@@ -1,0 +1,295 @@
+\subsection{Objetivo}
+Que el alumno utilice probabilidad en una aplicación de la vida real: modelar las probabilidades de que dado un texto, se pueda determinar a qué etiqueta pertenece: Ciencia, Tecnología, Cultura, etc. \par
+
+\subsection{Introducción} 
+
+Tener la posibilidad de etiquetar un texto automáticamente permite que las empresas del ramo periodístico puedan hacer un mejor uso de sus activos humanos para generar notas de valor y no estar etiquetando manualmente cada nota que entregan sus corresponsales. Por otro lado, estas etiquetas permiten una búsqueda de noticias más acertada para el lector, ya que son palabras clave derivadas del texto de la noticia.
+
+En esta práctica utilizaremos un algoritmo de Aprendizaje automático: el Clasificador Bayesiano Ingenuo (\textit{Naive Bayes Classifier}).
+
+\subsection{Clasificador Bayesiano Ingenuo}
+
+Una manera sencilla de obtener una etiqueta para cualquier texto es utilizar un Clasificador Bayesiano Ingenuo, el cual se basa en el uso de Probabilidad y el Teorema de Bayes para predecir la etiqueta para un texto dado, obteniendo la probabilidad de cada etiqueta y retornando la más probable. A continuación veremos un ejemplo de cómo aplicar este clasificador, basado en una entrada del blog de Monkey Learn \parencite{Stecanella2017}
+
+
+\subsection{Utilizando un Clasificador Bayesiano}
+
+Supongamos que queremos construir un clasificador que nos diga las etiquetas más probables para un texto y tenemos los siguientes datos de entrenamiento:
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tabular}{ l | c }
+      Texto & Etiqueta \\ \hline
+      de acuerdo con el portal de datos abiertos de la ciudad de méxico & CDMX  \\ \hline
+      el gobierno capitalino mejora la seguridad en ciudad de méxico & CDMX  \\ \hline
+      claudia sheinbaum aseguró que no se elevarán las tarifas para los capitalinos & CDMX  \\ \hline
+      clasificación a octavos de final de la champions league & Deportes\\ \hline
+      la fifa determinó que deberá pagar seis millones de dólares & Deportes  \\ \hline
+      con la oportunidad de clasificar a octavos, nápoles recibirá al rb salzburgo & Deportes  \\ \hline
+      el presidente lamentó lo sucedido al alcalde de valle de chalco & Nacional  \\ \hline
+      la comisión temporal de presupuesto del instituto nacional electoral & Nacional  \\ \hline
+      por la mañana, durante su conferencia de prensa, el presidente & Nacional  \\
+    \end{tabular}
+  \end{center}
+  \caption{Datos de entrenamiento}
+\end{figure}
+
+¿Cómo podríamos saber a qué etiqueta pertenece el texto \quotes{desde el aeropuerto capitalino fue trasladada}?
+
+Por ser un clasificador Bayesiano, calcularemos la probabilidad de que el texto anterior tenga alguna de las etiquetas Deportes, Nacional o CDMX y tomaremos la más alta. Entonces, lo que buscamos obtener es
+\[P( CDMX | x ), \ P( Nacional | x ), \ P( Deportes | x )\]
+donde
+\[x = desde \ el \ aeropuerto \ capitalino \ fue \ trasladada \]
+
+\subsubsection{Propiedades}
+
+Lo primero que debemos de hacer al crear un modelo de Aprendizaje Automático es definir qué propiedades se utilizarán para que nuestro algoritmo pueda determinar la etiqueta correcta. Una propiedad es un pedazo de información que se le da al algoritmo para que aprenda las correlaciones o patrones existentes. Un ejemplo de propiedades que se podrían utilizar si se quisiera saber si una persona es más propensa a consumir cervezas artesanales son: edad, sexo, nivel de ingreso, etc. y se excluirían datos que pueden no ser relevantes para el modelo como nombre, correo o si están casados.
+
+Estas propiedades deben tener una representación numérica para que el algoritmo pueda entenderlas, pero en nuestro caso sólo tenemos texto. Para poder hacer cualquier tipo de cálculo primero debemos transformar el texto a una representación numérica, esto lo logramos utilizando frecuencias de palabras, nos fijamos en cuántas veces aparece cada palabra por etiqueta.
+
+\subsubsection{Teorema de Bayes}
+
+Para lograr calcular probabilidades sobre frecuencias de palabras, utilizaremos el Teorema de Bayes, el cual nos permite obtener una probabilidad condicional a partir de la probabilidad condicional invertida y sus componentes, como podemos ver en la fórmula:
+
+\[ P( A | B ) = {{P( B | A ) \times P(A)} \over P(B)} \]
+
+En nuestro caso, para calcular \(P( CDMX | x )\) esta fórmula se traduce a:
+
+\[ P( CDMX | x ) = {{P( x | CDMX ) \times P(CDMX)} \over P(x)} \]
+
+% Pero, como queremos saber qué etiqueta tiene mayor probabilidad, podemos igualar ambos lados, eliminar el divisor, y así solo comparamos 
+
+% \[ {P(Un juego muy cerrado| CDMX) \times P(CDMX)} \]
+
+% con
+
+% \[ {P(Un juego muy cerrado| No deportes) \times P(No deportes)} \]
+
+Para calcular fácilmente la probabilidad condicional \(P(x | CDMX)\), basta con que contemos el número de veces que aparece el texto \quotes{desde el aeropuerto capitalino fue trasladada} para cada una de las etiquetas. Aquí nos topamos con un problema... ¡el texto completo no aparece en ninguna de las etiquetas!.
+
+\subsubsection{Clasificador ingenuo}
+
+Un clasificador ingenuo es aquél que supone que las propiedades proporcionadas al algoritmo son independientes entre ellas, logrando hacerlo más robusto sobre pocos datos o datos mal etiquetados.
+Utilizando este supuesto, nos permite tomar cada palabra del texto como propiedad, en lugar de tomar el texto completo. Podemos ver que: 
+
+\[ P(x) = P(desde) \times P(el) \times P(aeropuerto) \times P(capitalino) \times P(fue) \times P(trasladado) \]
+
+lo cual nos permite calcular la probabilidad condicional como
+\[ P(x | CDMX) = P(desde|CDMX) \times P(el|CDMX) \times P(aeropuerto|CDMX) \]
+\[ \times P(capitalino|CDMX) \times P(fue|CDMX) \times P(trasladado|CDMX) \]
+
+facilitándonos el cálculo de esta probabilidad, ya que estas palabras aparecen una o varias veces en nuestro conjunto de entrenamiento.
+
+\subsubsection{Calculando probabilidades}
+
+Como habíamos mencionado, haremos un conteo de palabras y de etiquetas. Primero, calculamos la probabilidad \textit{a priori} de las etiquetas: \(P(CDMX) = {1 \over 3}\), \(P(Nacional) = {1 \over 3}\) y \(P(Deportes) = {1 \over 3}\). Después, para calcular \(P(desde|CDMX)\) debemos tomar el número de veces que aparece la palabra \quotes{desde} dentro de los textos con la etiqueta \quotes{CDMX} y lo dividimos entre el número de palabras totales con la etiqueta \quotes{CDMX}, pero podemos ver que \quotes{desde} no aparece dentro de los textos con la etiqueta de \quotes{CDMX}, lo cual nos arroja que \(P(desde|CDMX) = 0\), pero al hacer las multiplicaciones para determinar \(P(x| CDMX)\) causaría que la probabilidad del texto completo sea $0$ y se pierda información sobre las probabilidades.
+
+Para resolver este problema se aplican técnicas de suavizado \parencite[ver][202]{ManningSchutze1999} como el suavizado de Laplace, sumando $1$ a cada dividendo y lo contrarrestamos sumando el número de palabras posibles sin repetirse a cada divisor, así tendríamos \(P(desde|CDMX) = {{0 + 1} \over {35 + 67} }\). Esto lo repetimos con cada palabra del texto \quotes{desde el aeropuerto capitalino fue trasladada} y con cada etiqueta, obteniendo las siguientes tablas:
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tabular}{ l | c }
+      X & $P(X|CDMX)$ \\ \hline
+      desde & $0 + 1 \over {35 + 67}$ \\ \hline
+      el & $2 + 1 \over {35 + 67}$ \\ \hline
+      aeropuerto & $0 + 1 \over {35 + 67}$ \\ \hline
+      capitalino & $2 + 1 \over {35 + 67}$ \\ \hline
+      fue & $0 + 1 \over {35 + 67}$ \\ \hline
+      trasladada & $0 + 1 \over {35 + 67}$ \\
+    \end{tabular}
+  \end{center}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tabular}{ l | c }
+      X & $P(X|Deportes)$ \\ \hline
+      desde & $0 + 1 \over {31 + 67}$ \\ \hline
+      el & $0 + 1 \over {31 + 67}$ \\ \hline
+      aeropuerto & $0 + 1 \over {31 + 67}$ \\ \hline
+      capitalino & $0 + 1 \over {31 + 67}$ \\ \hline
+      fue & $0 + 1 \over {31 + 67}$ \\ \hline
+      trasladada & $0 + 1 \over {31 + 67}$ \\
+    \end{tabular}
+  \end{center}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tabular}{ l | c }
+      X & $P(X|Nacional)$ \\ \hline
+      desde & $0 + 1 \over {30 + 67}$ \\ \hline
+      el & $2 + 1 \over {30 + 67}$ \\ \hline
+      aeropuerto & $0 + 1 \over {30 + 67}$ \\ \hline
+      capitalino & $0 + 1 \over {30 + 67}$ \\ \hline
+      fue & $0 + 1 \over {30 + 67}$ \\ \hline
+      trasladada & $0 + 1 \over {30 + 67}$ \\
+    \end{tabular}
+  \end{center}
+\end{figure}
+
+Ahora, multiplicamos todas las probabilidades y obtenemos que: 
+
+\[ P(x | CDMX) = {1 \over 102} \times {3 \over 102} \times {1 \over 102} \times {3 \over 102} \times {1 \over 102} \times {1 \over 102} \]
+\[ P(x | CDMX) = { 9 \over 11.26162419\times10^{11}} = 7.99174244\times10^{-12} \]
+
+\[ P(x | Deportes) = {1 \over 98} \times {1 \over 98} \times {1 \over 98} \times {1 \over 98} \times {1 \over 98} \times {1 \over 98} \]
+\[ P(x | Deportes) = { 1 \over 8.858423809\times10^{11} } = 1.128868997\times10^{-12} \]
+
+\[ P(x | Nacional) = {1 \over 97} \times {3 \over 97} \times {1 \over 97} \times {1 \over 97} \times {1 \over 97} \times {1 \over 97} \]
+\[ P(x | Nacional) = { 3 \over 8.329720049\times10^{11} } = 3.601561616\times10^{-12} \]
+
+
+Con lo cual nuestro clasificador le otorga la etiqueta \textbf{CDMX} al texto \quotes{desde el aeropuerto capitalino fue trasladada} y la segunda etiqueta más probable sería \textbf{Nacional}.
+
+
+\subsection{Mejorando el clasificador}
+
+Una manera sencilla de mejorar la clasificación de los textos es quitando palabras vacías \textit{(stop words)}, donde una palabra vacía es aquella que \quotes{no aporta información al texto que está siendo procesado}\parencite[533]{ManningSchutze1999}. En cualquier lenguaje, estas palabras vacías sirven para proveer contexto a un texto, pero el Clasificador Bayesiano Ingenuo no hace uso del contexto para determinar las etiquetas pertenecientes a cada texto, entonces estas palabras sólo hacen más lento la obtención de etiquetas y pueden introducir falsos positivos en la clasificación. En este caso procederíamos a quitarlas de nuestros conjuntos de entrenamiento y prueba.
+
+Utilizando las palabras vacías que define Alir3z4 en su repositorio de GitHub (https://github.com/Alir3z4/stop-words) en el ejemplo anterior, podemos ver que los datos de entrenamiento se reducen a
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tabular}{ l | c }
+      Texto & Etiqueta \\ \hline
+      acuerdo portal datos abiertos ciudad méxico & CDMX  \\ \hline
+      gobierno capitalino mejora seguridad ciudad méxico & CDMX  \\ \hline
+      claudia sheinbaum aseguró elevarán tarifas capitalinos & CDMX  \\ \hline
+      clasificación octavos final champions league & Deportes\\ \hline
+      fifa determinó deberá pagar seis millones dólares & Deportes  \\ \hline
+      oportunidad clasificar octavos, nápoles recibirá rb salzburgo & Deportes  \\ \hline
+      presidente lamentó sucedido alcalde valle chalco & Nacional  \\ \hline
+      comisión temporal presupuesto instituto nacional electoral & Nacional  \\ \hline
+      mañana, durante conferencia prensa, presidente & Nacional  \\
+    \end{tabular}
+  \end{center}
+  \caption{Datos de entrenamiento después de eliminar palabras vacías}
+\end{figure}
+
+Y nuestro texto a etiquetar quedaría así: \quotes{aeropuerto capitalino trasladada}. Entonces, haciendo los cálculos nuevamente, podemos ver que quedan de la siguiente manera
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tabular}{ l | c }
+      X & $P(X|CDMX)$ \\ \hline
+      aeropuerto & $0 + 1 \over {18 + 51}$ \\ \hline
+      capitalino & $2 + 1 \over {18 + 51}$ \\ \hline
+      trasladada & $0 + 1 \over {18 + 51}$ \\
+    \end{tabular}
+  \end{center}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tabular}{ l | c }
+      X & $P(X|Deportes)$ \\ \hline
+      aeropuerto & $0 + 1 \over {19 + 51}$ \\ \hline
+      capitalino & $0 + 1 \over {19 + 51}$ \\ \hline
+      trasladada & $0 + 1 \over {19 + 51}$ \\
+    \end{tabular}
+  \end{center}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tabular}{ l | c }
+      X & $P(X|Nacional)$ \\ \hline
+      aeropuerto & $0 + 1 \over {17 + 51}$ \\ \hline
+      capitalino & $0 + 1 \over {17 + 51}$ \\ \hline
+      trasladada & $0 + 1 \over {17 + 51}$ \\
+    \end{tabular}
+  \end{center}
+\end{figure}
+
+Ahora, multiplicamos todas las probabilidades y obtenemos que: 
+
+\[ P(x | CDMX) = {1 \over 69} \times {3 \over 69} \times {1 \over 69} \]
+\[ P(x | CDMX) = { 3 \over 328509} = 0.000009132 \]
+
+\[ P(x | Deportes) = {1 \over 70} \times {1 \over 70} \times {1 \over 70} \]
+\[ P(x | Deportes) = { 1 \over 343000 } = 0.000002915 \]
+
+\[ P(x | Nacional) = {1 \over 68} \times {1 \over 68} \times {1 \over 68} \]
+\[ P(x | Nacional) = { 1 \over 314432 } = 0.00000318 \]
+
+Con esto podemos ver que es más sencillo hacer las operaciones, obtenemos probabilidades de mayor magnitud por la disminución del número de palabras y las palabras restantes nos permiten una mayor exactitud en la determinación de las etiquetas.
+
+\subsection{Desarrollo e implementaci\'on}
+
+La práctica consiste en obtener el texto de las noticias proporcionadas por el feed RSS de Aristegui Noticias, separar las noticias en dos conjuntos: de entrenamiento y de prueba, eliminar las palabras vacías haciendo uso del repositorio de GitHub proporcionado anteriormente, entrenar un Clasificador Bayesiano Ingenuo con el primer conjunto y evaluar qué tan bien predice las etiquetas de las noticias del segundo conjunto. Para lograrlo deberán usar el ejemplo anterior como guía para obtener las probabilidades de cada etiqueta presente en la base de prueba y después comparar las etiquetas obtenidas por el clasificador contra las etiquetas reales.
+
+Incluido en el apéndice~\ref{appe:auxiliar} se encuentra el archivo \classname{feed.db} que contiene al menos 50 notas con título, texto, tags y link con el siguiente formato:
+
+\begin{minted}[mathescape,
+               linenos,
+               numbersep=5pt,
+               gobble=2,
+               frame=lines,
+               framesep=2mm]{text}
+
+    Title: ...
+    Tags: ...
+    Text: ...
+    Link: ...
+
+\end{minted}
+
+Por ejemplo:
+
+\begin{minted}[mathescape,
+               linenos,
+               breaklines,
+               fontsize=\footnotesize,
+               numbersep=5pt,
+               gobble=2,
+               frame=lines,
+               framesep=2mm]{text}
+
+    Title: Devolverá Senado 281 millones 537 mil 756 pesos a Hacienda
+    Tags: MÉXICO, Poder Legislativo, Presupuesto, Secretaría de Hacienda y ...
+    Text: El Senado de la República devolverá a la Tesorería de la Federación ...
+    Link: https://aristeguinoticias.com/1401/mexico/devolvera-senado...
+
+    Title: Consejeros y empleados del INE cobrarán lo mismo que en 2018 ...
+    Tags: MÉXICO, INE, Justicia, Poder Judicial, Presupuesto
+    Text: Una jueza federal permitió al Instituto Nacional Electoral (INE) ...
+    Link: https://aristeguinoticias.com/1401/mexico/consejeros-y-empleados...
+
+    Title: Buen inicio de semana del peso: dólar baja a 19 unidades
+    Tags: Dinero y Economía, Estados Unidos, Finanzas, Peso Dólar
+    Text: El peso mexicano tuvo este lunes un buen inicio de semana, ...
+    Link: https://aristeguinoticias.com/1401/lomasdestacado/buen-inicio...
+
+\end{minted}
+
+Separen este archivo en dos para obtener una base de datos de entrenamiento y otra de prueba, procurando que la mayor parte de las noticias queden en la base de datos de entrenamiento.
+
+Después deberán obtener el texto, el título y la etiqueta de cada noticia incluida en la base de datos de entrenamiento. Con esta información deberán calcular tres probabilidades, como se explica en el ejemplo visto en la sección anterior:
+
+\begin{enumerate}
+  \item La probabilidad de que se obtenga una etiqueta en específico:
+  \begin{equation*}
+   \#\ de\ veces\ que\ aparece\ la\ etiqueta \over \#\ total\ de\ muestras\ de\ etiquetas
+  \end{equation*}
+  
+  \item La probabilidad de que se obtenga una palabra en específico:
+  \begin{equation*}
+   \#\ de\ veces\ que\ aparece\ una\ palabra \over \#\ total\ de\ muestras\ de\ palabras
+  \end{equation*}
+  
+  \item La probabilidad de que una palabra aparezca en el texto de alguna etiqueta:
+  \begin{equation*}
+   P(palabra \mid etiqueta)
+  \end{equation*}
+\end{enumerate}
+
+Podemos ver que terminaremos con tres variables aleatorias, las cuales debemos conservar en Factores para agilizar su consulta. Si tienen problemas obteniendo la probabilidad de que una palabra aparezca en el texto de alguna etiqueta les recomiendo lo siguiente: creen un diccionario de palabras por cada etiqueta, que contenga el número de veces que aparece cada palabra con la etiqueta dada y el número total de palabras por etiqueta.
+
+Una vez que tengan sus probabilidades, habrán acabado con la fase de entrenamiento de su Clasificador Bayesiano Ingenuo. Solo faltaría evaluar qué tan bien predice las etiquetas de las noticias incluidas en su base de datos de prueba. Para esto, tendrán que determinar a qué etiqueta pertenece el texto de las noticias. Deberán proporcionar las 3 más probables, y comparar con las etiquetas reales imprimiendo ambos conjuntos de etiquetas lado a lado.
+
+En el apéndice~\ref{appe:auxiliar} podrán encontrar un script auxiliar que obtiene las noticias y las guarda en la base de datos, que es un archivo de texto plano. Lo pueden utilizar para obtener bases de datos actualizadas.
+
+\subsection{Requisitos y resultados}
+
+Todo lo anterior lo deberán anexar a la carpeta de la práctica, listo para cargarlo y probarlo. En el \classname{readme} deben especificar cómo se ejecuta, cómo se cargan los archivos, etc. Tampoco olviden comentar su código.

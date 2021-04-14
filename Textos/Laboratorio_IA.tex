@@ -1,0 +1,197 @@
+\documentclass[12pt,openany]{book}
+%\usepackage{classnotestikz}
+%\usepackage{tikzelements}
+\usepackage{libro-fciencias}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\def\thickline{\specialrule{.15em}{.05em}{.05em}}
+\def\violetrule{\color{Violeta}{\rule{100px}{0.05em}}}
+\def\bluerule{\color{DarkBlue}{\rule{100px}{0.05em}}}
+\usepackage{multirow}
+
+
+\usepackage{diagramas-fciencias}
+\pgfplotsset{compat=1.15}
+
+%\setcounter{tocdepth}{4}
+
+\graphicspath{ {../Figuras/} }
+
+\usepackage{minted}            % Requirió reconfigurar Kile para compilar con pdflatex --shell-escape yourfile.tex
+\newcommand{\classname}[1]{\texttt{#1}}
+\newcommand{\quotes}[1]{``#1''}
+\newcommand{\me}{\mathrm{e}}
+\newcommand{\chapterauthor}[1]{\vspace*{-2em}{\color{GrisOxford}\Large\noindent #1}\vspace*{1em}}
+
+\addbibresource{ialab_ref.bib}
+
+
+%----------------------------------------------------------------------------------------
+%	Autores y Título
+%----------------------------------------------------------------------------------------
+
+\title{Inteligencia Artificial}
+\subtitle{Manual de Prácticas 2021-II}
+\author{
+  Rodrigo Eduardo Colín Rivera \\
+  Luis Alfredo Lizárraga Santos \\
+  Verónica Esther Arriola Ríos \\
+  Benjamín Torres Saavedra \\
+}
+\publisher{Facultad de Ciencias, UNAM}
+\background{calabozo_pop.png}
+
+
+\begin{document}
+\maketitle
+
+%%
+\chapter*{Edición}
+
+
+Agradecemos especialmente a:
+
+\begin{center}
+ Luis Alfredo Lizárraga Santos
+\end{center}
+ 
+Por haber realizado la primer compilación y edición de este manual, sucesivas actualizaciones se han realizado sobre su trabajo.
+
+
+
+%----------------------------------------------------------------------------------------
+% Contenido
+%----------------------------------------------------------------------------------------
+\frontmatter % Numeración romana
+\tableofcontents
+\clearemptydoublepage % Whitespace to the end of the page
+
+
+%----------------------------------------------------------------------------------------
+%	                                Inicio
+%----------------------------------------------------------------------------------------
+\mainmatter  % Numeración arabiga
+
+
+
+%%
+\part{Prácticas}
+
+
+%%
+\chapter*{Convenciones}
+
+A lo largo del texto se utilizará la siguiente notación para diversos elementos:
+\begin{longtable}{lc}
+ Conjuntos   &   $\set{C}$ \\
+ Vectores    &   $\vec{X}$ \\
+ Matrices    &   $\mat{M}$ \\
+ Unidades    &   $\unit{cm}$
+\end{longtable}
+
+
+
+\chapter{Introducción a Agentes}
+\chapterauthor{Rodrigo Eduardo Colín Rivera}
+
+\input{practicas/Termitas}
+
+
+
+\chapter{Estados y espacio de búsqueda}
+\chapterauthor{ %
+  Rodrigo Eduardo Colín Rivera \\
+  Verónica Esther Arriola Ríos
+}
+
+\input{practicas/Estados}
+
+
+
+\chapter{Recursión y Retractación (\textit{Backtrack})}
+\chapterauthor{Rodrigo Eduardo Colín Rivera}
+
+\input{practicas/Retractacion}
+
+
+
+\chapter{A*}
+
+\input{practicas/AEstrella}
+
+
+
+\chapter{Factores}
+\chapterauthor{Luis Alfredo Lizárraga Santos}
+
+\input{practicas/Factores}
+
+
+
+\chapter[Bayes Ingenuo]{Clasificador Bayesiano Ingenuo y aplicación de la clase Factor}
+\chapterauthor{Luis Alfredo Lizárraga Santos}
+
+\input{practicas/BayesIngenuo}
+
+
+
+\chapter{Algoritmos Genéticos}
+\chapterauthor{Rodrigo Eduardo Colín Rivera}
+
+\input{practicas/Geneticos}
+
+
+
+\chapter[Perceptrón]{Perceptrón, unidad fundamental de las redes neuronales}
+\chapterauthor{Luis Alfredo Lizárraga Santos}
+
+\input{practicas/Perceptron}
+
+
+
+
+%%
+\part{Proyectos}
+
+
+\chapter{Lego Mindstorms}
+\chapterauthor{Luis Alfredo Lizárraga Santos}
+
+\input{proyectos/LegoMindstorm}
+
+
+
+\chapter{Localización de robots}
+\chapterauthor{%
+  Luis Alfredo Lizárraga Santos \\
+  Verónica Esther Arriola Ríos
+}
+
+\input{proyectos/Localizacion}
+
+
+
+%%
+\appendix
+\chapter{Código de prácticas}
+
+\section[Clasificador Bayesiano Ingenuo y Factores]{Clasificador Bayesiano Ingenuo y aplicación de la clase Factor}
+\label{appe:aplicaciones}
+\input{apendices/BayesIngenuo_codigo}
+
+\newpage
+
+\section[Lego Mindstorms]{Lego Mindstorms}
+\label{appe:lego}
+\input{apendices/LegoMindstorm_codigo}
+
+
+
+%----------------------------------------------------------------------------------------
+% Bibliografia
+%----------------------------------------------------------------------------------------
+\backmatter
+
+\printbibliography[heading=bibintoc]
+
+\end{document}

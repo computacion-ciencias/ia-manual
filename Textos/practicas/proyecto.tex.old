@@ -1,0 +1,90 @@
+
+\section{Objetivo}
+\noindent Conocer e implementar una técnica de localización utilizada en aplicaciones reales, específicamente para los robots \textit{Rhino} y \textit{Minerva} en los museos \textit{Deutsches Museum Bonn} y \textit{National Museum of American History}, respectivamente.
+
+\section{Introducci\'on}
+
+\noindent Primero, iniciemos con el contenido y especificación del mundo en el cual se moverá el robot. Este mundo contendrá obstáculos y será cuadrado (imagínense un cuarto o una oficina), las paredes serán obstáculos y cualquier otra cosa que se pueda encontrar en un cuarto u oficina normal: sillas, mesas, escritorios, etc.\\\par
+
+\noindent Antes, es importante hacer notar que nuestro robot tendrá dos sensores:
+
+\begin{enumerate}
+  \item láser: mide la distancia desde el robot hacia el primer obstáculo en línea recta del sensor.
+  \item odométrico: mide la distancia recorrida por el robot (en cm/m).\\
+\end{enumerate}
+
+\noindent Ahora, como el robot podrá moverse en 8 direcciones (0\degree a 360\degree en aumentos de 45\degree: 0\degree, 45\degree, 90\degree, 135\degree, ...) deberán tener una representación del mundo por cada dirección de movimiento. Una vez que se tiene la representación del mundo, lo siguiente sería inicializarlo.\\\par
+
+
+\noindent Deberán posicionar al robot aleatoriamente en el mundo, después deberán calcular la probabilidad de que el robot se encuentre en alguna celda, llamémosle a esta probabilidad \textit{creencia}. Al inicio esta probabilidad será igual para toda celda:
+
+\[ 1 \over \# de\ celdas\ que\ no\ son\ obstaculo\]\\
+
+\noindent Después, deberán calcular la distancia desde cada celda a cada obstáculo en línea recta. Por ejemplo, si su robot tiene 8 sensores y cada uno está ubicado a 45\degree  de separación, tendrán que calcular las distancias en línea recta hacia arriba, abajo, izquierda, derecha y diagonales hasta que se topen con un obstáculo. Esta información la deberán guardar en cada celda para evitar estarla calculando cada que se visita la celda.\\\par
+
+\noindent Antes de continuar se necesita definir un poco de notación.
+
+\section{Notaci\'on}
+
+\noindent Definamos la posición del robot usando una variable tridimensional $l = <x,y,\theta>$, donde $x$ y $y$ son las coordenadas del robot y $\theta$ es la dirección en la que está viendo el robot. Sea $l_t$ la posición del robot en el tiempo $t$, y $L_t$ la variable aleatoria correspondiente. Como el robot no sabe su posición exacta, su \textit{creencia} o $Bel(L_t)$ es una ditribución de probabilidad sobre el espacio de posibles posiciones. Esta \textit{creencia} nos permite saber cual es la probabilidad de que se encuentre en una celda $l$ en el tiempo $t$, formalmente $Bel(L_t = l)$.\\\par
+
+\noindent También aprovecharé para definir a las lecturas de los sensores como $s_T$ la lectura del láser y $a_T$ la lectura del sensor odométrico. A estas lecturas se les tendrá que agregar un ruido gaussiano, esto lo pueden lograr con el método \classname{nextGaussian()} de la clase \classname{Random}.\\\par
+
+\noindent Una vez definida la notación, procederemos a ver el algoritmo completo de esta técnica de localización.
+
+\section{Algoritmo}
+
+\noindent El algoritmo sería el siguiente:\\\par
+
+\begin{algorithmic}
+  \ForAll{$posicion$ $l$ $en$ $mundo$}
+    \State $Bel(L_0 = l)\gets P(L_0 = l)$
+  \EndFor
+  \ForAll{$posicion$ $l$ en $mundo$}
+    \State $determinar\ las\ distancias\ hacia\ obstaculos$
+  \EndFor
+  \While{$true$}
+    \State $decidir$ $si$ $se$ $mueve$ $el$ $robot$
+    \State $\alpha_T \gets 0$
+    \ForAll{$\theta$ $posible$}
+      \ForAll{$posicion$ $l$ en $mundo$}
+        \State $Bel(L_T = l) \gets P(s_T \mid l)*Bel(L_T-1 = l)$
+        \State $\alpha_T \gets \alpha_T + Bel(L_T = l)$
+      \EndFor
+      \ForAll{$posicion$ $l$ en $mundo$}
+      \Comment{Ahora se normaliza la creencia}
+        \State $Bel(L_T = l) \gets {\alpha_T}^{-1} * Bel(L_T = l)$
+      \EndFor
+      \If{$se\ movio\ el\ robot$}
+      \Comment{Se obtuvo una lectura del sensor odométrico}
+        \ForAll{$posicion$ $l$ en $mundo$}
+          % \ForAll{$posicion$ $l' != l$ en $mundo$}
+            \State \(Bel(L_T = l) \gets [\sum_{l'} {P(l \mid l', \alpha_T)*Bel(L_T-1 = l')}\)
+          % \EndFor
+        \EndFor
+      \EndIf
+    \EndFor
+  \EndWhile
+\end{algorithmic}
+
+\par
+
+\noindent \\$P(L_0 = l)$ es la probabilidad de la que se hablaba antes, la inicial. $P(s_i \mid l)$ es la evaluación de una variable aleatoria gaussiana $G(\mu, \sigma)$ en $G = (distancia\ medida\ por\ sensor)$ con la medición de distancia real como media y una varianza definida por ustedes. 
+% Si se recibe una lectura del sensor odométrico, por cada celda del mundo, deberán hacer un recorrido por las demás celdas, calculando $\int P(l \mid l', \alpha_T)*Bel(L_T-1 = l')dl$, donde $P(l \mid l', \alpha_T)$ es una variable aleatoria gaussiana tridimensional $G_{x,y,\theta}$ integrada sobre las posiciones de $l$ y $l'$ y desde $\theta + 45\degree/2$ a $\theta - 45\degree/2$.
+
+\section{Desarrollo e implementaci\'on}
+
+\noindent Esto se implementará en processing, recuerden que debe estar bien hecho y comentado, ya que este proyecto vale el 20\% de su calificación.\\\par
+
+\noindent Su aplicación deberá mostrar el mundo, los obstáculos y la probabilidad de cada celda usando distintos colores.
+
+
+
+\begin{thebibliography}{1}
+
+  \bibitem{notes} Dieter Fox, Wolfram Burgard et. al. {\em Markov Localization for Mobile Robots in Dynamic Environments}, 1999 :
+  Journal of Artificial Intelligence .
+
+\end{thebibliography}
+
+\end{document}

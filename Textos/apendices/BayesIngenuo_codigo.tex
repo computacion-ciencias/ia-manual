@@ -1,0 +1,94 @@
+\subsection{feed.py}
+\label{appe:auxiliar}
+
+\begin{minted}[mathescape,
+               linenos,
+               numbersep=5pt,
+               gobble=2,
+               frame=lines,
+               fontsize=\scriptsize,
+               framesep=2mm]{python}
+    # -*- coding: utf-8 -*-
+
+    import feedparser
+    import urllib3
+    import re
+
+    url = 'http://aristeguinoticias.com/feed/'
+    db = './feed.db'
+
+    feed = feedparser.parse(url)
+    not_in_db = True
+
+    def cleanhtml(raw_html):
+        """
+        Removes any strange symbol from a HTML string
+        """
+        cleanr = re.compile('<.*?>')
+        cleantext = re.sub(cleanr, '', raw_html)
+        return cleantext
+
+    def cleanstr(raw_str):
+        """
+        Removes any strange symbol from a string
+        """
+        cleanr = re.compile('&.*?;')
+        cleantext = re.sub(cleanr, '', raw_str)
+        return cleantext
+
+
+    for post in feed.entries:
+        title = post.title
+        link = post.link
+
+        with open(db) as database:
+            for line in database:
+                if title in line:
+                    # Verifying in the entry already exists in the database
+                    print('Already in DB')
+                    not_in_db = False
+                    break
+
+        if not not_in_db:
+            not_in_db = True
+            continue
+
+        try:
+            # Fetching the news data
+            http = urllib3.PoolManager()
+            r = http.request('GET', post.link)
+            data = str(r.data, 'utf-8')
+            text = data.split('<div class="class_text">')[1]
+            text = text.split('</div>')[0]
+            text = cleanhtml(text)
+        except Exception as e:
+            continue
+
+        summary = cleanstr(text.strip()).replace('\n', ' ')
+        tags = map(lambda x: x.term,post.tags)
+        tags_clean = ''
+
+        for tag in tags:
+            if tag != 'LO + DESTACADO':
+                tags_clean = tags_clean + tag + ', '
+
+        tags_clean = tags_clean[:len(tags_clean)-2]
+
+        print("Title: " + title)
+        print("Tags: " + tags_clean)
+        print("Text: " + summary)
+        print("Link: " + link)
+        print('')
+
+        with open(db, 'a') as file:
+            file.write("Title: " + title + '\n')
+            file.write("Tags: " + tags_clean + '\n')
+            file.write("Text: " + summary + '\n')
+            file.write("Link: " + link + '\n\n')
+
+\end{minted}
+
+\subsection{feed.db}
+\label{appe:base}
+
+Si se necesita este archivo, favor de mandar un correo a \href{mailto:luis.lzrg@gmail.com}{luis.lzrg@gmail.com}, ya que por ser un archivo muy extenso decidí no agregarlo.

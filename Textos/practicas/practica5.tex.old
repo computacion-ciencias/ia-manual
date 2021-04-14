@@ -1,0 +1,36 @@
+
+\section{Objetivo}
+Que el alumno implemente una clase \classname{Factor} para manejar las operaciones entre factores \par
+
+\section{Desarrollo e implementaci\'on}
+
+\noindent La práctica consiste de crear una clase \classname{Factor} que implemente la operaciones de multiplicación de factores, reducción de factores y marginalización de variables\\
+
+
+\subsection{Implementaci\'on}
+
+\textbf{\\Entrada}\\
+
+\noindent El programa deberá recibir la descripción de los factores en un archivo de texto. A continuación se define la sintaxis del archivo con los factores:\\\par
+
+\begin{itemize}
+  \item Variables: [\{\(<Var_1>:<val_0>,\dots,<val_m>\)\},\\\(\{<Var_2>:<val_0>,\dots,<val_m>\},\dots,\\\{<Var_n>:<val_0>,\dots,<val_m>\}\)]
+  \item Probabilidades: [\(\{P(<Var_i>=0)=0.\)\(1, P(<Var_i>=1)=0.\)\(5,\\P(<Var_i>=2)=0\).\(4\}\),\(\{P(<Var_i>|var_j=0,\dots,var_k=0)=<val>,\\P(<Var_i>|var_j=0,\dots,var_k=1)=<val>,\\P(<Var_i>|var_j=1,\dots,var_k=0)=<val>,\\P(<Var_i>|var_j=1,\dots,var_k=1)=<val>\},\\\{P(<Var_x>|var_j=0,\dots, var_k=0)=<val>,\dots\}\dots\)]
+\end{itemize}
+
+\noindent Donde \(<Var_{indice}>\) indica el nombre de alguna variable aleatoria y \(<val>\) se refiere al valor numérico correspondiente.\\\par
+
+\noindent Por ejemplo:\\\par
+
+\noindent Variables: [\(\{A:0,1\},\{B:0,1\},\{C:0,1,2\}\)]\\
+\noindent Probabilidades:[\(\{P(A=0)=0\).\(1, P(A=1)=0\).\(9\}, \{P(B=0)=0\).\(25, P(B=1)=0\).\(75\},\\\{P(C=0|A=0,B=0)=0\).\(25, P(C=0|A=0,B=1)=0\).\(15, P(C=0|A=1,B=0)=0\).\(35, P(C=0|A=1,B=1)=0\).\(1, P(C=1|A=0,B=0)=0\).\(65, P(C=1|A=0,B=1)=0\).\(80, P(C=1|A=1,B=0)=0\).\(60, P(C=1|A=1,B=1)=0\).\(8, P(C=2|A=0,B=0)=0\).\(10, P(C=2|A=0,B=1)=0\).\(05, P(C=2|A=1,B=0)=0\).\(05, P(C=2|A=1,B=1)=0\).\(1\}\)]\\\par
+
+\noindent En cuanto al lenguaje de programación, tienen dos opciones: \classname{Java} o \classname{Python}
+
+\section{Requisitos y resultados}
+\noindent Deberán hacer casos de prueba para marginalización, reducción y multiplicación de factores. Y también debe contar con un menú donde se puedan ejecutar las diferentes operaciones; no es necesario que lo hagan a prueba de todo, no me fijaré en eso.\\\par
+
+\noindent Para evaluar y calificar la práctica es necesario que se implementen todos los métodos mencionados e indicados, respetando las especificaciones de estilo y documentación del lenguaje de programación que usarán.
+Es completamente válido utilizar bibliotecas adicionales si lo consideran necesario, así como la creación y uso de sus propios métodos auxiliares si lo desean.\\\par
+
+\noindent No olviden documentar y comentar su código.\\\par

@@ -1,0 +1,59 @@
+\begin{minted}[mathescape,
+               linenos,
+               numbersep=5pt,
+               gobble=2,
+               frame=lines,
+               fontsize=\scriptsize,
+               framesep=2mm]{python}
+  from ev3.ev3dev import Motor
+  from ev3.lego import ColorSensor
+
+  a = Motor(port=Motor.PORT.A) # Abre el motor en el puerto A
+  b = Motor(port=Motor.PORT.D) # Abre el motor en el puerto D
+  sense = ColorSensor() # Abre el sensor para leer los valores
+                        # que obtiene
+
+  def move():
+      maxSpeed = 100
+      black = 10
+      white = 78
+      speedA = 50
+      speedB = 50
+      midpoint = (white-black)/2 + black
+      tolerance = 20
+      last_error = 0
+
+      while True:
+          # Obtiene el valor de reflectividad de la superficie
+          # que ve el sensor
+          val = sense.reflect 
+          error = midpoint - val
+          print error, val
+
+          if abs(error) < tolerance:
+              speedA = maxSpeed - last_error/2
+              speedB = maxSpeed - last_error/2
+              last_error = error
+          else:
+              if error > 0:
+                  speedB = speedB + error/2
+                  speedA = speedA - error/2
+                  last_error = error
+              else:
+                  error = abs(error)
+                  speedB = speedB - error/2
+                  speedA = speedA + error/2
+                  last_error = error
+
+          if speedA < 0: speedA = 0
+          if speedA > maxSpeed: speedA = maxSpeed
+          if speedB < 0: speedB = 0
+          if speedB > maxSpeed: speedB = maxSpeed
+
+          # Hace que el motor A gire a la velocidad especificada
+          # indefinidamente
+          a.run_forever(speedA) 
+          # Hace que el motor B gire a la velocidad especificada
+          # indefinidamente
+          b.run_forever(speedB) 
+\end{minted}
