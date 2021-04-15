@@ -1,7 +1,7 @@
-\subsection{Objetivo}
+\section{Objetivo}
 Que el alumno utilice probabilidad en una aplicación de la vida real: modelar las probabilidades de que dado un texto, se pueda determinar a qué etiqueta pertenece: Ciencia, Tecnología, Cultura, etc. \par
 
-\subsection{Introducción} 
+\section{Introducción} 
 
 Tener la posibilidad de etiquetar un texto automáticamente permite que las empresas del ramo periodístico puedan hacer un mejor uso de sus activos humanos para generar notas de valor y no estar etiquetando manualmente cada nota que entregan sus corresponsales. Por otro lado, estas etiquetas permiten una búsqueda de noticias más acertada para el lector, ya que son palabras clave derivadas del texto de la noticia.
 
@@ -41,13 +41,13 @@ Por ser un clasificador Bayesiano, calcularemos la probabilidad de que el texto 
 donde
 \[x = desde \ el \ aeropuerto \ capitalino \ fue \ trasladada \]
 
-\subsubsection{Propiedades}
+\subsection{Propiedades}
 
 Lo primero que debemos de hacer al crear un modelo de Aprendizaje Automático es definir qué propiedades se utilizarán para que nuestro algoritmo pueda determinar la etiqueta correcta. Una propiedad es un pedazo de información que se le da al algoritmo para que aprenda las correlaciones o patrones existentes. Un ejemplo de propiedades que se podrían utilizar si se quisiera saber si una persona es más propensa a consumir cervezas artesanales son: edad, sexo, nivel de ingreso, etc. y se excluirían datos que pueden no ser relevantes para el modelo como nombre, correo o si están casados.
 
 Estas propiedades deben tener una representación numérica para que el algoritmo pueda entenderlas, pero en nuestro caso sólo tenemos texto. Para poder hacer cualquier tipo de cálculo primero debemos transformar el texto a una representación numérica, esto lo logramos utilizando frecuencias de palabras, nos fijamos en cuántas veces aparece cada palabra por etiqueta.
 
-\subsubsection{Teorema de Bayes}
+\subsection{Teorema de Bayes}
 
 Para lograr calcular probabilidades sobre frecuencias de palabras, utilizaremos el Teorema de Bayes, el cual nos permite obtener una probabilidad condicional a partir de la probabilidad condicional invertida y sus componentes, como podemos ver en la fórmula:
 
@@ -67,7 +67,7 @@ En nuestro caso, para calcular \(P( CDMX | x )\) esta fórmula se traduce a:
 
 Para calcular fácilmente la probabilidad condicional \(P(x | CDMX)\), basta con que contemos el número de veces que aparece el texto \quotes{desde el aeropuerto capitalino fue trasladada} para cada una de las etiquetas. Aquí nos topamos con un problema... ¡el texto completo no aparece en ninguna de las etiquetas!.
 
-\subsubsection{Clasificador ingenuo}
+\subsection{Clasificador ingenuo}
 
 Un clasificador ingenuo es aquél que supone que las propiedades proporcionadas al algoritmo son independientes entre ellas, logrando hacerlo más robusto sobre pocos datos o datos mal etiquetados.
 Utilizando este supuesto, nos permite tomar cada palabra del texto como propiedad, en lugar de tomar el texto completo. Podemos ver que: 
@@ -80,7 +80,7 @@ lo cual nos permite calcular la probabilidad condicional como
 
 facilitándonos el cálculo de esta probabilidad, ya que estas palabras aparecen una o varias veces en nuestro conjunto de entrenamiento.
 
-\subsubsection{Calculando probabilidades}
+\subsection{Calculando probabilidades}
 
 Como habíamos mencionado, haremos un conteo de palabras y de etiquetas. Primero, calculamos la probabilidad \textit{a priori} de las etiquetas: \(P(CDMX) = {1 \over 3}\), \(P(Nacional) = {1 \over 3}\) y \(P(Deportes) = {1 \over 3}\). Después, para calcular \(P(desde|CDMX)\) debemos tomar el número de veces que aparece la palabra \quotes{desde} dentro de los textos con la etiqueta \quotes{CDMX} y lo dividimos entre el número de palabras totales con la etiqueta \quotes{CDMX}, pero podemos ver que \quotes{desde} no aparece dentro de los textos con la etiqueta de \quotes{CDMX}, lo cual nos arroja que \(P(desde|CDMX) = 0\), pero al hacer las multiplicaciones para determinar \(P(x| CDMX)\) causaría que la probabilidad del texto completo sea $0$ y se pierda información sobre las probabilidades.
 
@@ -215,7 +215,7 @@ Ahora, multiplicamos todas las probabilidades y obtenemos que:
 
 Con esto podemos ver que es más sencillo hacer las operaciones, obtenemos probabilidades de mayor magnitud por la disminución del número de palabras y las palabras restantes nos permiten una mayor exactitud en la determinación de las etiquetas.
 
-\subsection{Desarrollo e implementaci\'on}
+\section{Desarrollo e implementaci\'on}
 
 La práctica consiste en obtener el texto de las noticias proporcionadas por el feed RSS de Aristegui Noticias, separar las noticias en dos conjuntos: de entrenamiento y de prueba, eliminar las palabras vacías haciendo uso del repositorio de GitHub proporcionado anteriormente, entrenar un Clasificador Bayesiano Ingenuo con el primer conjunto y evaluar qué tan bien predice las etiquetas de las noticias del segundo conjunto. Para lograrlo deberán usar el ejemplo anterior como guía para obtener las probabilidades de cada etiqueta presente en la base de prueba y después comparar las etiquetas obtenidas por el clasificador contra las etiquetas reales.
 
@@ -290,6 +290,6 @@ Una vez que tengan sus probabilidades, habrán acabado con la fase de entrenamie
 
 En el apéndice~\ref{appe:auxiliar} podrán encontrar un script auxiliar que obtiene las noticias y las guarda en la base de datos, que es un archivo de texto plano. Lo pueden utilizar para obtener bases de datos actualizadas.
 
-\subsection{Requisitos y resultados}
+\section{Requisitos y resultados}
 
 Todo lo anterior lo deberán anexar a la carpeta de la práctica, listo para cargarlo y probarlo. En el \classname{readme} deben especificar cómo se ejecuta, cómo se cargan los archivos, etc. Tampoco olviden comentar su código.

@@ -2,10 +2,11 @@
 % \usepackage[linesnumbered,vlined]{algorithm2e}
 
 
-\subsection{Objetivo}
+\section{Objetivo}
+
 Conocer el funcionamiento de las redes neuronales y lograr implementar un perceptrón simple que aprenda las operaciones \classname{AND} y \classname{OR}.
 
-\subsection{Introducci\'on}
+\section{Introducci\'on}
 
 \quotes{Una red neuronal se puede definir como un modelo de razonamiento basado en el cerebro humano} \parencite[166]{Nengnevitsky2005}. Basándonos en el libro de Negnevisky explicaremos cómo funciona el cerebro, cómo las Redes Neuronales modelan el cerebro, cómo aprenden y finalizaremos con el Perceptrón \parencite[cap. 6]{Nengnevitsky2005}.
 
@@ -20,7 +21,7 @@ Señales se propagan de una neurona a otra por medio de reacciones electroquími
 
 Esta plasticidad permite que las conexiones hacia las neuronas que conducen a la \quotes{respuesta correcta} se vean fortalecidas, mientras que las conexiones que llevan a la \quotes{respuesta equivocada} sean debilitadas. Como resultado, las redes neuronales tienen la habilidad de aprender mediante la experiencia.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \includegraphics[scale=0.35]{perceptron/screen1.png}
   \caption{Partes de una neurona biológica. \parencite[166]{Nengnevitsky2005}}
@@ -98,7 +99,7 @@ Si $e(j)$ es positivo, se necesita incrementar $Y(j)$, pero si es negativo, se n
   \label{algo:b}
 \end{enumerate}
 
-\subsection{Desarrollo e implementaci\'on}
+\section{Desarrollo e implementaci\'on}
 
 \noindent Deberán crear dos perceptrones, uno que aprenda la operación \classname{AND} y otro la operación \classname{OR}, ambas de tres variables. Cada neurona tendrá cuatro entradas, tres para las entradas de la operación lógica y una para el sesgo.\par
 
@@ -156,7 +157,7 @@ Para probar su perceptrón, deberán utilizar el siguiente conjunto de entradas:
 \noindent PD: Se les recomienda que no se compliquen y usen la función escalón (\textit{step function}) como función de activación.\par
 
 
-\subsection{Requisitos y resultados}
+\section{Requisitos y resultados}
 
 Generen un reporte con observaciones de cómo se comporta el perceptrón con cada uno de los conjuntos de entrenamiento. Lo podrán programar en \classname{Java} o \classname{Python}. No olviden comentar su código.\medskip
 

@@ -1,0 +1,55 @@
+%----------------------------------------------------------------------------------------
+% Cadenas de Márkov
+%----------------------------------------------------------------------------------------
+
+En esta práctica se implementarán funciones para realizar cálculos básicos sobre cadenas de Márkov.
+
+\section{Objetivo}
+
+\begin{compactitem}
+ \item Que el alumno se familiarice con los procesos estocásticos discretos denominados Cadenas de Márkov discretas y realice una implementación para resolver algunas de las preguntas más frecuentes que se pueden plantear sobre estos procesos.
+\end{compactitem}
+
+
+\section{Introducción}
+
+Adicionalmente a lo visto en clase, que estuvo basado en el sitio de \hrefformat{https://www.gestiondeoperaciones.net/cadenas-de-markov/cadenas-de-markov-ejercicios-resueltos/}{Gestión de operaciones}, pueden consultar la página sobre cadenas de Márkov en \hrefformat{https://en.wikipedia.org/wiki/Markov_chain}{Wikipedia} así como algunos \hrefformat{https://en.wikipedia.org/wiki/Examples_of_Markov_chains}{ejemplos} sencillos.
+
+
+\section{Desarrollo}
+
+Para esta práctica se requiere implementar una clase para trabajar con cadenas de Márkov.  Se recomienda programarla en \code{Python}, ya que la biblioteca \code{numpy} contiene métodos para trabajar con matrices y vectores, lo cual simplifica mucho los puntos siguientes.  También se recomienda utilizar matrices columna para representar vectores, de esta manera funcionarán correctamente las multiplicaciones de matriz por vector.
+
+La clase \code{CadenaDeMarkov} debe contener:
+
+\begin{enumerate}
+ \item Un constructor que reciba como parámetros:
+ \begin{enumerate}
+  \item Una lista con los nombres los estados posibles.
+  \item Un vector con la probabilidad de iniciar en cada uno de los estados posibles.
+  \item Una matriz de probabilidades, con la probabilidad de transitar de cada estado hacia los demás.
+ \end{enumerate}
+
+ \item Un método para generar una secuencia de estados a partir del modelo de Márkov iniciado dado el número $n$ de elementos que tendrá la secuencia; opcionalmente puede recibir como parámetro una semilla para la generación de números aleatorios.
+ 
+ Para generar esta muestra necesitarás calcular los vectores con las distribuciones de probabilidad para $n$ pasos.  Dada cada distribución, utiliza un número aleatorio para determinar cuál de los estados corresponderá a ese paso.
+ 
+ Devuelve una lista con la secuencia de estados.
+ 
+ \item Obtener la probabilidad de una cadena de estados (punto extra si se permite que esta cadena tenga estados indeterminados).  Observa que esta es la distribución de probabilidad conjunta $P(S_0=s_0,S_1=s_1,...,S_n=s_n)$, escrito de otra forma, $P(s_0,s_1,...,s_n)$.  Deberá recibir como parámetro una lista con la secuencia de estados y devolver la probabilidad.
+ 
+ \item Estimar las probabilidades a largo plazo de cada uno de los estados, es decir, la distribución límite, cuando sea posible.  Este método deberá devolver el vector con la distribución de probabilidades.
+ 
+ \item Agregar un archivo donde se utilice tu clase para resolver un ejemplo, usando cada uno de los métodos.  Puedes usar algún ejemplo del sitio de gestión de operaciones.
+\end{enumerate}
+
+
+\subsection{Requisitos y resultados}
+
+En una carpeta, dentro de un archivo comprimido incluir:
+
+\begin{enumerate}
+ \item El archivo de la clase \code{CadenaDeMarkov}.
+ \item El archivo con el demo de prueba.
+\end{enumerate}
+

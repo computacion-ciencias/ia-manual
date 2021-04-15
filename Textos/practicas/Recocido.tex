@@ -1,0 +1,104 @@
+\section{Objetivo}
+
+Que el alumno se familiarice con una estrategia de mejoramiento iterativa para la resolución de problemas conocida como recocido simulado.
+
+
+
+\section{Introducción}
+
+\subsection{Recocido simulado}
+
+Este algoritmo puede ser visto como una mejora al algoritmo de ascenso de colinas, el cual mejora de manera iterativa una representación de la solución a un problema hasta que se encuentre el óptimo o se estanque en un máximo local.  Recocido simulado integra una selección de soluciones estocástica, es decir, para elegir la siguiente solución no siempre se escoge la mejor, con la cual se le da la libertad de explorar zonas distintas del espacio de soluciones, en las cuales el ascenso de colinas puede detenerse fácilmente.
+
+El pseudocódigo de este algoritmo es descrito en el \cite{Russell2010} en la sección de algoritmos de mejoramiento iterativo y lo podemos ver en \pref{alg:annealing}.
+
+\begin{algorithm}
+ \caption{Recocido simulado}\label{alg:annealing}
+ \begin{algorithmic}
+  \Function{RecocidoSimulado}{$problema$, $horario$}
+    \State \# $problema$: un problema
+    \State \# $horario$: mapeo de $tiempo$ a $temperatura$.
+    \State $actual \leftarrow $ \Call{HazNodo}{EstadoInicial(problema)}
+    \For{$t \leftarrow 1$ a $\infty$}
+      \State $T \leftarrow horario[t]$
+      \If {$T=0$} \Return $actual$ \EndIf
+      \State $siguiente \leftarrow$ un sucesor de $actual$ elegido al azar.
+      \State $\Delta E \leftarrow$ \Call{Valor}{$siguiente$} - \Call{Valor}{$actual$}
+      \If {$\Delta E > 0$}
+        \State $actual \leftarrow siguiente$
+      \Else
+        \State $actual \leftarrow siguiente$ sólo con probabilidad $e^{\frac{\Delta E}{T}}$
+      \EndIf
+    \EndFor
+  \EndFunction
+ \end{algorithmic}
+\end{algorithm}
+
+
+
+\subsection{Problema del agente viajero (TSP)}
+
+Este problema consiste en encontrar, dada una lista de ciudades, una ruta que pueda seguir un agente para recorrer todas las ciudades y volver a aquella en la cual inició el viaje.  Para que este recorrido valga la pena debe ser lo más económico posible o, en su defecto, recorrer la menor distancia que permita visitar todas las ciudades.
+
+Este problema es ampliamente conocido por ser de la clase NP-Completo, es decir, que no se puede resolver en tiempo polinomial por algoritmos deterministas, afortunadamente para esta práctica no usaremos un algoritmo de tal tipo y podremos aproximarnos a una solución en un tiempo razonable.
+
+
+
+\section{Desarrollo e implementaci\'on}
+
+Se les proporcionará código fuente en Java, que deberán completar con la finalidad de resolver el problema del agente viajero.
+
+El código fuente se encuentra en los archivos \code{Solucion.java}, es que se encargará de representar a una ruta del agente viajero que pase por todas las ciudades y el archivo \code{RecocidoSimulado.java}, que implementará el algoritmo anteriormente descrito.
+
+\subsection{Implementaci\'on}
+
+Los métodos a implementar dentro de una clase hija a \code{Solución} son:
+\begin{itemize}
+ \item \code{public Solución()}
+ 
+ Este método deberá inicializar una representación con una propuesta para solución de un problema, en nuestro caso, una ruta del problema del agente viajero.  Nota: no es necesario que dicha solución sea correcta.
+ 
+ \item \code{public Solución siguienteSolución()}
+ 
+ Genera una nueva solución perturbando de manera aleatoria al objeto que lo llama.
+ 
+ \item \code{public float evaluar()}
+ 
+ Asigna un valor a la solución actual.
+\end{itemize}
+
+Para la clase \code{RecocidoSimulado}:
+\begin{itemize}
+ \item \code{public RecocidoSimulado()}
+ 
+ Inicializa los parámetros del algoritmo, puedes modificar la firma de este método.
+ 
+ \item \code{public float nuevaTemperatura(float temperatura, float decaimiento)}
+ 
+ Calcula la nueva temperatura, se espera que a lo largo de las iteraciones este valor decrezca.
+ 
+ \item \code{public Solucion seleccionarSiguienteSolución(Solución s)}
+ 
+ Dada una solución, este método debe modificar al objeto pasado como parámetro para obtener una solución nueva y elegir con cierta probabilidad esta nueva solución si es que está mejor.
+ 
+ \item \code{public Solución ejecutar()}
+ 
+ Ejecuta el algoritmo con los parámetros inicializados, puedes modificar la firma si lo consideras necesario.
+\end{itemize}
+
+Finalmente, en la clase \code{Main} únicamente se crea un objeto tipo \code{RecocidoSimulado} que ejecute el algoritmo por algún número de iteraciones.
+
+En la página \hurl{http://www.math.uwaterloo.ca/tsp/world/countries.html\#DJ} se pueden encontrar una serie de países con ciudades y sus correspondientes coordenadas.  Sin asumes una conectividad total de las ciudades y usas la distancia euclideana como métrica, tu tarea será tratar de aproximarte lo mejor posible a la longitud del camino óptimo de la ciudad seleccionada.  Puedes incorporar la información a tu programa como te sea más conveniente.
+
+\subsection{Punto extra}
+
+Realiza las modificaciones que consideres pertinentes para poder utilizar una estrategia similar al recocido simulado para minimimzar la siguiente función:
+\begin{align*}
+ f(x,y) &= -20 e^{-0.2 \sqrt{0.5(x^2 + y^2)}} - e^{0.5 (\cos(2 \pi x) + \cos(2 \pi y))} + e + 20
+\end{align*}
+para $-5 \leq x,y \leq 5$.
+
+
+\section{Requisitos y resultados}
+
+El código debe ser implementado de manera eficiente y estar documentado para esclarecer su funcionamiento.  Además, debe encontrar una solución válida al problema del agente viajero.

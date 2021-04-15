@@ -1,7 +1,7 @@
-\subsection{Objetivo}
+\section{Objetivo}
 Conocer e implementar una técnica de localización utilizada en aplicaciones reales, específicamente para los robots \textit{Rhino} y \textit{Minerva} en los museos \textit{Deutsches Museum Bonn} y \textit{National Museum of American History}, respectivamente \parencite{Dieter1999}. Se utilizará Processing como herramienta de visualización de la técnica de localización.
 
-\subsection{Introducci\'on}
+\section{Introducci\'on}
 
 \quotes{La localización robótica ha sido considerado como uno de los problemas fundamentales de la robótica. El objetivo de la localización es lograr estimar la posición del robot en un ambiente, apoyándose en un mapa de éste y con lecturas de sensores} \parencite{Dieter1999}. Tomando como base esta publicación de Dieter Fox, et. al. conoceremos los tipos de localización que existen y presentaremos la técnica que desarrolla la publicación: la localización de Markov.
 
@@ -35,11 +35,11 @@ Estudiaremos el ejemplo sencillo que presentan Dieter Fox et. al. para ilustrar 
 
 Consideremos el entorno mostrado en la figura~\ref{fig:screen1}. Para simplificar, asumamos que el robot sólo puede moverse en una dimensión (enfrente-atrás). Ahora, supongamos que posicionamos el robot en algún lugar aleatorio del entorno, pero no le informamos al robot cuál es su posición. La localización de Markov representa este estado de \quotes{confusión} como una distribución de probabilidad uniforme sobre todo el conjunto de posibles posiciones del entorno, como lo muestra la primer gráfica de la figura~\ref{fig:screen1}. Asumamos que el robot hace una medición con sus sensores y determina que está al lado de una puerta. La localización de Markov modifica la distribución de probabilidad de tal manera que las posiciones que se encuentran a un lado de puertas tengan mayor probabilidad, esto queda ilustrado en la segunda gráfica de la figura~\ref{fig:screen1}. Notemos que la distribución resultante es multimodal(\footnote{Multimodal: Que tiene varios puntos máximos.} ), ya que la información obtenida por los sensores es insuficiente para determinar exactamente la posición del robot. También notemos que las posiciones que no se encuentran a un lado de una puerta aún tienen una probabilidad mayor que cero, esto es porque las mediciones de los sensores contienen ruido. Ahora, supongamos que el robot se mueve un metro hacia el frente. La localización de Markov incorpora este movimiento para que la distribución de probabilidad cambie como se representa en la tercer gráfica de la figura~\ref{fig:screen1}. Finalmente, asumamos que el robot vuelve a tomar una medición con sus sensores. Incorporando esta información a la obtenida anteriormente, vemos cómo la distribución de probabilidad cambia (cuarta gráfica de la figura~\ref{fig:screen1}) para asignar una alta probabilidad a la posición del robot, mientras que todas las demás posiciones tienen una probabilidad casi nula \parencite{Dieter1999}. 
 
-\subsection{Desarrollo}
+\section{Desarrollo}
 
 Tomando como base el modelo de Markov que presentan Dieter Fox et. al., el desarrollo de la práctica se dividirá en dos partes: la simulación del ambiente en donde se encuentra el robot y del robot, y la implementación del modelo en este ambiente.
 
-\subsubsection{Simulación del ambiente y del robot}
+\subsection{Simulación del ambiente y del robot}
 
 \noindent Primero, iniciemos con el contenido y especificación del mundo en el cual se moverá el robot. Este mundo contendrá obstáculos y será rectangular (imagínense un cuarto o una oficina), las paredes serán obstáculos y cualquier otra cosa que se pueda encontrar en un cuarto u oficina normal: sillas, mesas, escritorios, etc. Será representado por una matriz de celdas, donde cada celda será cuadrada, podrá ser obstáculo o no y tendrá la longitud de un lado especificado en \(cm\). En la figura~\ref{fig:mapa} pueden apreciar un ejemplo de cómo se vería el mundo del robot representado gráficamente, donde los cuadros color café son obstáculos, el robot es el círculo verde y se muestra la orientación de este con una línea negra.
 
@@ -52,13 +52,13 @@ El robot podrá ocupar cualquier posición del plano de Processing \footnote{Cab
   \label{fig:mapa}
 \end{figure}
 
-\paragraph{Movimiento del robot}
+\subsubsection{Movimiento del robot}
 
 \noindent El robot podrá moverse libremente en el ambiente, salvo que se encuentre de frente un obstáculo, o los bordes del mundo ya que son considerados paredes. Este movimiento será controlado por el usuario, ya sea que utilicen las flechas direccionales de su teclado, alguna otra combinación de teclas, botones en la interfaz, o el mecanismo que ustedes prefieran. Lo importante es que el robot pueda moverse en línea recta y girar.\par
 
 El usuario deberá poder especificar qué tanto se moverá el robot al momento de pulsar la tecla o botón requerido, ya sea si se desea cambiar de dirección o moverse en línea recta. Esto será muy importante, ya que necesitan saber la distancia real recorrida y la distancia real de giro para simular las medidas de los sensores.
 
-\paragraph{Simulación de sensores}
+\subsubsection{Simulación de sensores}
 
 \noindent Nuestro robot tendrá tres sensores:
 
@@ -70,7 +70,7 @@ El usuario deberá poder especificar qué tanto se moverá el robot al momento d
 
 Como se darán cuenta más adelante, utilizamos distribuciones Gaussianas para modelar las lecturas de los sensores. Cuando alguien busca armar un robot que tenga sensores, lo primero que debe hacer es calibrarlos para obtener un umbral de error inherente al sensor que se está utilizando para tenerlo en cuenta al momento de programar rutinas o desarrollar el software que permita al robot llegar a su objetivo. Si uno grafica las medidas obtenidas por el sensor versus la medida real, se llega a apreciar que forma una campana centrada en el valor de la medida real ya que los errores pequeños son comunes, pero errores grandes no tanto. Así nosotros podemos suponer que los sensores que estamos modelando generarán mediciones parecidas y utilizamos una distribución de probabilidad normal centrada en el valor real de lo que se mide para obtener la probabilidad de que el robot se encuentre en cierta posición dadas las mediciones recibidas.
 
-\subparagraph{Láser}\medskip
+\paragraph{Láser}\medskip
 En el caso de este sensor, las mediciones obtenidas pueden cambiar debido a los materiales donde se refleja el láser, entonces utilizaremos ruido gaussiano para simular este error.
 
 Para cada sensor se necesitarán dos parámetros: la media (\( \mu_{laser} \)) y la desviación estándar (\( \sigma_{laser} \)). La desviación estándar es un parámetro que tú debes fijar, éste representa la cantidad de ruido que se introducirá a la medición. Y la media estará dada por la distancia real medida desde el robot hacia el primer obstáculo en línea recta en la dirección del sensor.
@@ -84,16 +84,16 @@ Para simular la medición del sensor con ruido, se hará lo siguiente:
 \end{enumerate}
 
 
-\subparagraph{Odométrico}\medskip
+\paragraph{Odométrico}\medskip
 La manera de simular la medición con ruido de éste sensor es casi idéntica al sensor láser, sólo que en lugar de medir la distancia hacia el obstáculo más cercano usaremos la distancia que el usuario proporcionó para mover al robot. Por ejemplo: Si el usuario decidió mover al robot \(10cm\), la media (\( \mu_{odometrico} \)) sería \(10cm\) y la desviación estándar (\( \sigma_{odometrico} \)) un parámetro especificado por ti.
 
 
-\subparagraph{De giro}\medskip
+\paragraph{De giro}\medskip
 Similarmente al sensor odométrico, la media (\( \mu_{de\ giro} \)) sería los grados reales girados y la desviación estándar (\( \sigma_{de\ giro} \)) un parámetro especificado por ti.
 
-\subsubsection{Implementación del modelo de Markov}
+\subsection{Implementación del modelo de Markov}
 
-\paragraph{Representación interna del mundo}\medskip
+\subsubsection{Representación interna del mundo}\medskip
 
 El modelo de Markov en el que se basa esta práctica utiliza un modelo del mundo discretizado (como el que usamos para definir área libres y obstáculos). \textit{Dentro de la mente del robot} el mundo será representado por una matriz de tres dimensiones, ya que tenemos tres grados de libertad para el movimiento del robot: \(<x,y,\theta>\), donde \( \theta \) es el ángulo hacia donde está viendo el robot. Estas tres direcciones estarán discretizadas.\par
 
@@ -108,7 +108,7 @@ Recapitulando, en la mente del robot el mundo será representado por un arreglo 
 
 Como habíamos mencionado antes, se necesitará una función que permita obtener la celda en donde se encuentra el robot dadas las coordenadas de éste, pero también se requerirá otra función que nos diga en qué dirección discretizada se encuentra viendo el robot. La función anterior deberá calcular el ángulo al que se encuentra viendo el robot, pero centrado sobre las posibles direcciones de movimiento. Por ejemplo: si el robot se encuentra con una dirección de 12\degree, la función deberá regresar el valor 0\degree, ya que 12\degree \ se encuentra entre (24.5\degree, -24.5\degree].\par
 
-\paragraph{Inicialización}
+\subsubsection{Inicialización}
 
 Deberán posicionar al robot aleatoriamente en el mundo, después deberán calcular la probabilidad de que el robot se encuentre en alguna celda, llamémosle a esta probabilidad \textit{creencia} y representa lo que el robot \textit{cree} acerca de su posición en el mundo \parencite{Dieter1999}. Al inicio esta probabilidad será igual para toda posición porque el robot no sabe dónde está:
 
@@ -205,9 +205,9 @@ Una vez definida la notación, procederemos a ver el algoritmo completo de esta 
 
 % Si se recibe una lectura del sensor odométrico, por cada celda del mundo, deberán hacer un recorrido por las demás celdas, calculando $\int P(l \mid l', \alpha_T)*Bel(L_T-1 = l')dl$, donde $P(l \mid l', \alpha_T)$ es una variable aleatoria gaussiana tridimensional $G_{x,y,\theta}$ integrada sobre las posiciones de $l$ y $l'$ y desde $\theta + 45\degree/2$ a $\theta - 45\degree/2$.
 
-\subsection{Desarrollo e implementaci\'on}
+\section{Desarrollo e implementaci\'on}
 
-\subsubsection{Tips}
+\subsection{Tips}
 
 \begin{itemize}
   \item Tengan bien identificado cuál es su eje X, Y y \(\theta\) en las matrices utilizadas para la simulación.
@@ -218,7 +218,7 @@ Una vez definida la notación, procederemos a ver el algoritmo completo de esta 
 \end{itemize}
 
 
-\subsection{Requisitos y resultados}
+\section{Requisitos y resultados}
 
 Esto se implementará en processing, recuerden que debe estar bien hecho y comentado, ya que esta práctica vale el 20\% de su calificación. Su aplicación deberá mostrar el mundo, los obstáculos y la probabilidad de cada celda para cada ángulo usando distintos colores o gradientes de un mismo color.
 
