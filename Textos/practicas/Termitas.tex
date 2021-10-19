@@ -5,7 +5,7 @@ Que el alumno se familiarice con la abstracción del concepto de agente mediante
 
 \section{Introducci\'on}
 \paragraph*{}
-Un autómata celular es un modelo discreto que consiste en una cuadrícula de células, cada una con un número finito de estados. La cuadrícula puede estar en cualquier número finito de dimensiones pero lo más común es encontrar autómatas en una, dos y tres dimensiones para que tengan sentido geométrico. Cada célula tiene definido un conjunto de células llamado vecindad [Fig. ~\ref{fig:vecindadmoore} ] [Fig. ~\ref{fig:vecindadneumann} ].\par
+Un autómata celular es un modelo discreto que consiste en una cuadrícula de células, cada una con un número finito de estados. La cuadrícula puede estar en cualquier número finito de dimensiones pero lo más común es encontrar autómatas en una, dos y tres dimensiones para que tengan sentido geométrico. Cada célula tiene definido un conjunto de células llamado vecindad [\fref{fig:vecindadmoore} y ~\fref{fig:vecindadneumann}].
 
 
 \begin{figure}
@@ -24,7 +24,7 @@ Un autómata celular es un modelo discreto que consiste en una cuadrícula de c�
   \end{minipage}
 \end{figure}
 
-Se tiene un estado inicial (al tiempo t=0) en el que se asigna un estado a cada célula. Una nueva generación es creada (avanzar t en 1) según alguna regla que determina el nuevo estado de cada célula en términos del estado actual de la célula y la de sus vecinos [Fig. ~\ref{fig:numtrans} ].\par
+Se tiene un estado inicial (al tiempo t=0) en el que se asigna un estado a cada célula. Una nueva generación es creada (avanzar t en 1) según alguna regla que determina el nuevo estado de cada célula en términos del estado actual de la célula y la de sus vecinos [\fref{fig:numtrans}].
 
 \begin{figure}
   \centering
@@ -42,7 +42,7 @@ Los modelos simulan las operaciones simultáneas e interacciones de múltiples a
 \subsection{Agentes aut\'onomos y auto-organizaci\'on}
 Un agente autónomo es una unidad que interactúa con su entorno (el cual probablemente consta de otros agentes) pero actúa independientemente de todos los demás agentes porque no toma decisiones con respecto a algún líder o plan global a seguir. Es decir, cada agente actúa por sí mismo.\par
 
-Así, veremos cómo múltiples agentes pueden desempeñar tareas que aparentan seguir un plan global. A este proceso en el que cada agente autónomo interactúa a su propia manera para crear un orden global se le conoce como auto-organización y se observa como modelos simples son capaces de generar comportamientos complejos.\par
+Así, veremos cómo múltiples agentes pueden desempeñar tareas que aparentan seguir un plan global. A este proceso en el que cada agente autónomo interactúa a su propia manera para crear un orden global se le conoce como auto-organización y se observa cómo modelos simples son capaces de generar comportamientos complejos.\par
 
 \section{Planteamiento}
 
@@ -57,10 +57,10 @@ Mitchel \cite{Resnick1994} estudió varios sistemas de agentes primitivos, uno d
 
 Claramente, las reglas definidas por Resnick son tan simples como es posible. No parece haber lugar para un comportamiento inteligente en un modelo como éste, tampoco parece que las termitas puedan producir nada con algún sentido más allá de la aleatoriedad de las astillas distribuidas en el entorno.\par
 
-La Figura ~\ref{fig:termitasaleatorias} muestra seis escenarios de la simulación del conjunto de reglas simples con un conjunto pequeño de termitas. En la configuración inicial el universo de termitas consiste en una cuadrícula con astillas aleatoriamente distribuidas. La representación de la cuadrícula consta de una frontera periódica, es decir, un punto en una de las aristas de la cuadrícula tiene como vecinos a los puntos en la arista opuesta.
+La \fref{fig:termitasaleatorias} muestra seis escenarios de la simulación del conjunto de reglas simples con un conjunto pequeño de termitas. En la configuración inicial el universo de termitas consiste en una cuadrícula con astillas aleatoriamente distribuidas. La representación de la cuadrícula consta de una frontera periódica, es decir, un punto en una de las aristas de la cuadrícula tiene como vecinos a los puntos en la arista opuesta.
 Al comenzar la simulación, las termitas mueven las astillas en pequeños grupos o clusters. Conforme pasa el tiempo, los clusters se vuelven más grandes y más definidos.\par
 
-Tras cientos de miles de pasos en la ejecución de la simulación, como se muestra en la última imagen de la Figura 4, las astillas están claramente bien definidas en una colección. Obviamente esto es un método poco óptimo para coleccionar astillas, sin mencionar lo frustrante que es observar el proceso. Sin embargo, con el paso del tiempo es un hecho que el orden del sistema es evidente como resultado.\par
+Tras cientos de miles de pasos en la ejecución de la simulación, como se muestra en la última imagen de la \fref{fig:termitasaleatorias}, las astillas están claramente bien definidas en una colección. Obviamente esto es un método poco óptimo para coleccionar astillas, sin mencionar lo frustrante que es observar el proceso. Sin embargo, con el paso del tiempo es un hecho que el orden del sistema es evidente como resultado.\par
 
 \begin{figure}
   \centering
@@ -69,12 +69,13 @@ Tras cientos de miles de pasos en la ejecución de la simulación, como se muest
   \label{fig:termitasaleatorias}
 \end{figure}
 
+
 \section{Desarrollo e implementaci\'on}
-Los resultados anteriores son reportados por el propio Resnick, sin embargo, para mostrar que es posible llegar al mismo resultado se lleva a cabo una implementación con el lenguaje de programación \classname{Processing}.
+
+Los resultados anteriores son reportados por el propio Resnick, sin embargo, para mostrar que es posible llegar al mismo resultado, se lleva a cabo una implementación con el lenguaje de programación \classname{Processing}.
 Al alumno se le proporciona parte de la implementación, de manera que se enfoque únicamente en programar el comportamiento descrito y evitando perder tiempo en la interfaz gráfica.
 
 Las clases, métodos y variables más relevantes son las siguientes:
-\pagebreak
 
 \begin{description}%[leftmargin=40pt, labelindent=20pt]
   \item[Clase Celda] \hfill \\
@@ -89,7 +90,7 @@ Las clases, métodos y variables más relevantes son las siguientes:
 \end{description}
 
 \subsection{Implementaci\'on}
-El constructor de la clase \classname{ModeloTermitas} ya está implementado (principalmente para inicializar el espacio y termitas). También se encuentra implementado el método \classname{moverTermita}, que mueve la termita dada como parámetro en la dirección indicada. Cada termita tiene una vecindad de Moore, es decir, tienen 8 celdas adyacentes (considerando un espacio periódico) que se enumeran según la Fig. ~\ref{fig:dirsposibles1} \par
+El constructor de la clase \classname{ModeloTermitas} ya está implementado (principalmente para inicializar el espacio y termitas). También se encuentra implementado el método \classname{moverTermita}, que mueve la termita dada como parámetro en la dirección indicada. Cada termita tiene una vecindad de Moore, es decir, tienen 8 celdas adyacentes (considerando un espacio periódico) que se enumeran según la \fref{fig:dirsposibles1}.
 
 \begin{figure}
   \begin{center}
@@ -125,7 +126,7 @@ Existen 3 maneras diferentes de simular e implementar el modelo de termitas:
 
 Cada una de las diferentes maneras de implementación se encuentran asignadas a los métodos \classname{evolucion1}, \classname{evolucion2} y \classname{evolucion3}, respectivamente.
 
-El archivo \classname{Termitas.pde} contiene parte del código de la simulación y solamente tiene implementado la visualización de las termitas como cuadrados verdes moviéndose aleatoriamente (Fig. ~\ref{fig:sinastillas} ). Al implementar todos los métodos faltantes se darán cuenta de que cuando una termita está cargando una astilla (cuadros amarillos) cambia de color a rojo.
+El archivo \classname{termitas/Termitas.java} contiene parte del código de la simulación y solamente tiene implementada la visualización de las termitas como cuadrados verdes moviéndose aleatoriamente [\fref{fig:sinastillas}]. Al implementar todos los métodos faltantes se darán cuenta de que cuando una termita está cargando una astilla (cuadros amarillos) cambia de color a rojo.
 
 
 % Fig. 6. Captura de pantalla del código Termitas.pde de Processing
@@ -155,7 +156,7 @@ Cada método se encuentra especificado dentro del archivo \classname{Termitas.ja
 Para evaluar y calificar la práctica es necesario que se implementen todos los métodos mencionados e indicados en el código, respetando implementar sólo lo que se pide (para evitar comportamientos extraños de la simulación).
 Es completamente válido utilizar bibliotecas adicionales si lo consideran necesario, así como la creación y uso de sus propios métodos auxiliares si lo desean.
 
-Debe notarse una mejora significativa mediante la implementación de la caminata restringida o el uso del salto. Es decir, verifiquen que tras varias iteraciones su implementación del modelo actúe como se espera. Las siguientes imágenes ilustran parte de los resultados esperados [Fig. ~\ref{fig:evo1} ] [Fig. ~\ref{fig:evo2} ] [Fig. ~\ref{fig:evo3} ].
+Debe notarse una mejora significativa mediante la implementación de la caminata restringida o el uso del salto. Es decir, verifiquen que tras varias iteraciones su implementación del modelo actúe como se espera. Las siguientes imágenes ilustran parte de los resultados esperados [Figuras ~\ref{fig:evo1}, ~\ref{fig:evo2} y ~\ref{fig:evo3}].
 
 \begin{figure}
   \centering

@@ -10,7 +10,7 @@ Que el alumno se familiarice con una estrategia de mejoramiento iterativa para l
 
 Este algoritmo puede ser visto como una mejora al algoritmo de ascenso de colinas, el cual mejora de manera iterativa una representación de la solución a un problema hasta que se encuentre el óptimo o se estanque en un máximo local.  Recocido simulado integra una selección de soluciones estocástica, es decir, para elegir la siguiente solución no siempre se escoge la mejor, con la cual se le da la libertad de explorar zonas distintas del espacio de soluciones, en las cuales el ascenso de colinas puede detenerse fácilmente.
 
-El pseudocódigo de este algoritmo es descrito en el \cite{Russell2010} en la sección de algoritmos de mejoramiento iterativo y lo podemos ver en \pref{alg:annealing}.
+El pseudocódigo de este algoritmo es descrito en el \cite{Russell2010} en la sección de algoritmos de mejoramiento iterativo y lo podemos ver en el \pref{alg:annealing}.
 
 \begin{algorithm}
  \caption{Recocido simulado}\label{alg:annealing}
@@ -21,7 +21,7 @@ El pseudocódigo de este algoritmo es descrito en el \cite{Russell2010} en la se
     \State $actual \leftarrow $ \Call{HazNodo}{EstadoInicial(problema)}
     \For{$t \leftarrow 1$ a $\infty$}
       \State $T \leftarrow horario[t]$
-      \If {$T=0$} \Return $actual$ \EndIf
+      \If {$T < \varepsilon$} \Return $actual$ \EndIf
       \State $siguiente \leftarrow$ un sucesor de $actual$ elegido al azar.
       \State $\Delta E \leftarrow$ \Call{Valor}{$siguiente$} - \Call{Valor}{$actual$}
       \If {$\Delta E > 0$}
@@ -52,43 +52,60 @@ El código fuente se encuentra en los archivos \code{Solucion.java}, es que se e
 
 \subsection{Implementaci\'on}
 
-Los métodos a implementar dentro de una clase hija a \code{Solución} son:
+Se debe programar una clase hija de \code{Solución}.  Esta clase hija agregará los atributos del(de los) tipo(s) necesario(s) para representar una propuesta de solución al problema que se desea resolver.
+
+En la página \hurl{http://www.math.uwaterloo.ca/tsp/world/countries.html\#DJ} se pueden encontrar una serie de países con ciudades y sus correspondientes coordenadas.  Sin asumes una conectividad total de las ciudades y usas la distancia euclideana como métrica, tu tarea será tratar de aproximarte lo mejor posible a la longitud del camino óptimo de la ciudad seleccionada.  Puedes incorporar la información a tu programa como te sea más conveniente.
+
+Los métodos a implementar dentro de una clase hija de \code{Solución} son:
 \begin{itemize}
- \item \code{public Solución()}
+ \item Un constructor.
  
- Este método deberá inicializar una representación con una propuesta para solución de un problema, en nuestro caso, una ruta del problema del agente viajero.  Nota: no es necesario que dicha solución sea correcta.
+ Este método deberá inicializar una representación con una propuesta para solución de un problema, en nuestro caso, una ruta del problema del agente viajero.  Deberás elegir cómo representar la solución.  No es necesario que dicha solución sea correcta.
+ 
+ En el caso del agente viajero puede ser que la solución visite todas las ciudades, pero que la distancia recorrida no sea mínima y/o que las visite más de una vez.
  
  \item \code{public Solución siguienteSolución()}
  
- Genera una nueva solución perturbando de manera aleatoria al objeto que lo llama.
+ Genera una nueva solución perturbando de manera aleatoria al objeto que lo llama.  Observa que al sobreescribir el método puedes cambiar el tipo de regreso para evitar hacer audiciones (\textit{castings}).
  
  \item \code{public float evaluar()}
  
- Asigna un valor a la solución actual.
+ Califica la solución actual según la heurística elegida de acuerdo al problema a resolver.
 \end{itemize}
+
 
 Para la clase \code{RecocidoSimulado}:
 \begin{itemize}
  \item \code{public RecocidoSimulado()}
  
- Inicializa los parámetros del algoritmo, puedes modificar la firma de este método.
+ Inicializa los parámetros del algoritmo. En principio ya funciona así, pero la puedes modificar si lo consideras necesario.
  
- \item \code{public float nuevaTemperatura(float temperatura, float decaimiento)}
+ \item \code{public float nuevaTemperatura()}
  
- Calcula la nueva temperatura, se espera que a lo largo de las iteraciones este valor decrezca.
+ Calcula la nueva temperatura, se espera que a lo largo de las iteraciones este valor decrezca, llegando a cero en el último paso.
  
- \item \code{public Solucion seleccionarSiguienteSolución(Solución s)}
+ \item \code{public Solucion seleccionarSiguienteSolución()}
  
- Dada una solución, este método debe modificar al objeto pasado como parámetro para obtener una solución nueva y elegir con cierta probabilidad esta nueva solución si es que está mejor.
+ Dada la solución actual, este método debe modificarla para obtener una solución nueva y elegir esta nueva solución con cierta probabilidad dependiendo de si es mejor o no, según el algoritmo presentado anteriormente.
  
  \item \code{public Solución ejecutar()}
  
  Ejecuta el algoritmo con los parámetros inicializados, puedes modificar la firma si lo consideras necesario.
 \end{itemize}
 
-Finalmente, en la clase \code{Main} únicamente se crea un objeto tipo \code{RecocidoSimulado} que ejecute el algoritmo por algún número de iteraciones.
+Finalmente, en la clase \code{Main} únicamente se crea un objeto tipo \code{RecocidoSimulado} que ejecuta el algoritmo por algún número de iteraciones:
+\begin{itemize}
+ \item Calcula los parámetros para el constructor de\code{RecocidoSimulado}:
+ 
+ \begin{itemize}
+  \item Crea un objeto de la clase hija de \code{Solucion} que implementaste.
+  
+  \item Calcula la temperatura inicial y decaimiento adecuados para ejecutar recocido simulado dependiendo del número de interacciones.
+ \end{itemize}
 
-En la página \hurl{http://www.math.uwaterloo.ca/tsp/world/countries.html\#DJ} se pueden encontrar una serie de países con ciudades y sus correspondientes coordenadas.  Sin asumes una conectividad total de las ciudades y usas la distancia euclideana como métrica, tu tarea será tratar de aproximarte lo mejor posible a la longitud del camino óptimo de la ciudad seleccionada.  Puedes incorporar la información a tu programa como te sea más conveniente.
+ \item Modificar el ciclo para monitorear la evolución del algoritmo entre interacciones.
+\end{itemize}
+
 
 \subsection{Punto extra}
 
