@@ -20,7 +20,7 @@ El pseudocódigo de este algoritmo es descrito en el \cite{Russell2010} en la se
     \State \# $horario$: mapeo de $tiempo$ a $temperatura$.
     \State $actual \leftarrow $ \Call{HazNodo}{EstadoInicial(problema)}
     \For{$t \leftarrow 1$ a $\infty$}
-      \State $T \leftarrow horario[t]$
+      \State $T \leftarrow horario(t)$
       \If {$T < \varepsilon$} \Return $actual$ \EndIf
       \State $siguiente \leftarrow$ un sucesor de $actual$ elegido al azar.
       \State $\Delta E \leftarrow$ \Call{Valor}{$siguiente$} - \Call{Valor}{$actual$}
