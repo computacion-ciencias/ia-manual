@@ -1,6 +1,6 @@
 \section{Objetivo}
 
-Que el alumno se familiarice con una estrategia de mejoramiento iterativa para la resolución de problemas conocida como recocido simulado.
+Que el alumno se familiarice con una estrategia de mejoramiento iterativa para la resolución de problemas mediante búsquedas en el espacio de estados, conocida como recocido simulado.
 
 
 
@@ -8,9 +8,9 @@ Que el alumno se familiarice con una estrategia de mejoramiento iterativa para l
 
 \subsection{Recocido simulado}
 
-Este algoritmo puede ser visto como una mejora al algoritmo de ascenso de colinas, el cual mejora de manera iterativa una representación de la solución a un problema hasta que se encuentre el óptimo o se estanque en un máximo local.  Recocido simulado integra una selección de soluciones estocástica, es decir, para elegir la siguiente solución no siempre se escoge la mejor, con la cual se le da la libertad de explorar zonas distintas del espacio de soluciones, en las cuales el ascenso de colinas puede detenerse fácilmente.
+Este algoritmo puede ser visto como una mejora al algoritmo de ascenso de colinas.  Ascenso de colinas comienza con la propuesta de una solución parcial o no óptima a un problema, la cual mejora de manera iterativa hasta encontrarse con la óptima o estancarse en un máximo local.  Recocido simulado integra una selección de soluciones estocástica, es decir, para elegir la siguiente solución no siempre escoge a la mejor vecina, con lo cual se le da la libertad de explorar zonas distintas del espacio de soluciones, en las cuales el ascenso de colinas puede detenerse fácilmente.
 
-El pseudocódigo de este algoritmo es descrito en el \cite{Russell2010} en la sección de algoritmos de mejoramiento iterativo y lo podemos ver en el \pref{alg:annealing}.
+El pseudocódigo de este algoritmo es descrito en el libro de  \cite{Russell2010} en la sección de algoritmos de mejoramiento iterativo y lo podemos ver en el \pref{alg:annealing}.
 
 \begin{algorithm}
  \caption{Recocido simulado}\label{alg:annealing}
@@ -21,7 +21,9 @@ El pseudocódigo de este algoritmo es descrito en el \cite{Russell2010} en la se
     \State $actual \leftarrow $ \Call{HazNodo}{EstadoInicial(problema)}
     \For{$t \leftarrow 1$ a $\infty$}
       \State $T \leftarrow horario(t)$
-      \If {$T < \varepsilon$} \Return $actual$ \EndIf
+      \If {$T < \varepsilon$}
+        \State \Return $actual$
+      \EndIf
       \State $siguiente \leftarrow$ un sucesor de $actual$ elegido al azar.
       \State $\Delta E \leftarrow$ \Call{Valor}{$siguiente$} - \Call{Valor}{$actual$}
       \If {$\Delta E > 0$}
@@ -40,7 +42,7 @@ El pseudocódigo de este algoritmo es descrito en el \cite{Russell2010} en la se
 
 Este problema consiste en encontrar, dada una lista de ciudades, una ruta que pueda seguir un agente para recorrer todas las ciudades y volver a aquella en la cual inició el viaje.  Para que este recorrido valga la pena debe ser lo más económico posible o, en su defecto, recorrer la menor distancia que permita visitar todas las ciudades.
 
-Este problema es ampliamente conocido por ser de la clase NP-Completo, es decir, que no se puede resolver en tiempo polinomial por algoritmos deterministas, afortunadamente para esta práctica no usaremos un algoritmo de tal tipo y podremos aproximarnos a una solución en un tiempo razonable.
+Este problema es ampliamente conocido por ser de la clase NP-Completo, es decir, que conoce algoritmo determinista que pueda resolverlo en tiempo polinomial, afortunadamente para esta práctica no usaremos un algoritmo de tal tipo y podremos aproximarnos a una solución en un tiempo razonable.
 
 
 
@@ -48,21 +50,21 @@ Este problema es ampliamente conocido por ser de la clase NP-Completo, es decir,
 
 Se les proporcionará código fuente en Java, que deberán completar con la finalidad de resolver el problema del agente viajero.
 
-El código fuente se encuentra en los archivos \code{Solucion.java}, es que se encargará de representar a una ruta del agente viajero que pase por todas las ciudades y el archivo \code{RecocidoSimulado.java}, que implementará el algoritmo anteriormente descrito.
+El código fuente se encuentra en los archivos: \code{Solución.java}, que se encargará de representar una ruta del agente viajero que pase por todas las ciudades, y el archivo \code{RecocidoSimulado.java}, que implementará el algoritmo anteriormente descrito.
 
 \subsection{Implementaci\'on}
 
 Se debe programar una clase hija de \code{Solución}.  Esta clase hija agregará los atributos del(de los) tipo(s) necesario(s) para representar una propuesta de solución al problema que se desea resolver.
 
-En la página \hurl{http://www.math.uwaterloo.ca/tsp/world/countries.html\#DJ} se pueden encontrar una serie de países con ciudades y sus correspondientes coordenadas.  Sin asumes una conectividad total de las ciudades y usas la distancia euclideana como métrica, tu tarea será tratar de aproximarte lo mejor posible a la longitud del camino óptimo de la ciudad seleccionada.  Puedes incorporar la información a tu programa como te sea más conveniente.
+En la página \hurl{http://www.math.uwaterloo.ca/tsp/world/countries.html\#DJ} se pueden encontrar una serie de países con ciudades y sus correspondientes coordenadas.  Se incluye un ejemplar pequeño de esta página con esta práctica para que te sirva al probar tu código.  Si asumes una conectividad total de las ciudades y usas la distancia euclideana como métrica, tu tarea será tratar de aproximarte lo mejor posible a la longitud del camino óptimo para recorrer todas las ubicaciones de la ciudad seleccionada.  Puedes incorporar la información a tu programa como te sea más conveniente.
 
 Los métodos a implementar dentro de una clase hija de \code{Solución} son:
 \begin{itemize}
  \item Un constructor.
  
- Este método deberá inicializar una representación con una propuesta para solución de un problema, en nuestro caso, una ruta del problema del agente viajero.  Deberás elegir cómo representar la solución.  No es necesario que dicha solución sea correcta.
+ Este método deberá inicializar una representación con una propuesta para solución de un problema, en nuestro caso, una ruta del problema del agente viajero.  Deberás elegir cómo representar la solución.  No es necesario que dicha solución sea correcta.  Puedes modificar la firma del constructor como consideres necesario para crear un propuesta de solución inicial aleatoriamente a partir de la especificación del problema a resolver.
  
- En el caso del agente viajero puede ser que la solución visite todas las ciudades, pero que la distancia recorrida no sea mínima y/o que las visite más de una vez.
+ En el caso del agente viajero puede ser que la solución visite todas las ciudades, pero que la distancia recorrida no sea mínima y/o que las visite más de una vez.  La especificación del problema está dada por los archivos \code{.tsp} con la información sobre las ciudades.
  
  \item \code{public Solución siguienteSolución()}
  
@@ -71,6 +73,8 @@ Los métodos a implementar dentro de una clase hija de \code{Solución} son:
  \item \code{public float evaluar()}
  
  Califica la solución actual según la heurística elegida de acuerdo al problema a resolver.
+ 
+ En este caso la evaluación estará relacionada con la longitud del recorrido propuesto por la solución actual.  La función de evaluación que elijas debe cumplir que el recorrido óptimo del problema del agente viajero satisface que $\acute{o}ptimo.evaluar() \leq s.evaluar()$ para toda posible solución.
 \end{itemize}
 
 
@@ -84,26 +88,29 @@ Para la clase \code{RecocidoSimulado}:
  
  Calcula la nueva temperatura, se espera que a lo largo de las iteraciones este valor decrezca, llegando a cero en el último paso.
  
- \item \code{public Solucion seleccionarSiguienteSolución()}
+ \item \code{public Solución seleccionarSiguienteSolución()}
  
- Dada la solución actual, este método debe modificarla para obtener una solución nueva y elegir esta nueva solución con cierta probabilidad dependiendo de si es mejor o no, según el algoritmo presentado anteriormente.
+ Dada la solución actual, este método debe obtener una modificación suya y elegir esta nueva solución con cierta probabilidad dependiendo de si es mejor o no, según el algoritmo presentado anteriormente.
  
  \item \code{public Solución ejecutar()}
  
- Ejecuta el algoritmo con los parámetros inicializados, puedes modificar la firma si lo consideras necesario.
+ Ejecuta el algoritmo y devuelve la mejor solución encontrada.
 \end{itemize}
 
-Finalmente, en la clase \code{Main} únicamente se crea un objeto tipo \code{RecocidoSimulado} que ejecuta el algoritmo por algún número de iteraciones:
+Finalmente, en la clase \code{Main} se crea un objeto tipo \code{RecocidoSimulado} que ejecuta el algoritmo por algún número de iteraciones:
+
 \begin{itemize}
- \item Calcula los parámetros para el constructor de\code{RecocidoSimulado}:
+ \item Usa el argumento en \code{args[0]}, que deberá ser la ubicación de un archivo \code{.tsp}, para cargar la descripción de una ciudad.  Se te da la clase \code{DatosPAV} para facilitar esta tarea.
+
+ \item Calcula los parámetros para el constructor de \code{RecocidoSimulado}:
  
  \begin{itemize}
-  \item Crea un objeto de la clase hija de \code{Solucion} que implementaste.
+  \item Crea un objeto de la clase hija de \code{Solución} que implementaste, de modo que represente una primer ruta a través de la ciudad descrita en el archivo \code{.tsp}.
   
   \item Calcula la temperatura inicial y decaimiento adecuados para ejecutar recocido simulado dependiendo del número de interacciones.
  \end{itemize}
 
- \item Modificar el ciclo para monitorear la evolución del algoritmo entre interacciones.
+ \item Modifica el ciclo para monitorear la evolución del algoritmo entre interacciones.
 \end{itemize}
 
 

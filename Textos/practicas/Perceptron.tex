@@ -88,13 +88,18 @@ Si $e(j)$ es positivo, se necesita incrementar $Y(j)$, pero si es negativo, se n
 
 \begin{enumerate}
   \item \textbf{Inicialización:} Fijar los pesos iniciales \(w_1, w_2, ..., w_n\) y el umbral $\theta$ a números aleatorios en el rango $[-0.5, 0.5]$ (recomendado).
+  
   \item \textbf{Activación:} Para un ejemplar $j$, activar el perceptrón aplicando las entradas\\ \(x_1(j), x_2(j), ..., x_n(j)\).
   \[Y(j) = f\left[\sum_{i=1}^{n}x_i(j)w_i(j)-\theta\right]\]
   donde $n$ es el número de entradas y $f$ es la función de activación.
+  
   \item \textbf{Entrenamiento de pesos:} Se actualizan los pesos del perceptrón:
   \[w_i(t+1)=w_i(t)+\Delta w_i(t)\]
   donde \(\Delta w_i(t)\) es la corrección del peso al tiempo $t$ para el ejemplar $j$, que se calcula de la siguiente forma:
   \[\Delta w_i(t)=\alpha \times x_i(j) \times e(j)\]
+  
+  El umbral $\theta$ se queda fijo en el valor que le fue asignado al inicio.
+  
   \item \textbf{Iteración:} Repetir el paso 2 y 3 para cada ejemplar del conjunto de entrenamiento hasta minimizar lo mejor posible el error. Si el resultado no es satisfactorio, continuar ejecutando otra vez desde el primer ejemplar.
   \label{algo:b}
 \end{enumerate}

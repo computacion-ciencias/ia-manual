@@ -256,24 +256,26 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
 \begin{itemize}
   \item Variables: 
     \begin{align*}
-      [&\{<Var_1>:<val_0>, . . . , <val_m>\},\\
-      &\{<Var_2>:<val_0>, . . . , <val_m>\}, . . . ,\\
-      &\{<Var_n>:<val_0>, . . . , <val_m>\}]
+      \{&<Var_1>:[<val_0>, . . . , <val_m>],\\
+        &<Var_2>:[<val_0>, . . . , <val_m>], . . . ,\\
+        &<Var_n>:[<val_0>, . . . , <val_m>]\}
     \end{align*}
     Donde \(<Var_{i}>\) indica el nombre de la variable y \(<val_i>\) los valores que puede tomar la variable.
+    
   \item Factores: 
     \begin{align*}
-      [&\{<Var_1>,<Var_2>, . . . , <Var_n> | <Var_{c1}>,<Var_{c2}>, . . ., <Var_{cn}>\},\\
-      & . . . , \\
-      &\{<Var_1>,<Var_2>, . . . , <Var_n>\}]
+      [& [<Var_1>,<Var_2>, . . . , <Var_n>], \\
+       & . . . , \\
+       & [<Var_1>,<Var_2>, . . . , <Var_n>]]
     \end{align*}
-    Donde \(<Var_{i}>\) indica las variables del factor, \(\mid\) que es un factor condicional y \(<Var_{ci}>\) las variables condicionantes.
+    Donde \(<Var_{i}>\) indica las variables del factor.
+    
   \item Valores: 
     \begin{align*}
-      [&\{(Factor_1)_{val1}, (Factor_1)_{val2}, . . . , (Factor_1)_{valk}\},\\
-      &\{(Factor_2)_{val1}, (Factor_2)_{val2}, . . . , (Factor_2)_{valk}\},\\
-      & . . . \\
-      &\{(Factor_j)_{val1}, (Factor_j)_{val2}, . . . , (Factor_j)_{valk}\}]
+      [&[(Factor_1)_{val1}, (Factor_1)_{val2}, . . . , (Factor_1)_{valk}],\\
+       &[(Factor_2)_{val1}, (Factor_2)_{val2}, . . . , (Factor_2)_{valk}],\\
+       & . . . \\
+       &[(Factor_j)_{val1}, (Factor_j)_{val2}, . . . , (Factor_j)_{valk}]]
     \end{align*}
     Donde \((Factor_i)_{valn}\) indica el valor numérico correspondiente a cada renglón del \(Factor_i\). Deben tener en cuenta que se toma la última variable especificada en el renglón de Factores como la que cambia más rápidamente.
 \end{itemize}
@@ -288,9 +290,9 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
                frame=lines,
                fontsize=\scriptsize,
                framesep=2mm]{text}
-  Variables: [{A : 0, 1}, {B : 0, 1}, {C : 0, 1, 2}]
-  Factores: [{A, B}, {A, B, C}]
-  Valores: [{0.1, 0.9, 0.5, 0.1}, {0.25, 0.15, 0.35, 0.1, 0.65, 0.8, 0.6, 0.8, .1, .2, .4, .25}]
+  Variables: {A : [0, 1], B : [0, 1], C : [0, 1, 2]}
+  Factores: [[A, B], [A, B, C]]
+  Valores: [[0.1, 0.9, 0.5, 0.1], [0.25, 0.15, 0.35, 0.1, 0.65, 0.8, 0.6, 0.8, .1, .2, .4, .25]]
 \end{minted}
 
 \noindent representa los factores:\par
