@@ -20,7 +20,7 @@ Utilizaremos a los factores para realizar operaciones con distribuciones de prob
 \subsubsection{Multiplicación}
 
 \begin{definition}[Multiplicación]
-\quotes{Sean $X$, $Y$ y $Z$ tres conjuntos disjuntos de variables, y sean $\phi_1(X,Y)$ y $\phi_2(Y,Z)$ dos factores. Se define el Factor producto $\phi_1(X,Y) \times \phi_2(Y,Z)$ como un factor $\psi: Val(X,Y,Z) \mapsto \mathbb{R}$ de la siguiente forma: \[ \psi(X,Y,Z) = \phi_1(X,Y) \cdot \phi_2(Y,Z)\]}
+\quotes{Sean $X$, $Y$ y $Z$ tres conjuntos disjuntos de variables, y sean $\phi_1(X,Y)$ y $\phi_2(Y,Z)$ dos factores. Se define el factor producto   $\phi_1 \times \phi_2$ como un factor $\psi: Val(X,Y,Z) \mapsto \mathbb{R}$ de la forma siguiente: \[ \psi(X,Y,Z) = \phi_1(X,Y) \cdot \phi_2(Y,Z)\]}
 
 \parencite[107]{KollerFriedman2009}.
 \end{definition}
@@ -62,7 +62,7 @@ La operación de multiplicación es sencilla. Si los conjuntos de variables de l
     \caption{Factores sobre variables aleatorias binarias.}\label{fig:ABC}
 \end{figure}
 
-Por ejemplo: Tenemos los tres factores $A$, $B$ y $C$ de la \fref{fig:ABC}. Para obtener el factor $A \times B$, se multiplicaría el renglón $A=0$ con $B=0$, luego $A=0$ con $B=1$, $A=1$ con $B=0$ y por último $A=1$ con $B=1$ como en la \fref{fig:FactorAB}.
+Por ejemplo: Tenemos los tres factores $A$, $B$ y $C$ de la \fref{fig:ABC}. Para obtener el factor $AB = A \times B$, se multiplicaría el renglón $A=0$ con $B=0$, luego $A=0$ con $B=1$, $A=1$ con $B=0$ y por último $A=1$ con $B=1$ como en la \fref{fig:FactorAB}.
 
 \begin{figure}[H]
   \begin{center}
@@ -74,11 +74,11 @@ Por ejemplo: Tenemos los tres factores $A$, $B$ y $C$ de la \fref{fig:ABC}. Para
       1 & 1 & (.7)*(.4) = 0.28 \\
     \end{tabular}
   \end{center}
-  \caption{Factor $A \times B$}
+  \caption{Factor $AB$}
   \label{fig:FactorAB}
 \end{figure}
 
-\noindent Si el alcance de ambos factores tiene variables en común, se debe asegurar que tengan el mismo valor en cada renglón por multiplicar en ambos factores. Por ejemplo, si se tienen los factores $A \times B$ y $A \times C$, al momento de multiplicar el renglón $\{A=0,B=0\}$ se debe seleccionar los renglones donde $A=0$ en el factor $A \times C$, estos son $\{A=0,C=0\}$ y $\{A=0,C=1\}$, como muestran \fref{fig:FAFB} y \fref{fig:FactorABC}.
+\noindent Si el alcance de ambos factores tiene variables en común, se debe asegurar que tengan el mismo valor en cada renglón por multiplicar en ambos factores. Por ejemplo, si se tienen los factores $AB$ y $AC$, al momento de multiplicar el renglón $\{A=0,B=0\}$ se debe seleccionar los renglones donde $A=0$ en el factor $AC$, estos son $\{A=0,C=0\}$ y $\{A=0,C=1\}$, como muestran \fref{fig:FAFB} y \fref{fig:FactorABC}.
 
 \begin{figure}[h!]
     \centering
@@ -91,7 +91,7 @@ Por ejemplo: Tenemos los tres factores $A$, $B$ y $C$ de la \fref{fig:ABC}. Para
           1 & 0 & (.7)*(.6) = 0.42 \\ \hline
           1 & 1 & (.7)*(.4) = 0.28 \\
         \end{tabular}
-        \caption{Factor $A \times B$}
+        \caption{Factor $AB = A \times B$}
     \end{subfigure}
     ~ 
     \begin{subfigure}[b]{0.4\textwidth}
@@ -103,7 +103,7 @@ Por ejemplo: Tenemos los tres factores $A$, $B$ y $C$ de la \fref{fig:ABC}. Para
           1 & 0 & (.7)*(.2) = 0.14 \\ \hline
           1 & 1 & (.7)*(.8) = 0.56 \\
         \end{tabular}
-        \caption{Factor $A \times C$}
+        \caption{Factor $AC = A \times C$}
     \end{subfigure}
     \caption{Multiplicandos.}
     \label{fig:FAFB}
@@ -124,11 +124,11 @@ Por ejemplo: Tenemos los tres factores $A$, $B$ y $C$ de la \fref{fig:ABC}. Para
       1 & 1 & 1 & [(.7)*(.4)]*[(.7)*(.8)] = 0.1568 \\ 
     \end{tabular}
   \end{center}
-  \caption{Factor $(A \times B) \times (A \times C)$}
+  \caption{Factor $AB \times AC$}
   \label{fig:FactorABC}
 \end{figure}
 
-Es importante hacer notar que al multiplicar los factores $A \times B$ y $A \times C$ no se estaría obteniendo la probabilidad conjunta de $A$, $B$ y $C$, si no alguna otra función $\phi(A,B,C)$. 
+Es importante hacer notar que al multiplicar los factores $AB$ y $AC$ no se estaría obteniendo la probabilidad conjunta de $A$, $B$ y $C$, si no alguna otra función $\phi(A,B,C)$.
 
 \subsubsection{Reducción}
 
@@ -138,7 +138,7 @@ Es importante hacer notar que al multiplicar los factores $A \times B$ y $A \tim
 \parencite[111]{KollerFriedman2009}.
 \end{definition}
 
-La operación de reducción consiste en tomar un valor de alguna variable del factor y sólo tomar los renglones que cumplen con el valor dado de la variable. Por ejemplo: Se tiene el factor AB,
+La operación de reducción consiste en seleccionar un valor de alguna variable del factor y sólo tomar los renglones que cumplen con el valor dado de la variable. Por ejemplo: Se tiene el factor $AB$ de la \fref{fig:FactorAB}.
 
 \begin{figure}[H]
   \begin{center}
@@ -150,11 +150,11 @@ La operación de reducción consiste en tomar un valor de alguna variable del fa
       1 & 1 & .28  \\
     \end{tabular}
   \end{center}
-  \caption{Factor AB}
-  % \label{fig:FactorA}
+  \caption{Factor $AB$}
+  \label{fig:FactorAB}
 \end{figure}
 
-\noindent Si se desea reducir con A = 0, el resultado sería un factor:
+\noindent Si se desea reducir con $A = 0$, el resultado es el factor en la \fref{fig:FactorA0B}.
 
 \begin{figure}[h]
   \begin{center}
@@ -165,23 +165,22 @@ La operación de reducción consiste en tomar un valor de alguna variable del fa
     \end{tabular}
   \end{center}
   \caption{Factor \(B\)}
-  % \label{fig:FactorA}
+  \label{fig:FactorA0B}
 \end{figure}
 
 \subsubsection{Normalización}
-Para normalizar un factor, esto es, que los valores que toma el factor sumen 1, basta con sumar todos los valores asociados a las asignaciones y dividir cada uno entre esta suma. Por ejemplo: Tenemos el factor \(\phi(B)\), la suma de sus posibles valores es .3, entonces tendríamos:
+Para normalizar un factor, esto es, que los valores que toma el factor sumen 1, basta con sumar todos los valores asociados a las asignaciones y dividir cada uno entre esta suma. Por ejemplo: Tenemos el factor \(\phi(B)\), la suma de sus posibles valores es .3, entonces el factor normalizado queda como en la \fref{fig:FactorA0BNorm}.
 
-% TODO: Cambiar por un factor de probabilidad conjunta, donde no sumen uno sus renglones
 \begin{figure}[H]
   \begin{center}
-    \begin{tabular}{ l  c | r }
+    \begin{tabular}{ l  c | c }
       A & B &  \(\phi(B)\)\\ \hline
       0 & 0 & (.18/.3)= .6  \\ \hline
       0 & 1 & (.12/.3)= .4 \\
     \end{tabular}
   \end{center}
-  \caption{Factor \(B\)}
-  % \label{fig:FactorA}
+  \caption{Factor \(B\) normalizado}
+  \label{fig:FactorA0BNorm}
 \end{figure}
 
 % \noindent Esta operación es útil cuando se desea calcular probabilidades condicionales.
@@ -195,7 +194,7 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \begin{tabular}{ l l  c | r }
+        \begin{tabular}{ l l  c | c }
            & A & B & $\phi$(A,B)\\ \cline{2-4}
           \(\to\) & 0 & 0 & .18  \\ \cline{2-4}
           \(\to\) & 0 & 1 & .12  \\ \cline{2-4}
@@ -207,7 +206,7 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
     ~ 
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \begin{tabular}{l  l | r }
+        \begin{tabular}{l  l | c }
             & A & $\phi$(A)\\ \cline{2-3}
         \(\to\) & 0 & (.18)+(.12)  \\
         \end{tabular}
@@ -222,7 +221,7 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \begin{tabular}{ l l  c | r }
+        \begin{tabular}{ l l  c | c }
            & A & B & $\phi$(A,B)\\ \cline{2-4}
            & 0 & 0 & .18  \\ \cline{2-4}
            & 0 & 1 & .12  \\ \cline{2-4}
@@ -234,7 +233,7 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
     ~ 
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \begin{tabular}{l  l | r }
+        \begin{tabular}{l  l | c }
             & A & $\phi$(A)\\ \cline{2-3}
             & 0 & (.18)+(.12)  \\ \cline{2-3}
         \(\to\) & 1 & (.42)+(.28)  \\
