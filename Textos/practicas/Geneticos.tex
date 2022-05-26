@@ -8,7 +8,7 @@ Implementar un algoritmo genético que resuelva y optimice un problema dado.
 
 \section{Introducci\'on}
 
-Un algoritmo genético es una heurística de búsqueda que está basada en el proceso de \textbf{selección natural}. La selección natural es un proceso gradual mediante el cual las características biológicas se vuelven más o menos comunes en una población. Esto depende de las características heredadas y de la diferencia de éxito reproductivo de los organismos que interactúan con su entorno. La selección natural es el mecanismo clave de la \textbf{evolución}. El término de “selección natural” fue popularizado por Charles Darwin desde el año de 1859.
+Un algoritmo genético es una heurística de búsqueda que está basada en el proceso de \textbf{selección natural}.  Su objetivo es encontrar soluciones óptimas a problemas combinatorios. La selección natural es un proceso gradual mediante el cual las características biológicas se vuelven más o menos comunes en una población. Esto depende de las características heredadas y de la diferencia de éxito reproductivo de los organismos que interactúan con su entorno. La selección natural es el mecanismo clave de la \textbf{evolución}. El término de “selección natural” fue popularizado por Charles Darwin desde el año de 1859.
 
 \section{Metodolog\'ia}
 
@@ -20,10 +20,10 @@ La evolución es un proceso iterativo mediante el cual se generan individuos ale
 
 \begin{enumerate}
   \item Una \textbf{representación} genética del dominio de la solución.
-  \item Una \textbf{función de aptitud} (\textit{fitness}) a evaluar el dominio de la solución.
+  \item Una \textbf{función de aptitud} (\textit{fitness}) a evaluar sobre el dominio de la solución.
 \end{enumerate}
 
-\noindent La representación estándar de cada individuo es una arreglo de bits, sin embargo, arreglos de otro tipo y estructuras funcionan esencialmente de la misma manera. El motivo por el cual se prefiere la representación estándar es porque facilita las operaciones de recombinación debido a la longitud fija del arreglo, también la operación de mutación se vuelve trivial como se notará más adelante.
+\noindent La representación estándar de cada individuo es un arreglo de bits, sin embargo, arreglos de otro tipo y estructuras funcionan esencialmente de la misma manera. El motivo por el cual se prefiere la representación estándar es porque facilita las operaciones de recombinación debido a la longitud fija del arreglo, también la operación de mutación se vuelve trivial como se notará más adelante.
 
 
 \section{Componentes del algoritmo gen\'etico}
@@ -34,7 +34,7 @@ Usualmente se genera una cantidad de soluciones posibles de manera aleatoria par
 
 \subsection{Selecci\'on}
 
-La selección es una etapa del algoritmo genético en la cuál se selecciona un individuo de la población que después será recombinado con otro.\par
+La selección es una etapa del algoritmo genético en la cual se selecciona un individuo de la población que después será recombinado con otro.\par
 
 Existen diferentes maneras de realizar el proceso de selección, el más común es la \textbf{selección proporcional de aptitud} (selección de ruleta). En este tipo de selección, la aptitud (o \textit{fitness}) del individuo se asocia con su probabilidad de selección.\par
 
@@ -42,7 +42,7 @@ Entonces si \(f_i\)  es la aptitud del individuo \(i\) en la población, la prob
 \[p_i = {f_i \over \sum_{j=1}^{N} f_j}\]
 donde \(N\) es el número de individuos en la población.\par
 
-Esto es similar a imaginar una ruleta de casino. Usualmente una proporción de la rueda de la ruleta es asignada a cada posible individuo basado en su valor fitness. Esto se logra al dividir el fitness de cada individuo entre el total de fitness de todos los individuos, que es equivalente a normalizarlos a 1. Entonces un individuo es aleatoriamente seleccionado de la manera en que lo haría una ruleta que está girando.
+Esto es similar a imaginar una ruleta de casino. Usualmente una proporción de la rueda de la ruleta es asignada a cada posible individuo basado en su aptitud. Esto se logra al dividir la aptitud de cada individuo entre el total de aptitud de todos los individuos, que es equivalente a normalizarlos a 1. Entonces un individuo es aleatoriamente seleccionado de la manera en que lo haría una ruleta que está girando.
 
 \subsection{Operadores gen\'eticos}
 
@@ -74,7 +74,7 @@ Hay varias técnicas de recombinación, la más habitual es la recombinación de
 
 La mutación es el operador genético que mantiene la diversidad genética de una generación a otra, de manera análoga a la mutación biológica. La mutación altera uno o más de los genes (valores) en el cromosoma. Esta alteración puede cambiar por completo la solución antes de aplicar el operador de mutación y puede llegar a obtener mejores soluciones (o peores) dentro del algoritmo genético.\par
 
-Las mutaciones ocurren de acuerdo a una probabilidad de mutación que es definida por el usuario. Esta probabilidad debería ser baja porque si se establece un probabilidad de mutación muy alta el algoritmo genético se convierte en una búsqueda de soluciones de manera aleatoria.
+Las mutaciones ocurren valor por valor en un individuo de acuerdo a una probabilidad de mutación que es definida por el usuario. Esta probabilidad debería ser baja porque si se establece un probabilidad de mutación muy alta el algoritmo genético se convierte en una búsqueda de soluciones de manera aleatoria.
 
 \begin{table}[H]
   \centering
@@ -109,9 +109,7 @@ Hay muchas variaciones que pueden hacerse a un algoritmo genético, una de ellas
 
 \section{Desarrollo e implementaci\'on}
 
-Se desea resolver el problema de las ocho reinas mediante algoritmos genéticos.\par
-
-Este problema consiste en colocar ocho reinas del juego de ajedrez en un tablero de \(8 \times 8\) de tal manera que no se ataquen mutuamente. Entonces, encontrar una solución requiere que entre cualesquiera dos reinas no compartan columna, fila, ni diagonal entre ellas. El problema de las ocho reinas es un caso particular de otro más general, el de las \(n\)-reinas, que consiste en colocar \(n\) reinas en un tablero de dimensiones \(n \times n\).
+Se desea resolver el problema de las ocho reinas mediante algoritmos genéticos.  Este problema consiste en colocar ocho reinas del juego de ajedrez en un tablero de \(8 \times 8\) de tal manera que no se ataquen mutuamente. Entonces, encontrar una solución requiere que entre cualesquiera dos reinas no compartan columna, fila, ni diagonal entre ellas. El problema de las ocho reinas es un caso particular de otro más general, el de las \(n\)-reinas, que consiste en colocar \(n\) reinas en un tablero de dimensiones \(n \times n\).
 
 \begin{figure}[H]
   \centering
@@ -180,28 +178,28 @@ La población de cada generación estará constituida por 50 individuos.
 
 \subsubsection{Elitismo}
 
-Para asegurarnos de mantener al menos una solución lo suficientemente óptima, se utilizará elitismo de 1 individuo en cada generación.
+Para asegurarnos de mantener al menos una solución lo suficientemente buena, se utilizará elitismo de 1 individuo en cada generación.
 
 \subsection{Pseudoc\'odigo}
 
 El comportamiento general del algoritmo genético puede representarse a través del siguiente pseudocódigo:\medskip
 
 \begin{algorithmic}
-  \State $poblacion\gets new Poblacion(50)$
-  \State $poblacion.asignarAptitud()$
-  \While{not $limiteDeGeneraciones$ or $optimoEncontrado$}
-    \State $nuevaPoblacion.add(poblacion.elitismo(1))$
-    \While{not $nuevaPoblacion.llena$}
-      \State $individuo1\gets poblacion.seleccionRuleta()$
-      \State $individuo2\gets poblacion.seleccionRuleta()$
-      \State $hijo\gets recombinacion(individuo1, individuo2)$
-      \State $hijo.mutacion()$
-      \State $nuevaPoblacion.add(hijo)$
+  \State $poblaci\acute{o}n\gets new Poblaci\acute{o}n(50)$
+  \State $poblaci\acute{o}n.asignarAptitud()$
+  \While{not $limiteDeGeneraciones$ or $\acute{o}ptimoEncontrado$}
+    \State $nuevaPoblaci\acute{o}n.add(poblaci\acute{o}n.elitismo(1))$
+    \While{not $nuevaPoblaci\acute{o}n.llena$}
+      \State $individuo1\gets poblaci\acute{o}n.seleccionRuleta()$
+      \State $individuo2\gets poblaci\acute{o}n.seleccionRuleta()$
+      \State $hijo\gets recombinaci\acute{o}n(individuo1, individuo2)$
+      \State $hijo.mutaci\acute{o}n()$
+      \State $nuevaPoblaci\acute{o}n.add(hijo)$
     \EndWhile
-    \State $poblacion\gets nuevaPoblacion$
-    \State $poblacion.asignarAptitud()$
+    \State $poblaci\acute{o}n\gets nuevaPoblaci\acute{o}n$
+    \State $poblaci\acute{o}n.asignarAptitud()$
   \EndWhile
-  \State $print(poblacion.mejorIndividuo())$
+  \State $print(poblaci\acute{o}n.mejorIndividuo())$
 \end{algorithmic}
 
 \section{Requisitos y resultados}
