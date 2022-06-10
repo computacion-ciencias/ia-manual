@@ -7,7 +7,7 @@ En esta práctica se implementarán funciones para realizar cálculos básicos s
 \section{Objetivo}
 
 \begin{compactitem}
- \item Que el alumno se familiarice con los procesos estocásticos discretos denominados Cadenas de Márkov discretas y realice una implementación para resolver algunas de las preguntas más frecuentes que se pueden plantear sobre estos procesos.
+ \item Que el alumno se familiarice con los procesos estocásticos discretos denominados Cadenas de Márkov discretas y realice una implementación para resolver algunas de las preguntas más frecuentes que se pueden plantear sobre estos procesos. \parencite{gestiondeoperaciones2015}
 \end{compactitem}
 
 
@@ -102,9 +102,116 @@ Entonces, la matriz de transición se acomoda como en la tabla siguiente:
  \end{tabular}
  \end{center}
 
+Para calcular qué es probable que esté haciendo el soldado al tiempo siguiente basta con multiplicar:
+\begin{align*}
+ P(S^{(1)}) &= T P(S^{(0)}) \\
+   &= \begin{bmatrix}
+        0.27 & 0.3 & 0.6 \\
+        0.03 & 0.2 & 0.2 \\
+        0.7  & 0.5 & 0.2
+       \end{bmatrix}
+       \begin{bmatrix}
+	    0.2 \\
+	    0.2 \\
+	    0.6
+	 \end{bmatrix} \\
+   &=  \begin{bmatrix}
+        0.474 \\
+        0.166 \\
+        0.36
+       \end{bmatrix}
+\end{align*}
+
+\subsection{Estado estacionario}
+
+\begin{definition}[Cadena irreducible]
+ Se dice que una cadena es \emph{irreducible} si es posible acceder a cualquier estado desde cualquier otro estado, ya sea directamente o a través de un camino de nodos.
+\end{definition}
+
+\begin{definition}[Estado periódico]
+ ``Un estado es periódico si, partiendo de ese estado, sólo es posible volver a él en un número de etapas que sea múltiplo de un cierto número entero $d$ mayor que uno.''
+
+ ``Si $d = 1$ decimos que el estado es \emph{aperiódico}.''
+ \parencite{gestiondeoperaciones2013}
+\end{definition}
+
+En particular, un sistema donde es posible transitar desde un estado $s_i$ a cualquier otro estado $s_j$ directamete, da lugar a una cadena irreducible con estados aperiódicos.  Cuando estas dos condiciones se cumplen, la cadena eventualmente alcanzará un \emph{estado estacionario}, donde la distribución de probabilidad al tiempo $t+1$ será igual a la distribución al tiempo $t$.  Es decir, cumple con la ecuación:
+\begin{align*}
+ P(S^{(t)}) &= T P(S^{(t)})
+\end{align*}
+
+Adicionalmente, como se trata de una distribución de probabilidad, las componentes de $P(S)$ deben sumar uno:
+\begin{align*}
+ \sum_i P(s_i) &= 1
+\end{align*}
+
+Si el número de valores posibles para $S$ es $n$, esto nos da un sistema de $n+1$ ecuaciones linealmente independientes.  Este sistema está sobre determinado, por lo que para resolverlo se realiza una aproximación utilizando mínimos cuadrados \parencite{Maplesoft2022}.
+
+El sistema en forma matricial se escribe:
+\begin{align*}
+ (T - \mathbb{1})P(S^{(t)}) &= \mathbb{0} \\
+ [1 1 ... 1]P(S^{(t)}) &= 1
+\end{align*}
+Concatenando los renglones de ambas matrices:
+\begin{align*}
+ \begin{bmatrix}
+   T - \mathbb{1} \\
+   1 1 ... 1
+ \end{bmatrix}
+ P(S^{(t)}) &=
+ \begin{bmatrix}
+  \mathbb{0} \\
+  1
+ \end{bmatrix}
+\end{align*}
+
+Mínimos cuadrados ajustará un plano que pase lo más cerca posible de los puntos descritos por cada renglón de la matriz que multiplica a $P(S^{(t)})$.
 
 
-Adicionalmente a lo visto en clase, que estuvo basado en el sitio de \hrefformat{https://www.gestiondeoperaciones.net/cadenas-de-markov/cadenas-de-markov-ejercicios-resueltos/}{Gestión de operaciones}, pueden consultar la página sobre cadenas de Márkov en \hrefformat{https://en.wikipedia.org/wiki/Markov_chain}{Wikipedia} así como algunos \hrefformat{https://en.wikipedia.org/wiki/Examples_of_Markov_chains}{ejemplos} sencillos.
+\subsection{Ejemplo: comportamiento del soldado en el estado estacionario}
+
+Si bien el comportamiento del soldado de nuestro ejemplo mutará más al inicio, eventualmente se estabilizará en una rutina donde una sola distribución de probabilidad describirá qué podría estar haciendo.  Para encontrar esta distribución el sistema que debemos resolver ajustando mínimos cuadrados es:
+\begin{align*}
+ \begin{bmatrix}
+  -0.73 & 0.3  & 0.6 \\
+   0.03 & -0.8 & 0.2 \\
+   0.7  &  0.5 & -0.8 \\
+   1    &  1   &  1
+ \end{bmatrix}
+ \begin{bmatrix}
+  cam \\
+  dor \\
+  d.p.
+ \end{bmatrix} &=
+ \begin{bmatrix}
+  0 \\
+  0 \\
+  0 \\
+  1
+ \end{bmatrix}
+\end{align*}
+
+El resultado es:
+\begin{align*}
+ P(S) &= \begin{bmatrix}
+  0.42220485 \\
+  0.12822518 \\
+  0.44956998
+ \end{bmatrix}
+\end{align*}
+y es posible verificar que $TP = P$.
+
+La \fref{fig:MinimosCuadrados} muestra los puntos descritos por esta matriz y el plano definido por la solución encontrada.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.6\textwidth]{markov/MinimosCuadrados}
+ \caption{El plano ajustado corresponde a la distribución estacionaria.}\label{fig:MinimosCuadrados}
+\end{figure}
+
+
+Hay más consultas que se pueden realizar con una cadena de Márkov, con los conocimientos que tienes de redes de Bayes ya te debe ser posible inferir lo que tienes que hacer.  Si aún tienes dudas puedes consultar la página sobre cadenas de Márkov en \hurl{https://en.wikipedia.org/wiki/Markov_chain} así como algunos ejemplos sencillos en \hurl{https://en.wikipedia.org/wiki/Examples_of_Markov_chains}.
+
 
 
 \section{Desarrollo}
