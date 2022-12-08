@@ -1,19 +1,19 @@
 %----------------------------------------------------------------------------------------
-% Modelos Ocultos de Markov
+% Modelos Ocultos de Márkov
 %----------------------------------------------------------------------------------------
 
-Esta práctica introduce el concepto de Modelo Oculto de Markov, así como sus aplicaciones en el aprendizaje supervisado de cadenas, en donde se implementará el algoritmo de Viterbi.
+Esta práctica introduce el concepto de Modelo Oculto de Márkov, así como sus aplicaciones en el aprendizaje supervisado de cadenas, en donde se implementará el algoritmo de Viterbi.
 
 \section{Objetivo}
 
-Que el alumno conozca el concepto de Modelo Oculto de Markov, su forma de representarlos, así como sus aplicaciones. Que sea capaz de aplicar los Modelos Ocultos de Markov a problemas de etiquetado de secuencias de forma óptima por medio del algoritmo de Viterbi.
+Que el alumno conozca el concepto de Modelo Oculto de Márkov, su forma de representarlos, así como sus aplicaciones. Que sea capaz de aplicar los Modelos Ocultos de Márkov a problemas de etiquetado de secuencias de forma óptima por medio del algoritmo de Viterbi.
 
 
 \section{Introducción}
 
-Los Modelos Ocultos de Morkov a los que nos referiremos como HMM (por sus siglas en inglés \emph{Hidden Markov Models}) son un modelo gráfico generativo que generaliza el modelo de Bayes Ingenuo y, además, incorpora el concepto de procesos de Markov en su estructura.
+Los Modelos Ocultos de Márkov a los que nos referiremos como HMM (por sus siglas en inglés \emph{Hidden Markov Models}) son un modelo gráfico generativo que generaliza el modelo de Bayes Ingenuo y, además, incorpora el concepto de procesos de Márkov en su estructura.
 
-En el clasificador de Bayes Ingenuo se busca estimar una probabilidad conjunta de una series de observaciones, determinadas por un vector, $x$ y las clases $y$. En el modelo de Bayes Ingenuo se busca estimar la clase $\hat{y}$ que cumpla:
+En el clasificador de Bayes Ingenuo se busca estimar una probabilidad conjunta de una serie de observaciones, determinadas por un vector, $x$ y las clases $y$. En el modelo de Bayes Ingenuo se busca estimar la clase $\hat{y}$ que cumpla:
 
 $$ \hat{y} = \arg\max_y P(y,x) = \arg\max_y p(x|y)$$
 
@@ -22,19 +22,19 @@ Si $x$ es un vector con $n$ elementos independientes, la probabilidad condiciona
 \begin{figure}
  \centering
  \includegraphics[width=1.0\textwidth]{hmm/hmmBayes}
- \caption{Comparación entre la gráfica del modelo de Bayes Ingenuo y la gráfica de un Modelo Oculto de Markov.}\label{Fig:BayesMarkov}
+ \caption{Comparación entre la gráfica del modelo de Bayes Ingenuo y la gráfica de un Modelo Oculto de Márkov.}\label{Fig:BayesMárkov}
 \end{figure}
 
-Los HMMs son una solución a este tipo de problemas. Podemos pensar a un HMM como un modelo de Bayes Ingenuo dinámico, donde las clases o categorías conforman un proceso de Markov. En la Figura~\ref{Fig:BayesMarkov} se peude observar la comparación entre una gráfica del modelo de Bayes Ingenuo (a la izquierda) y el modelo oculto de Markov (a la derecha). El HMM genera transiciones entre las cadenas de salida, para así poder estimar la pertinencia de una categoría en referencia no sólo a una observación, sino a las categorías previas de la cadena. En términos generales, definimos una HMM como sigue:
+Los HMMs son una solución a este tipo de problemas. Podemos pensar a un HMM como un modelo de Bayes Ingenuo dinámico, donde las clases o categorías conforman un proceso de Márkov. En la \fref{Fig:BayesMárkov} se puede observar la comparación entre una gráfica del modelo de Bayes Ingenuo (a la izquierda) y el modelo oculto de Márkov (a la derecha). El HMM genera transiciones entre las cadenas de salida, para así poder estimar la pertinencia de una categoría en referencia no sólo a una observación, sino a las categorías previas de la cadena. En términos generales, definimos una HMM como sigue:
 
 
-\begin{definition}[Modelo Oculto de Markov}
-  Un \emph{Modelo Oculto de markov} o HMM es un modelo bayesiano definido como una 5-tupla $HMM = (X, Y, A, \Pi, B)$ cuyos elementos son:
+\begin{definition}[Modelo Oculto de Márkov]
+  Un \emph{Modelo Oculto de Márkov} o HMM es un modelo bayesiano definido como una 5-tupla $HMM = (X, Y, A, \Pi, B)$ cuyos elementos son:
 
 \begin{itemize}
     \item $X$ es un conjunto de \emph{observables} que dependen de $Y$.
-    \item  $Y$ es un conjunto de \emph{emisiones} que definen un proceso de Markov.
-    \item $A$ es la matriz de transiciones y $\Pi$ es un vector de probabilidades iniciales; ambos definen el proceso de Markov sobre $Y$.
+    \item  $Y$ es un conjunto de \emph{emisiones} que definen un proceso de Márkov.
+    \item $A$ es la matriz de transiciones y $\Pi$ es un vector de probabilidades iniciales; ambos definen el proceso de Márkov sobre $Y$.
     \item $B$ es una matriz de probabilidades de observaciones, que contiene las probabilidades de las observaciones condicionadas a las emisiones.
   \end{itemize}
 \end{definition}
@@ -47,7 +47,7 @@ Para obtener la cadena de emisiones que etiquete a la cadena de entrada más óp
     &= \arg\max_{y_1,...,y_n} \prod_{t=1}^n P(Y^{(t)}=y_t | Y^{(t-1)}=y_{t-1}) P(x^{(t)}|Y^{(t)}=y_t) \label{eq:HMM}
 \end{align}
 
-Con la convención de que $P(Y^{(1)}=y_1) :=P(Y^{(1)}=y_1 | Y^{(0)})$ es la probabilidad inicial del proceso de Markov en $Y$. Esto establece los HMM y da forma al problema que buscamos resolver.
+Con la convención de que $P(Y^{(1)}=y_1) :=P(Y^{(1)}=y_1 | Y^{(0)})$ es la probabilidad inicial del proceso de Márkov en $Y$. Esto establece los HMM y da forma al problema que buscamos resolver.
     
 
 
@@ -55,9 +55,9 @@ Con la convención de que $P(Y^{(1)}=y_1) :=P(Y^{(1)}=y_1 | Y^{(0)})$ es la prob
 
 \subsection{Estimación del modelo}
 
-Un HMM puede considerarse un modelo de aprendizaje; es decir, un modelo en que se deben aprender ciertos parámetros a partir de un conjunto de datos. Con estos datos, se deben obtener los valores que peuden tomar $Y$ y $X$, así como las probabilidades de transición ($A$), iniciales ($\Pi$) y de observaciones ($B$). Al proceso de obtener los parámetros del modelo se le conocerá como el \emph{entrenamiento del modelo}.
+Un HMM puede considerarse un modelo de aprendizaje; es decir, un modelo en que se deben aprender ciertos parámetros a partir de un conjunto de datos. Con estos datos, se deben obtener los valores que pueden tomar $Y$ y $X$, así como las probabilidades de transición ($A$), iniciales ($\Pi$) y de observaciones ($B$). Al proceso de obtener los parámetros del modelo se le conocerá como el \emph{entrenamiento del modelo}.
 
-Tomemos un caso en donde queremos obtener cadenas en un alfabeto $Y = \{a,b,c\}$ a partir de un alfabeto binario $X = \{0,1\}$. Tenemos entonces que estimar un modelo para el proceso de Markov en $Y$ determinado por las transiciones, la probabilidad de que se pase de un símbolo en $Y$ a otro, y las probabilidades iniciales. Pero además, tenemos que estimar las probabilidades de observaciones, esto es, la probabilidad de observar un símbolo binario asociado a un símbolo del alfabeto $\{a,b,c\}$.
+Tomemos un caso en donde queremos obtener cadenas en un alfabeto $Y = \{a,b,c\}$ a partir de un alfabeto binario $X = \{0,1\}$. Tenemos entonces que estimar un modelo para el proceso de Márkov en $Y$ determinado por las transiciones, la probabilidad de que se pase de un símbolo en $Y$ a otro, y las probabilidades iniciales. Pero además, tenemos que estimar las probabilidades de observaciones, esto es, la probabilidad de observar un símbolo binario asociado a un símbolo del alfabeto $\{a,b,c\}$.
 
 Podemos asumir que las probabilidades de transición en $A$ son las siguientes:
 
@@ -82,7 +82,7 @@ Y consideremos los siguientes iniciales $\Pi$:
  \end{tabular}
  \end{center}
 
-Como se puede observar, el HMM define un proceso de Markov sobre $Y$, pero además integra un modelo de predicción; consideremos entonces las probabilidades de observaciones en $B$ dadas como:
+Como se puede observar, el HMM define un proceso de Márkov sobre $Y$, pero además integra un modelo de predicción; consideremos entonces las probabilidades de observaciones en $B$ dadas como:
 
 \begin{center}
  \begin{tabular}{l|ccc}
@@ -93,9 +93,9 @@ Como se puede observar, el HMM define un proceso de Markov sobre $Y$, pero adem�
  \end{tabular}
  \end{center}
 
- Esta matriz de observaciones guarda similitudes con el modelo de Bayes Ingenuo, pues se puede decir que determina las probabilidades condicionadas a su clase. En la forma gráfica del modelo, expuesta en la Figura~\ref{Fig:BayesMarkov} (derecha), las probabilidades de transición en $A$ determinan las aristas horizontales que van de una variable $Y^{(t)}$ hacia la siguiente, mientras que la matriz $B$ determina las aristas verticales entre los elementos $Y^{(t)}$ y $x^{(t)}$.
+ Esta matriz de observaciones guarda similitudes con el modelo de Bayes Ingenuo, pues se puede decir que determina las probabilidades condicionadas a su clase. En la forma gráfica del modelo, expuesta en la Figura~\ref{Fig:BayesMárkov} (derecha), las probabilidades de transición en $A$ determinan las aristas horizontales que van de una variable $Y^{(t)}$ hacia la siguiente, mientras que la matriz $B$ determina las aristas verticales entre los elementos $Y^{(t)}$ y $x^{(t)}$.
 
- Si bien el modelo gráfico que define a las HMMs está determinado por la gráfica secuencia de la Figura~\ref{Fig:BayesMarkov}, es común representar a los parámetros del modelo en una gráfica, que se define como sigue:
+ Si bien el modelo gráfico que define a las HMMs está determinado por la gráfica secuencia de la Figura~\ref{Fig:BayesMárkov}, es común representar a los parámetros del modelo en una gráfica, que se define como sigue:
 
  \begin{enumerate}
      \item Se tiene un nodo raíz que indica el comienzo.
@@ -121,7 +121,7 @@ Como se puede observar, el HMM define un proceso de Markov sobre $Y$, pero adem�
 
 Para realizar el etiquetado de una cadena de entrada $x^{(1)}, x^{(2)},...,x^{(n)}$ dado un HMM, se requiere encontrar la cadena que solucione el problema de optimización de la Ecuación~\ref{eq:HMM}. Sin embargo, como se está computando un máximo, se deben explorar todos los símbolos posibles $y_t$ para cada uno de los estados de la cadena. Así, por ejemplo, si $|Y| = M$ es el número de símbolos de emisión, se tendrá que calcular $M$ probabilidades para una cadena de longitud 1. Para una cadena de longitud 2, el primer símbolo de entrada podrá tomar $M$ valores, y el segundo también podrá tomar estos $M$ valores, por lo que se tendrán que calcular $M^2$ combinaciones. En general, encontrar el argumento que maximiza la probabilidad sobre las cadenas de emisión tiene una complejidad de $O(M^n)$.
 
-En problemas reales, como etiquetado del lenguaje natural, donde se cuenta con cadenas varios cientos de símbolos, y cadenas que pueden tener la extensión de un documento, el cálculo de estas probabilidades se vuelve intratable. En la Figura~\ref{Fig:Trellis} se muestra un diagrama, conocido como diagrama de Trellis, que muestra los posibles formas de etiquetar la cadna ``yo salto el salto de altura'' con cinco símbolos de emisión.\footnote{Los símbolos corresponden a las etiquetas $DA=$Determinante Artículo, $NC=$Nombre Común, $PP=$Preposición, $DP=$Determinante Pronombre y $V=$Verbo.} Partiendo de cualquier símbolo de inicio se puede tomar cualquier camino, lo que genera un total de $5^6=15 625$ posibles caminos, o formas de etiquetar la cadena.
+En problemas reales, como etiquetado del lenguaje natural, donde se cuenta con cadenas varios cientos de símbolos, y cadenas que pueden tener la extensión de un documento, el cálculo de estas probabilidades se vuelve intratable. En la Figura~\ref{Fig:Trellis} se muestra un diagrama, conocido como diagrama de Trellis, que muestra los posibles formas de etiquetar la cadena ``yo salto el salto de altura'' con cinco símbolos de emisión.\footnote{Los símbolos corresponden a las etiquetas $DA=$Determinante Artículo, $NC=$Nombre Común, $PP=$Preposición, $DP=$Determinante Pronombre y $V=$Verbo.} Partiendo de cualquier símbolo de inicio se puede tomar cualquier camino, lo que genera un total de $5^6=15 625$ posibles caminos, o formas de etiquetar la cadena.
 
 
 \begin{figure}
@@ -162,7 +162,7 @@ Estas variables consideran el camino $y_{i_1}...y{i_t}$ con mayor probabilidad p
     \For{ $t \leftarrow n-1$ a $1$ }
      \State $\hat{y}_t \leftarrow \phi_{\hat{y}_{t+1}}(t+1)$
     \EndFor
-    \Statte \textbf{return} $\hat{y}_1, \hat{y}_2, ..., \hat{y}_n $
+    \State \textbf{return} $\hat{y}_1, \hat{y}_2, ..., \hat{y}_n $
   \EndFunction
  \end{algorithmic}
 \end{algorithm}
@@ -332,5 +332,5 @@ El sistema de etiquetado deberá ser una función que pueda trabajar con cualqui
 \begin{enumerate}
  \item Que el manejo de las cadenas de lenguaje natural y etiquetas de emisión sea adecuado.
  \item Que la representación de los datos se maneje adecuadamente; en particular, que las operaciones para el algoritmo de Viterbi entre las matrices y los vectores sean eficientes.
- \item Que tanto la entrada como la salida sean cadenas interpretables por el usuario huamno.
+ \item Que tanto la entrada como la salida sean cadenas interpretables por el usuario humano.
 \end{enumerate}
