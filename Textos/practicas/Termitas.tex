@@ -28,7 +28,7 @@ Se tiene un estado inicial (al tiempo t=0) en el que se asigna un estado a cada 
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{termitas/screen3.png}
+  \includegraphics[width=0.6\textwidth]{termitas/Automata1D.png}
   \caption{Numeración de reglas de transición para autómatas celulares unidimensionales.}
   \label{fig:numtrans}
 \end{figure}
@@ -39,14 +39,16 @@ Un modelo basado en agentes es un tipo de modelo computacional que permite la si
 Combina elementos de teoría de juegos, sistemas complejos, emergencia, sociología computacional, sistemas multi-agente y programación evolutiva.
 Los modelos simulan las operaciones simultáneas e interacciones de múltiples agentes, en un intento de recrear y predecir la apariencia de fenómenos complejos. El proceso de emergencia surge de un nivel bajo hacia niveles del sistema más altos. La clave es notar que reglas de comportamientos sencillos generan comportamientos complejos.\par
 
+
 \subsection{Agentes aut\'onomos y auto-organizaci\'on}
+
 Un agente autónomo es una unidad que interactúa con su entorno (el cual probablemente consta de otros agentes) pero actúa independientemente de todos los demás agentes porque no toma decisiones con respecto a algún líder o plan global a seguir. Es decir, cada agente actúa por sí mismo.\par
 
 Así, veremos cómo múltiples agentes pueden desempeñar tareas que aparentan seguir un plan global. A este proceso en el que cada agente autónomo interactúa a su propia manera para crear un orden global se le conoce como auto-organización y se observa cómo modelos simples son capaces de generar comportamientos complejos.\par
 
-\section{Planteamiento}
 
 \subsection{Modelo de termitas}
+
 Mitchel \cite{Resnick1994} estudió varios sistemas de agentes primitivos, uno de ellos fueron las termitas teóricas dentro de un espacio con astillas esparcidas que seguían las siguientes reglas:
 
 \begin{itemize}
@@ -65,12 +67,14 @@ Tras cientos de miles de pasos en la ejecución de la simulación, como se muest
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{termitas/screen4.png}
-  \caption{Termitas colocando aleatoriamente astillas con las reglas definidas anteriormente.}
+  \caption{Termitas colocando aleatoriamente astillas con las reglas definidas anteriormente, tomada de \cite{Resnick1994}.}
   \label{fig:termitasaleatorias}
 \end{figure}
 
 
+
 \section{Desarrollo e implementaci\'on}
+
 
 Los resultados anteriores son reportados por el propio Resnick, sin embargo, para mostrar que es posible llegar al mismo resultado, se lleva a cabo una implementación con el lenguaje de programación \classname{Processing}.
 Al alumno se le proporciona parte de la implementación, de manera que se enfoque únicamente en programar el comportamiento descrito y evitando perder tiempo en la interfaz gráfica.
@@ -133,7 +137,7 @@ El archivo \classname{termitas/Termitas.java} contiene parte del código de la s
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{termitas/sinastillas.png}
-  \caption{Captura de pantalla del código \classname{Termitas.pde} de Processing.}
+  \caption{Captura de pantalla de \classname{Termitas.java}, que hace uso de Processing.}
   \label{fig:sinastillas}
 \end{figure}
 
