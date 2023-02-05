@@ -8,12 +8,12 @@ Dado un problema o modelo es posible determinar las características del mundo d
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.4\textwidth]{estados/screen1.png}
+  \includegraphics[width=0.4\textwidth]{estados/tableroAjedrez.png}
   \caption{Estado inicial del juego de ajedrez.}
   \label{fig:ajedrez}
 \end{figure}
 
-Cuando una pieza se mueve, el estado del ajedrez cambia; pues la posición y cantidad de las piezas en juego determinan el estado del ajedrez.  De esta manera el \emph{espacio de estados} se representa como una gráfica donde cada nodo representa un estado del problema y las aristas que los unen son la aplicación de un operador o función.\par
+Cuando una pieza se mueve, el estado del ajedrez cambia; pues la posición y cantidad de las piezas en juego determinan el estado del ajedrez.  De esta manera el \emph{espacio de estados} se representa como una gráfica donde cada nodo representa un estado del problema y las aristas que los unen son la aplicación de una \emph{acción} (u \textit{operador aterrizado}).\par
 
 
 \begin{figure}
@@ -25,31 +25,31 @@ Cuando una pieza se mueve, el estado del ajedrez cambia; pues la posición y can
 
 \footnotetext{Milton A. Ramírez Klapp, Notas de Inteligencia Artificial, Universidad San Sebastián, Facultad de Ingeniería y Tecnología.}
 
-Es decir, el espacio de estados son todas las posibles configuraciones del problema. En el caso del ajedrez, las operaciones que unen cada estado en la gráfica representan el movimiento de una pieza por parte del jugador y son el otro elemento requerido para el definir el \emph{sistema de transiciones de estados}.\par
+Es decir, el espacio de estados son todas las posibles configuraciones del problema. En el caso del ajedrez, las acciones que unen cada estado en la gráfica representan el movimiento de una pieza por parte del jugador y son el otro elemento requerido para el definir el \emph{sistema de transiciones de estados}.\fref{fig:espacioestados}
 
 
 \section{Desarrollo e implementaci\'on}
 
-La práctica consiste de generar los sucesores de los estados válidos del juego del Gato (también llamado Tres en línea).\par
-Recordemos que el juego del Gato es entre dos jugadores, representados por los símbolos \enquote{\classname{X}} y \enquote{\classname{O}} que toman turnos para marcar los espacios de un tablero de 3x3.
-Un jugador gana cuando logra tener una línea, ya sea horizontal, vertical o diagonal, de 3 símbolos correspondientes.\par
+La práctica consiste en generar el sistema de transiciones de estados para el juego del Gato (también llamado \textit{Tres en línea}).  Para ello se requiere calcular a los sucesores de cada estado válido del juego y ensamblar el grafo de transiciones.  Para generar y almacenar este grafo se utiliza una estructura conocida como \emph{nodo de búsqueda}.  Para esta práctica el tipo nodo corresponderá a la clase \code{Gato}, la cual se caracteriza por contener la información del estado que contiene y la lista de nodos con los estados sucesores alcanzables mediante alguna jugada desde el nodo actual.
+
+Recordemos que el juego del Gato es entre dos jugadores, representados por los símbolos \enquote{\classname{O}} y \enquote{\classname{X}}, que toman turnos para marcar los espacios vacíos de un tablero de 3x3.
+Un jugador gana cuando logra tener una línea, ya sea horizontal, vertical o diagonal, de 3 símbolos correspondientes. \fref{fig:tictactoe}
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{estados/screen2.png}
-  \caption{Ejemplo de un juego de Gato donde gana el jugador \enquote{\classname{X}}. \protect\footnotemark}
+  \includegraphics[width=0.7\textwidth]{estados/jugadagato.png}
+  \caption{Ejemplo de un juego de Gato donde gana el jugador \enquote{\classname{O}}.}
   \label{fig:tictactoe}
 \end{figure}
-
-\footnotetext{Autor: Gdr (http://en.wikipedia.org/wiki/User:Gdr)}
 
 Afortunadamente el juego del Gato es lo bastante simple como para evitar ciclarse al generar el espacio de estados y eso es una característica importante que ayuda a la construcción del espacio de estados, ya que  podemos hacer uso de un árbol (que es un tipo especial de gráfica) para almacenar los estados.\par
 
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{estados/screen3.png}
-  \caption{Espacio de búsqueda en el juego del Gato representado como un árbol.}
+  \includegraphics[scale=0.45]{estados/screen3.png}
+  \includegraphics[scale=0.45]{estados/screen3sim.png}
+  \caption{\textbf{Izquierda:} Espacio de búsqueda en el juego del Gato representado como un árbol sin hacer detección de simetrías. \textbf{Derecha:} Espacio de búsqueda en el juego del Gato representado como un árbol eliminando estados equivalentes por simetría.}
   \label{fig:espaciogato}
 \end{figure}
 
@@ -57,15 +57,15 @@ Por tanto, se necesitan los siguientes elementos para representar el espacio de 
 
 \begin{enumerate}
   \item \textbf{Representación del estado} \hfill\par
-    Una manera de representar el estado del Gato, se usará la siguiente idea:\medskip
+    Una manera de representar el estado del Gato es haciendo uso de una matriz $3 \times 3$:\medskip
     
-    \classname{int[][] tablero = [[0,0,1], [0,0,0], [4,4,0]]}
+    \classname{int[][] tablero = \{\{1,0,1\}, \{0,0,0\}, \{4,4,0\}\}}
 
     \begin{figure}[h!]
       \begin{center}
         \begin{tabular}{c l | l | l }
            & \multicolumn{1}{c}{\tiny{0}} & \multicolumn{1}{c}{\tiny{1}} & \multicolumn{1}{c}{\tiny{2}} \\
-           \multicolumn{1}{c}{\tiny{0}} &   &   & O \\ \cline{2-4}
+           \multicolumn{1}{c}{\tiny{0}} & O &   & O \\ \cline{2-4}
            \multicolumn{1}{c}{\tiny{1}} &   &   &   \\ \cline{2-4}
            \multicolumn{1}{c}{\tiny{2}} & X & X &
         \end{tabular}
@@ -78,7 +78,7 @@ Por tanto, se necesitan los siguientes elementos para representar el espacio de 
 
 
   \item \textbf{Función generadora}\hfill \\
-    Se necesitará implementar una función que genere los sucesores de un estado del juego del Gato, considerando sólo las jugadas válidas y descartando simetrías.
+    Se necesitará implementar una función que genere los sucesores de un estado del juego del Gato, considerando sólo las jugadas válidas y descartando simetrías.  Esto es: si dos tableros son iguales bajo rotación ($90\degree, 180\degree, 270\degree$) o reflexión (horizontal, vertical y diagonal) basta con generar uno de ellos, pues las jugadas que le sigan seguirán siendo idénticas bajo la misma operación de simetría. \fref{fig:espaciogato}
 
   \item \textbf{Función de comprobación} \hfill \\
     Se necesitará implementar una función que verifique si hubo ganador en un estado dado, utilizando una bandera para indicar que no se debe generar sucesores de ese estado, para evitar generar estados inalcanzables.
@@ -86,24 +86,23 @@ Por tanto, se necesitan los siguientes elementos para representar el espacio de 
 
 
 \subsection{Implementaci\'on}
-Se volverá a trabajar con \classname{Processing}.
 
-Se debe programar lo referente a generación de sucesores de un estado, verificación de simetrías y agregar variables que lleven el conteo de empates y juegos ganados por cada jugador, esto se imprimirá junto con la información de nodos del nivel generado.
+Se volverá a trabajar con \classname{Processing}.  Se debe programar lo referente a la generación de sucesores de un estado, verificación de simetrías y agregar variables que lleven el conteo de empates y juegos ganados por cada jugador, esto se imprimirá junto con la información de los nodos del nivel generado.
 
 \noindent En pocas palabras es necesario implementar los siguientes métodos:
 
-\begin{itemize}
+\begin{compactitem}
   \item \classname{LinkedList<Gato> generaSucesores()}
-  \item \classname{boolean esSimetricoDiagonalInvertida(Gato otro)}
-  \item \classname{boolean esSimetricoDiagonal(Gato otro)}
-  \item \classname{boolean esSimetricoVerticalmente(Gato otro)}
-  \item \classname{boolean esSimetricoHorizontalmente(Gato otro)}
-  \item \classname{boolean esSimetrico90(Gato otro)}
-  \item \classname{boolean esSimetrico180(Gato otro)}
-  \item \classname{boolean esSimetrico270(Gato otro)}
-\end{itemize}
+  \item \classname{boolean esSimétricoDiagonalInvertida(Gato otro)}
+  \item \classname{boolean esSimétricoDiagonal(Gato otro)}
+  \item \classname{boolean esSimétricoVerticalmente(Gato otro)}
+  \item \classname{boolean esSimétricoHorizontalmente(Gato otro)}
+  \item \classname{boolean esSimétrico90(Gato otro)}
+  \item \classname{boolean esSimétrico180(Gato otro)}
+  \item \classname{boolean esSimétrico270(Gato otro)}
+\end{compactitem}
 
-\noindent Cada método se encuentra especificado dentro del archivo \classname{Gatos.java}.
+\noindent Cada método se encuentra especificado dentro de los archivos \classname{Gatos.java} y \classname{Gato.java}.
 
 
 \subsection{Punto extra}
@@ -113,9 +112,8 @@ Si lo desean pueden extenderse e implementar una función de dispersión (\texti
 \section{Requisitos y resultados}
 
 Para evaluar y calificar la práctica es necesario que se implementen todos los métodos mencionados e indicados en el código, respetando implementar sólo lo que se pide (para evitar comportamientos extraños de la simulación).
-Es completamente válido utilizar bibliotecas adicionales si lo consideran necesario, así como la creación y uso de sus propios métodos auxiliares si lo desean.
+Es completamente válido utilizar bibliotecas adicionales si lo consideran necesario, así como la creación y uso de sus propios métodos auxiliares si lo desean. Si crean métodos auxiliares, no olviden documentar cuál es su función.
 
 Deben correr su simulación de los espacios de estados del Gato sin simetrías, y después con ellas. Agreguen en su archivo \classname{readme} un pequeño párrafo detallando sus observaciones con respecto a lo anterior.
 
-Si crean métodos auxiliares, no olviden documentar cuál es su función.
 
