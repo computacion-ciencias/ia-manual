@@ -10,13 +10,13 @@ Implementar un algoritmo genético que resuelva y optimice un problema dado.
 
 Un algoritmo genético es una heurística de búsqueda que está basada en el proceso de \textbf{selección natural}.  Su objetivo es encontrar soluciones óptimas a problemas combinatorios. La selección natural es un proceso gradual mediante el cual las características biológicas se vuelven más o menos comunes en una población. Esto depende de las características heredadas y de la diferencia de éxito reproductivo de los organismos que interactúan con su entorno. La selección natural es el mecanismo clave de la \textbf{evolución}. El término de “selección natural” fue popularizado por Charles Darwin desde el año de 1859.
 
-\section{Metodolog\'ia}
+\subsection{Metodolog\'ia}
 
 En un algoritmo genético, una \textbf{población} de candidatos a solución (también llamados \textbf{individuos} o fenotipos) es evolucionada para obtener soluciones óptimas del problema. Cada individuo tiene una representación (sus cromosomas o genotipo) que puede ser alterada o mutada; tradicionalmente, las representaciones son cadenas binarias de 0’s y 1’s, pero otras representaciones son posibles.\par
 
 La evolución es un proceso iterativo mediante el cual se generan individuos aleatoriamente para crear otra población en cada iteración, llamada \textbf{generación}. En cada generación, la \textbf{aptitud} (\textit{fitness}) de cada individuo es evaluada. Usualmente la aptitud es el valor de la función objetivo del problema de optimización que se quiere resolver. Se seleccionan de manera aleatoria individuos de la población para que modifiquen su genoma, \textbf{recombinando} y posiblemente \textbf{mutando} aleatoriamente sus componentes para formar una nueva generación. La nueva generación de posibles soluciones es usada en la siguiente iteración del algoritmo. Comúnmente, el algoritmo termina cuando se alcanza el número máximo de iteraciones o el valor de aptitud de un individuo se ha aproximado lo suficiente a un valor óptimo.
 
-\section{Requisitos del algoritmo gen\'etico}
+\subsection{Requisitos del algoritmo gen\'etico}
 
 \begin{enumerate}
   \item Una \textbf{representación} genética del dominio de la solución.
@@ -26,13 +26,13 @@ La evolución es un proceso iterativo mediante el cual se generan individuos ale
 \noindent La representación estándar de cada individuo es un arreglo de bits, sin embargo, arreglos de otro tipo y estructuras funcionan esencialmente de la misma manera. El motivo por el cual se prefiere la representación estándar es porque facilita las operaciones de recombinación debido a la longitud fija del arreglo, también la operación de mutación se vuelve trivial como se notará más adelante.
 
 
-\section{Componentes del algoritmo gen\'etico}
+\subsection{Etapas del algoritmo gen\'etico}
 
-\subsection{Inicializaci\'on}
+\subsubsection{Inicializaci\'on}
 
 Usualmente se genera una cantidad de soluciones posibles de manera aleatoria para formar la población inicial. El tamaño de la población depende del problema y puede llegar a contener cientos de miles de individuos.
 
-\subsection{Selecci\'on}
+\subsubsection{Selecci\'on}
 
 La selección es una etapa del algoritmo genético en la cual se selecciona un individuo de la población que después será recombinado con otro.\par
 
@@ -44,17 +44,17 @@ donde \(N\) es el número de individuos en la población.\par
 
 Esto es similar a imaginar una ruleta de casino. Usualmente una proporción de la rueda de la ruleta es asignada a cada posible individuo basado en su aptitud. Esto se logra al dividir la aptitud de cada individuo entre el total de aptitud de todos los individuos, que es equivalente a normalizarlos a 1. Entonces un individuo es aleatoriamente seleccionado de la manera en que lo haría una ruleta que está girando.
 
-\subsection{Operadores gen\'eticos}
+\subsubsection{Operadores gen\'eticos}
 
-\subsubsection{Recombinaci\'on}
+\paragraph{Recombinaci\'on}
 
 La recombinación es el operador genético que permite la variación de cromosomas de los individuos de la población de una generación a otra. Es análoga a la reproducción y la recombinación biológica. El proceso de recombinación consiste en tomar más de un individuo y producir un nuevo hijo o solución.\par
 
-Hay varias técnicas de recombinación, la más habitual es la recombinación de un punto y consiste en seleccionar aleatoriamente un mismo punto de corte dentro de la cadena de cromosomas de los padres e intercambiar sus contenido para generar nuevos hijos:
+Hay varias técnicas de recombinación, la más habitual es la recombinación de un punto y consiste en seleccionar aleatoriamente un mismo punto de corte dentro de la cadena de cromosomas de los padres e intercambiar su contenido para generar nuevos hijos:
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.6]{geneticos/screen1.png}
+  \includegraphics[scale=0.6]{geneticos/cruce.png}
   \caption{Operación genética recombinación de un punto.}
 \end{figure}
 
@@ -70,7 +70,7 @@ Hay varias técnicas de recombinación, la más habitual es la recombinación de
   \caption{Ejemplo numérico de recombinación.}
 \end{table}
 
-\subsubsection{Mutaci\'on}
+\paragraph{Mutaci\'on}
 
 La mutación es el operador genético que mantiene la diversidad genética de una generación a otra, de manera análoga a la mutación biológica. La mutación altera uno o más de los genes (valores) en el cromosoma. Esta alteración puede cambiar por completo la solución antes de aplicar el operador de mutación y puede llegar a obtener mejores soluciones (o peores) dentro del algoritmo genético.\par
 
@@ -86,7 +86,7 @@ Las mutaciones ocurren valor por valor en un individuo de acuerdo a una probabil
   \caption{Ejemplo del operador de mutación.}
 \end{table}
 
-\subsection{Terminaci\'on del algoritmo}
+\subsubsection{Terminaci\'on del algoritmo}
 
 Las iteraciones del algoritmo genético se terminan hasta que se alcanza alguna de las condiciones de terminación, que pueden ser:
 
@@ -100,7 +100,6 @@ Las iteraciones del algoritmo genético se terminan hasta que se alcanza alguna 
 \end{itemize}
 
 
-\subsection{Variaciones}
 
 \subsubsection{Elitismo}
 
@@ -128,8 +127,8 @@ Esta representación es muy conveniente porque evita que las reinas se ataquen p
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.5]{geneticos/screen2.png}
-  \caption{La representación del tablero sería [8, 3, 7, 4, 2, 5, 1, 6].}
+  \includegraphics[scale=0.3]{geneticos/NReinas.png}
+  \caption{La representación del tablero sería [1, 6, 2, 5, 7, 4, 8, 3].}
   \label{fig:P8screen2}
 \end{figure}
 
@@ -184,6 +183,8 @@ Para asegurarnos de mantener al menos una solución lo suficientemente buena, se
 
 El comportamiento general del algoritmo genético puede representarse a través del siguiente pseudocódigo:\medskip
 
+\begin{algorithm}
+\caption{Algoritmo genético}
 \begin{algorithmic}
   \State $poblaci\acute{o}n\gets new Poblaci\acute{o}n(50)$
   \State $poblaci\acute{o}n.asignarAptitud()$
@@ -201,6 +202,7 @@ El comportamiento general del algoritmo genético puede representarse a través 
   \EndWhile
   \State $print(poblaci\acute{o}n.mejorIndividuo())$
 \end{algorithmic}
+\end{algorithm}
 
 \section{Requisitos y resultados}
 
