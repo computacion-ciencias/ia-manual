@@ -24,7 +24,7 @@ El objetivo de este algoritmo es construir un escenario que consiste en una seri
  \item Es posible llegar a cualquier punto del laberinto desde cualquier otro punto.  Es decir, no hay regiones cerradas inaccesibles.
  \item La ruta entre dos puntos cualquiera del laberinto es única.
 \end{itemize}
-Por lo tanto, es posible seleccionar un punto como \textit{inicio} y cualquie otro como \textit{destino} y existe un único camino entre ellos.
+Por lo tanto, es posible seleccionar un punto como \textit{inicio} y cualquier otro como \textit{destino} y existe un único camino entre ellos.
 
 Para definir este problema se empleó el ejemplo de la siguiente página para ver la construcción (primer ejemplo: ``\textit{recursive backtracker}''):
 \href{http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap}{Recursive Backtracker}
@@ -36,7 +36,7 @@ También hay una liga sobre el algoritmo y una implementación hecha en lenguaje
 \noindent A continuación se explica la construcción del laberinto, con un algoritmo que satisface los requisitos anteriores:
 
 \begin{enumerate}
-  \item El algoritmo comienza con un tablero de celdas de tamaño N x M.
+  \item El algoritmo comienza con un tablero de celdas de tamaño N x M. \fref{fig:tablero1}
     \begin{figure}[h!]
       \centering
       \includegraphics[width=0.2\textwidth]{retractacion/screen1.png}
@@ -44,15 +44,15 @@ También hay una liga sobre el algoritmo y una implementación hecha en lenguaje
       \label{fig:tablero1}
     \end{figure}
     
-  \item Se elige una celda aleatoriamente como la celda \textit{inicial}/actual, se marca como visitada y se agrega al stack.
+  \item Se elige una celda aleatoriamente como la celda \textit{inicial}/actual, se marca como visitada y se agrega a la pila. \fref{fig:tablero2}
     \begin{figure}[h!]
       \centering
       \includegraphics[width=0.2\textwidth]{retractacion/screen2.png}
-      \caption{}
+      \caption{Celda inicial.}
       \label{fig:tablero2}
     \end{figure}
     
-  \item Se elige de manera aleatoria una dirección hacia donde moverse, esto consiste en elegir una casilla adyacente que no haya sido visitada. Dependiendo de la dirección elegida se debe borrar la pared correspondiente. Se marca como visitada la celda, se empuja a una pila de celdas y se actualiza la celda actual.
+  \item Se elige de manera aleatoria una dirección hacia donde moverse, esto consiste en elegir una casilla adyacente que no haya sido visitada. Dependiendo de la dirección elegida se debe borrar la pared correspondiente. Se marca como visitada la celda, se empuja a una pila de celdas y se actualiza la celda actual. \fref{fig:tablero3}
     \pagebreak
     \begin{figure}[h!]
       \centering
@@ -61,7 +61,7 @@ También hay una liga sobre el algoritmo y una implementación hecha en lenguaje
       \label{fig:tablero3}
     \end{figure}
     
-  \item El paso anterior se repite hasta que ya no haya direcciones por elegir, es decir, se queda encerrada la celda actual.
+  \item El paso anterior se repite hasta que ya no haya direcciones por elegir, es decir, la celda actual se queda encerrada. \fref{fig:tablero4}
     \begin{figure}[h!]
       \centering
       \includegraphics[width=0.2\textwidth]{retractacion/screen4.png}
@@ -69,7 +69,7 @@ También hay una liga sobre el algoritmo y una implementación hecha en lenguaje
       \label{fig:tablero4}
     \end{figure}
     
-  \item Estando encerrados sin poder elegir una celda adyacente sin visitar, se procede a explusar una celda de la pila para cambiar la posición de la celda actual y repetir el algoritmo desde el paso 3 hasta recorrer todo el tablero de celdas.
+  \item Estando encerrados sin poder elegir una celda adyacente sin visitar, se procede a explusar una celda de la pila para cambiar la posición de la celda actual y repetir el algoritmo desde el paso 3 hasta recorrer todo el tablero de celdas.\fref{fig:tablero5} y \fref{fig:tablero6}
     \begin{figure}[h!]
       \centering
       \includegraphics[width=0.6\textwidth]{retractacion/screen5.png}
@@ -88,17 +88,17 @@ También hay una liga sobre el algoritmo y una implementación hecha en lenguaje
 
 \subsection{Implementaci\'on}
 
-Se debe implementar tanto la lógica de construcción del laberinto como su visualización. Se recomienda usar \classname{Processing/Java} ya que solo requiere usar las primitivas de dibujo: \classname{stroke()} y \classname{line()}. Adicionalmente también pueden usar: \classname{fill()} y \classname{rect()}. Es recomendable usar los siguientes métodos para una adecuada visualización: \classname{background()} y \classname{size()}.
+Se debe implementar tanto la lógica de construcción del laberinto como su visualización. Utilicen \classname{Processing/Java} ya que solo requiere usar las primitivas de dibujo: \classname{stroke()} y \classname{line()}. Adicionalmente también pueden usar: \classname{fill()} y \classname{rect()}. Es recomendable usar los siguientes métodos para una adecuada visualización: \classname{background()} y \classname{size()}.  El material auxiliar para esta práctica ya incluye cómo dibujar el laberinto.
 
 
 
 \section{Requisitos y resultados}
 
-Para llevar a cabo la evaluación de esta práctica es necesario implementar la construcción del laberinto usando retractación. Empleen como estructura auxiliar durante la construcción una pila o stack.
+Para llevar a cabo la evaluación de esta práctica es necesario implementar la construcción del laberinto usando retractación. Empleen como estructura auxiliar durante la construcción una pila (\textit{stack}).
 
 La implementación debe ser lo más generalizada y robusta posible, es decir, se deben definir parámetros o valores para determinar el ancho y largo del laberinto.
 
-No olviden documentar su código. De preferencia utilicen el estándar de \classname{JavaDoc}, de no hacerlo, al menos describan de manera breve, clara y concisa el funcionamiento de sus métodos. Si omiten documentación en su código les afectará negativamente en su calificación.
+No olviden documentar su código. Utilicen el estándar de \classname{JavaDoc}, describan de manera breve, clara y concisa el funcionamiento de sus métodos. Si omiten documentación en su código les afectará negativamente en su calificación.
 
 El ejemplo visto en laboratorio se construye en tiempo de ejecución. Es deseable que se muestre esta construcción pero no es necesaria. Es válido mostrar el resultado final aunque no se visualice la construcción.
 
