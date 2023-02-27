@@ -1,6 +1,6 @@
 \section{Objetivo}
 
-Que el alumno se familiarice con una estrategia de mejoramiento iterativa para la resolución de problemas mediante búsquedas en el espacio de estados, conocida como recocido simulado.
+Que el alumno se familiarice con la estrategia de mejoramiento iterativa para la resolución de problemas mediante búsquedas en el espacio de estados, conocida como recocido simulado.
 
 
 
@@ -42,21 +42,30 @@ El pseudocódigo de este algoritmo es descrito en el libro de  \cite{Russell2010
 
 Este problema consiste en encontrar, dada una lista de ciudades, una ruta que pueda seguir un agente para recorrer todas las ciudades y volver a aquella en la cual inició el viaje.  Para que este recorrido valga la pena debe ser lo más económico posible o, en su defecto, recorrer la menor distancia que permita visitar todas las ciudades.
 
-Este problema es ampliamente conocido por ser de la clase NP-Completo, es decir, que conoce algoritmo determinista que pueda resolverlo en tiempo polinomial, afortunadamente para esta práctica no usaremos un algoritmo de tal tipo y podremos aproximarnos a una solución en un tiempo razonable.
+Este problema es ampliamente conocido por ser de la clase NP-Completo, es decir, que no se conoce ningún algoritmo determinista que pueda resolverlo en tiempo polinomial, afortunadamente para esta práctica no usaremos un algoritmo de tal tipo y podremos aproximarnos a una solución en un tiempo razonable.
 
 
 
 \section{Desarrollo e implementaci\'on}
 
-Se les proporcionará código fuente en Java, que deberán completar con la finalidad de resolver el problema del agente viajero.
+Para esta práctica cuentas con código auxiliar en Java, que deberás completar con la finalidad de resolver el problema del agente viajero.
 
-El código fuente se encuentra en los archivos: \code{Solución.java}, que se encargará de representar una ruta del agente viajero que pase por todas las ciudades, y el archivo \code{RecocidoSimulado.java}, que implementará el algoritmo anteriormente descrito.
+El código fuente consta de los archivos:
+\begin{itemize}
+ \item \code{recocido/Solución.java}. Se encargará de representar una ruta del agente viajero que pase por todas las ciudades,
+
+ \item \code{recocido/RecocidoSimulado.java}.  Implementará el algoritmo anteriormente descrito.
+
+ \item \code{recocido/DatosPAV.java}.  Lee la información desde los archivos de datos con la información de las ciudades que se utilizarán.
+
+ \item \code{recocido/Main.java}.  Contiene el esqueleto con la idea principal de cómo utilizar el resto del código para buscar soluciones.
+\end{itemize}
 
 \subsection{Implementaci\'on}
 
 Se debe programar una clase hija de \code{Solución}.  Esta clase hija agregará los atributos del(de los) tipo(s) necesario(s) para representar una propuesta de solución al problema que se desea resolver.
 
-En la página \hurl{http://www.math.uwaterloo.ca/tsp/world/countries.html\#DJ} se pueden encontrar una serie de países con ciudades y sus correspondientes coordenadas.  Se incluye un ejemplar pequeño de esta página con esta práctica para que te sirva al probar tu código.  Si asumes una conectividad total de las ciudades y usas la distancia euclideana como métrica, tu tarea será tratar de aproximarte lo mejor posible a la longitud del camino óptimo para recorrer todas las ubicaciones de la ciudad seleccionada.  Puedes incorporar la información a tu programa como te sea más conveniente.
+En la página \hurl{http://www.math.uwaterloo.ca/tsp/world/countries.html\#DJ} se pueden encontrar una serie de países con ciudades y sus correspondientes coordenadas.  Se incluye un ejemplar pequeño de esta página con esta práctica para que te sirva al probar tu código.  Si asumes una conectividad total de las ciudades y usas la distancia euclideana como métrica, tu tarea será tratar de aproximarte lo mejor posible a la longitud del camino óptimo para recorrer todas las ubicaciones de las ciudades en el país seleccionado.  Puedes incorporar la información a tu programa como te sea más conveniente.
 
 Los métodos a implementar dentro de una clase hija de \code{Solución} son:
 \begin{itemize}
@@ -74,7 +83,7 @@ Los métodos a implementar dentro de una clase hija de \code{Solución} son:
  
  Califica la solución actual según la heurística elegida de acuerdo al problema a resolver.
  
- En este caso la evaluación estará relacionada con la longitud del recorrido propuesto por la solución actual.  La función de evaluación que elijas debe cumplir que el recorrido óptimo del problema del agente viajero satisface que $\acute{o}ptimo.evaluar() \leq s.evaluar()$ para toda posible solución.
+ En este caso la evaluación estará relacionada con la longitud del recorrido propuesto por la solución actual.  La función de evaluación que elijas debe cumplir que el recorrido óptimo del problema del agente viajero satisface que $\acute{o}ptimo.evaluar() \leq s.evaluar()$ para toda solución posible.
 \end{itemize}
 
 
@@ -107,10 +116,10 @@ Finalmente, en la clase \code{Main} se crea un objeto tipo \code{RecocidoSimulad
  \begin{itemize}
   \item Crea un objeto de la clase hija de \code{Solución} que implementaste, de modo que represente una primer ruta a través de la ciudad descrita en el archivo \code{.tsp}.
   
-  \item Calcula la temperatura inicial y decaimiento adecuados para ejecutar recocido simulado dependiendo del número de interacciones.
+  \item Calcula la temperatura inicial y decaimiento adecuados para ejecutar recocido simulado dependiendo del número de iteraciones.
  \end{itemize}
 
- \item Modifica el ciclo para monitorear la evolución del algoritmo entre interacciones.
+ \item Modifica el ciclo para monitorear la evolución del algoritmo entre iteraciones.
 \end{itemize}
 
 

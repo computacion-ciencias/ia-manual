@@ -7,13 +7,13 @@ Que el alumno implemente y refuerce su comprensión del algoritmo A*.
 
 Una de las aplicaciones más populares del algoritmo A* es el problema de navegación en videojuegos y robótica.  Por ello, un curso de Inteligencia Artificial no estaría completo sin haber implementado este algoritmo.  Comenzaremos siguiendo el ejemplo de Patrick \cite{Lester2003} en un mundo hecho de mosaicos.
 
-Vamos a asumir que tenemos un personaje que quiere ir desde un punto A hasta un punto B y que ambos puntos están separados por una pared. Este ejemplo se puede apreciar en la figura~\ref{fig:fig1P4}, donde el cuadrado verde es el punto A, el rojo es el punto B y el rectángulo azul, la pared mencionada anteriormente.  Curiosamente, este sencillo escenario no puede ser resuelto por ascenso de colinas, pero para A* es pan comido.
+En el ejemplo de Patrick, asumimos que tenemos un personaje que quiere ir desde un punto A hasta un punto B y que ambos puntos están separados por una pared. Este ejemplo se puede apreciar en la figura~\ref{fig:AEstrellaIni}, donde el cuadrado verde es el punto A, el rojo es el punto B y el rectángulo gris, la pared mencionada anteriormente.  Curiosamente, este sencillo escenario no puede ser resuelto por ascenso de colinas, pero para A* es pan comido.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.4\textwidth]{aestrella/screen1.jpg}
+  \includegraphics[width=0.4\textwidth]{aestrella/Barrera}
   \caption{Escenario construido con mosaicos discretos. El problema de búsqueda de caminos consiste en encontrar una ruta desde el cuadro verde al cuadro rojo.}
-  \label{fig:fig1P4}
+  \label{fig:AEstrellaIni}
 \end{figure}
 
 Si el mundo donde se encuentran nuestros personajes es continuo, el primer paso que debemos hacer es simplificar el área de búsqueda, dividiendo nuestro mundo en una rejilla de mosaicos cuadrados.  En los videojuegos algunos mundos ya son así desde un prinicipio.  En el caso de robótica se puede proceder a crear rejillas de ocupación discretizando las coordenadas del plano y representando al mundo con mosaicos ocupados/libres, semejantes a los de los videojuegos.  Con esto, podremos representar el mundo con una matriz bidimensional. Cada posición en la matriz representará un mosaico del mundo, el cual será transitable o no transitable. Entonces, el objetivo del algoritmo A* es calcular a qué mosaico nos debemos mover en cada turno para lograr llegar al punto B. Una vez calculado esto, el personaje del juego se moverá del centro del mosaico donde se encuentra actualmente al centro del mosaico obtenido con A*.  Observa entonces que cada mosaico del mundo es un estado posible para nuestro personaje.
@@ -24,71 +24,65 @@ Ahora pensaremos en el mundo como un grafo.  Cuando dos mosaicos son adyacentes 
 
 \subsection{Iniciando la b\'usqueda}
 
-Después de haber simplificado el área de búsqueda en nodos, el siguiente paso es dirigir una búsqueda para encontrar el camino más corto. En el algoritmo A* lo hacemos empezando desde el punto A, comprobando los cuadros adyacentes (estados sucesores) y generalmente buscando hacia fuera hasta que encontremos nuestro destino.
+Después de haber simplificado el área de búsqueda en nodos, el siguiente paso es dirigir una búsqueda para encontrar el camino más corto.  Comenzamos por el punto A, luego consideramos los cuadros adyacentes (estados sucesores) para ver en qué dirección movernos y continuamos alejándonos hasta que encontremos nuestro destino.
 
 \noindent Empezamos la búsqueda haciendo lo siguiente:
 
 \begin{enumerate}
-  \item Comenzamos en el punto inicial A y lo añadimos a una \textbf{lista abierta} de cuadrados a tener en cuenta. La lista contiene los cuadrados que podrían formar parte del camino que queremos tomar, pero que quizás no lo hagan. Básicamente, esta es una lista de los cuadrados que necesitan ser considerados. Si, por azares del destino, el punto A es igual al punto B, terminamos nuestra ejecución con un plan vacío: el personaje no necesita hacer nada, ya está en su destino.
+  \item Añadimos el punto inicial A a la \textbf{lista abierta}. Esta lista contiene los cuadrados que vamos a considerar para que formen parte del camino. Si, por azares del destino, el punto A es igual al punto B, terminamos nuestra ejecución con un plan vacío: el personaje no necesita hacer nada, ya está en su destino.
   
   \item Sacamos el cuadro inicial A de la lista abierta y lo añadimos a una \textbf{lista cerrada} de cuadrados que no necesitan ser vistos de nuevo.
   
-  \item Nos fijamos en todos los cuadrados alcanzables o transitables adyacentes al punto de inicio, ignorando cuadrados con muros, agua u otros terrenos prohibidos. Se añaden a la lista abierta también. Por cada uno de esos cuadrados, guardamos el punto A como su \textbf{cuadrado padre}. El cuadrado padre es muy importante para trazar nuestro camino.  La estructura dentro de la cual guardaremos esta información, y que ofreceremos a la lista abierta, se llama \textbf{nodo de búsqueda}.
+  \item Nos fijamos en todos los cuadrados alcanzables o transitables adyacentes al punto de inicio, ignorando cuadrados no transitables (por contener muros, muebles, agua, precipicios, etc.). Se añaden a la lista abierta, marcando que el punto A es su \textbf{cuadrado padre}, pues estamos considerando llegar desde ahí. El cuadrado padre es muy importante para trazar nuestro camino.  La estructura dentro de la cual guardaremos esta información, y que ofreceremos a la lista abierta, se llama \textbf{nodo de búsqueda}.
 \end{enumerate}
 
-En este punto, se tendrá algo como la figura~\ref{fig:fig2P4}. En este diagrama, el cuadrado verde oscuro del centro es el cuadrado de inicio. Está bordeado de azul claro para indicar que el cuadrado ha sido añadido a la lista cerrada. Todos los cuadros adyacentes están ahora en la lista abierta para ser considerados. Cada uno tiene un puntero gris que señala a su padre, el cual es el cuadro inicial.
+En este punto, se tendrá algo como la figura~\ref{fig:fig2P4}, en un momento explicaremos el significado de los números en las casillas. En este diagrama, el cuadrado verde es el \textbf{estado inicial} y ya ha sido añadido a la lista cerrada. Todos los cuadros adyacentes están ahora en la lista abierta para ser considerados. Cada uno tiene un indicador que señala a su padre, que es el cuadro inicial.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.3\textwidth]{aestrella/screen2.png}
+  \includegraphics[width=0.4\textwidth]{aestrella/PrimerosVecinos.png}
   \caption{Mosaicos en la lista abierta con referencia a su padre.}
   \label{fig:fig2P4}
 \end{figure}
 
-
-Después, elegimos uno de los cuadrados adyacentes de la lista abierta y más o menos repetimos el proceso anterior. Pero, ¿qué cuadro se debe elegir? Aquel que tenga costo estimado \(f(n)\) más bajo.
+Ahora necesitamos elegir a uno de los cuadrados de la lista abierta para explorar esa ruta. Elegimos aquel vecino que tenga costo estimado más bajo, es decir, aquel que promete estar más cerca de la meta, hasta donde sabemos, para ello calcularemos la función $f(n)$.
 
 \subsection{Puntuando el camino}
 
-La clave para determinar qué cuadrados usaremos para resolver el camino está en la siguiente ecuación:\medskip
+Para determinar qué cuadrado exploraremos a continuación usaremos la siguiente ecuación:
 
 \begin{center}
 \(f(n) = g(n) + h(n)\)
-\end{center}\medskip
+\end{center}
 
 donde:
 
 \begin{itemize}
-  \item \(g(n)\) es el costo del movimiento para ir desde el punto inicial A a un cierto cuadro \(n\) de la rejilla, siguiendo el camino generado para llegar ahí.
-  \item \(h(n)\) es el costo del movimiento estimado para ir desde ese cuadro \(n\) hasta el destino final, el punto B. Esto se conoce como la heurística. Aquí se verá una forma de calcular la heurística, pero no es la única.
+  \item \(g(n)\) es el costo del movimiento para ir desde el punto inicial A al cuadro \(n\) de la rejilla, siguiendo el camino que se ha ido generado para llegar ahí.
+
+  \item \(h(n)\) es el costo estimado del movimiento para ir desde ese cuadro \(n\) hasta el destino final, el punto B. Si conociéramos ese costo exactamente no necesitaríamos buscar la mejor ruta, bastaría con movernos hacia el vecino con el valor más bajo, en lugar de ello sólo contaremos con una aproximación, a esta se le llama \textbf{heurística}.  Cuando se trata de problemas de desplazamiento, como es el caso aquí, una aproximación utilizada frecuentemente es la distancia Euclidiana (la ruta más corta, si no hubiera obstáculos, sería la línea recta), aunque existen otras aproximaciones, que pueden ser más o menos adecuadas, dependiendo del ambiente.
 \end{itemize}
 
-Nuestro camino se genera al ir repetidamente a través de nuestra lista abierta eligiendo el cuadrado con la puntuación \(f(n)\) más baja. Este proceso se describirá con más detalle un poco más adelante. Primero veamos más de cerca cómo calculamos esta puntuación.
+Para generar el camino completo de A a B, tendremos que ir sacando a los nodos de la lista abierta con menor \(f(n)\) hasta llegar a la meta.  Sin embargo, calcular esta función tiene su chiste, pues su valor puede cambiar conforme exploramos.  Veamos entonces cómo se hace ese cálculo.
 
-Tal y como está descrito arriba, \(g(n)\) es el costo del movimiento para ir desde el punto de inicio a un cuadro \(n\) usando el camino generado para llegar ahí. En esta práctica asignaremos un costo de 10 a cada cuadro vertical u horizontal hacia el que nos movamos, y un costo de 14 para un movimiento diagonal. Usamos estos números ya que es más simple poner 14 que \(\sqrt{2}\times10\) y porque usar números enteros es mucho más rápido para la computadora. Pronto descubrirás que los algoritmos de búsqueda pueden ser muy lentos si no usas atajos como éste.
+La primer función que podemos calcular es \(h(n)\), pues su valor no cambia una vez dado el ambiente.  Lo óptimo es calcularla la primera vez que el algoritmo ve al cuadrado \(n\), cuando crea el nodo búsqueda y lo inserta a la lista abierta.
 
-Ahora que hemos calculado el costo \(g(n)\) mediante un camino específico hasta cierto cuadro, la forma de resolver el costo \(g(n)\) del cuadro vecino suyo es tomar el costo \(g(n)\) de su padre, y luego añadirle 10 o 14 dependiendo de si el movimiento para llegar a él es ortogonal o se realiza en diagonal con respecto al cuadro padre.
+Además de la distancia Euclidiana, otra técnica para aproximar distancias es el método Manhattan, donde se calcula el número total de cuadros movidos horizontalmente y verticalmente para alcanzar el cuadrado destino desde el cuadro actual, sin hacer uso de movimientos diagonales e ignorando cualquier obstáculo.  Para hacer el cálculo numérico más eficiente (usar enteros en lugar de flotantes), se multiplicará el total por 10, esto nos ayudará a evitar más adelante el cálculo de una raíz cuadrada. Se llama método Manhattan porque está inspirado en la ciudad que lleva ese nombre, donde las manzanas están diseñadas en forma de rejilla y para ir desde un lugar a otro no es posible tomar atajos atravesando una manzana en diagonal.  Observa que esta estimación es mejor si el agente no puede moverse en diagonal, pues de este modo nunca sobreestimará qué tan lejos está la meta, pero la usarmos aquí de todos modos para mostrar qué sucede.
 
-\(h(n)\) puede ser estimado de diferentes maneras. El método que usaremos aquí se llama el método Manhattan, donde se calcula el número total de cuadros movidos horizontalmente y verticalmente para alcanzar el cuadrado destino desde el cuadro actual, sin hacer uso de movimientos diagonales e ignorando cualquier obstáculo. Luego multiplicamos el total por 10. Se llama método Manhattan porque es como calcular el número de manzanas que hay desde un lugar a otro, donde no puedes acortar atravesando en diagonal una manzana. Es una estimación de la distancia que queda, no necesariamente coincide con la distancia real, es por eso que se llama heurística.
 
-Observa que, mientras que \(g(n)\) solamente se puede calcular conforme se van eligiendo los nodos durante la búsqueda, el valor de \(h(n)\) sólo depende del punto B y el cuadrado \(n\), por lo que basta con calcular \(h(n)\) una sola vez y lo puedes hacer en cualquier momento.
+La siguiente función a estimar es \(g(n)\), el costo del movimiento para ir desde el punto de inicio al cuadro \(n\), usando el camino generado para llegar ahí.  Observa que por lo mismo, solamente se puede calcular conforme se van eligiendo los nodos durante la búsqueda.  En esta práctica asignaremos un costo de 10 por cada cuadro vertical u horizontal hacia el que nos movamos, y un costo de 14 para un movimiento diagonal (una aproximación razonable de \(\sqrt{2}\times10\)), pues usar números enteros es mucho más rápido para la computadora y, después de todo, sólo estamos estimando.
 
-\(f(n)\) se calcula sumando \(g(n)\) y \(h(n)\). El resultado del primer paso en nuestra búsqueda puede verse en la figura~\ref{fig:fig3P4}. Las puntuaciones \(f(n)\), \(g(n)\) y \(h(n)\) están escritas en cada cuadrado. En el cuadro inmediatamente a la derecha del cuadro inicial, se escribieron las letras F, G y H para indicar dónde se encuentran los valores de \(f(n)\), \(g(n)\) y \(h(n)\).
+Una vez calculado el costo \(g(n)\) mediante un camino específico hasta el cuadro $n$, el costo \(g(n')\) para su vecino $n'$, al que estamos llegando, es el costo \(g(n)\) de su padre más 10 o 14 dependiendo de si el movimiento para llegar a él es ortogonal o se realiza en diagonal con respecto al cuadro padre.
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.5\textwidth]{aestrella/screen3.png}
-  \caption{Cálculo de \(f\),\(g\) y \(h\) que se agregan a la lista abierta.}
-  \label{fig:fig3P4}
-\end{figure}
+\(f(n)\) se calcula sumando \(g(n)\) y \(h(n)\).  Los números en la \fref{fig:fig2P4} corresponden precisamente a estos cálculos.
 
-Así pues, observaremos algunos ejemplos de estos cuadros. En el cuadrado con letras, \(g(n)=10\). Esto es debido a que está solo a un cuadro del cuadrado inicial en dirección horizontal. Los cuadrados inmediatamente encima, abajo y a la izquierda del cuadrado inicial tienen todos el mismo valor \(g(n)\) de 10. Los cuadros diagonales tienen un valor \(g(n)\) de 14.
+En el cuadrado a la derecha del inicial \(g(n)=10\). Esto es debido a que está solo a un cuadro del cuadrado inicial en dirección horizontal. Los cuadrados inmediatamente encima, abajo y a la izquierda del cuadrado inicial tienen todos el mismo valor \(g(n)\) de 10. Los cuadros diagonales tienen un valor \(g(n)\) de 14.
 
-Las puntuaciones \(h(n)\) se calculan estimando la distancia Manhattan hasta el cuadrado rojo objetivo, moviéndose solo horizontal y verticalmente e \textbf{ignorando el muro} que está en el camino. Usando este método, el cuadro a la derecha del inicial, está a 3 cuadros del cuadrado rojo con una puntuación \(h(n)\) de 30. El cuadrado está a sólo 4 cuadros de distancia (recuerda que solo nos movemos en dirección horizontal y vertical) con una puntuación \(h(n)\) de 40. Probablemente podrás calcular las puntuaciones \(h(n)\) para los demás cuadros.  Observa que, para este mapa donde se permiten movimientos en diagonal, esta heurística no es admisible.
+Las puntuaciones \(h(n)\) se calculan estimando la distancia Manhattan desde $n$ hasta el cuadrado objetivo (en rojo), moviéndose solo horizontal y verticalmente e \textbf{ignorando el muro} que está en el camino. Usando este método, el cuadro a la derecha del inicial, está a 3 cuadros del cuadrado rojo lo que da una puntuación \(h(n)\) de 30. Los cuadrados arriba y abajo del incial están a sólo 4 cuadros de distancia (tomando sólo movimientos en dirección horizontal y vertical), dando una puntuación \(h(n)\) de 40.  Observa que, para este mapa donde se permiten movimientos en diagonal, esta heurística no es \textbf{admisible}, pues la ruta más corta puede utilizar diagonales y, entonces, estar más cerca de lo que estima.  La consecuencia es qu A* no siempre encuentra la ruta óptima en estas condiciones.
 
 \subsection{Continuando la b\'usqueda}
 
-Para continuar la búsqueda, simplemente elegimos la puntuación \(f(n)\) más baja de todos aquellos que estén en la lista abierta. Para que esta operación se realize lo más eficientemente posible, la lista abierta se implementará con una cola de prioridades. Después hacemos lo siguiente con el cuadro seleccionado:
+Para continuar la búsqueda, se elige al nodo con la puntuación \(f(n)\) más baja de todos aquellos que estén en la lista abierta. Para que esta operación se realize lo más eficientemente posible, la lista abierta se implementará con una cola de prioridades. Después hacemos lo siguiente con el cuadro seleccionado:
 
 \begin{enumerate}
   \item Lo sacamos de la lista abierta y lo añadimos a la lista cerrada.  
@@ -100,7 +94,7 @@ Para continuar la búsqueda, simplemente elegimos la puntuación \(f(n)\) más b
    
    \item Añadimos los cuadros a la lista abierta si no están ya en esa lista. Hacemos que el cuadro seleccionado sea el \textbf{padre} de los cuadros nuevos.
    
-   \item Si el cuadro adyacente ya está en la lista abierta, comprobamos si el camino nuevo a ese cuadro es mejor que el que tenía, es decir, si el valor de \(g(n)\) con este padre es menor que el que se había estimado con su padre anterior. Si no es así, no haremos nada. Por otro lado, si el costo \(g(n)\) del nuevo camino es más bajo, cambiamos el padre del cuadro adyacente al cuadro seleccionado (en el diagrama superior, cambia la dirección del puntero para que señale al cuadro seleccionado). Finalmente, recalculamos \(f(n)\) y \(g(n)\) de ese cuadrado.
+   \item Si el cuadro adyacente ya está en la lista abierta, comprobamos si el camino nuevo a ese cuadro es mejor que el que tenía, es decir, si el valor de \(g(n)\) con este padre es menor que el que se había estimado con su padre anterior. Si no es así, no haremos nada. Por otro lado, si el costo \(g(n)\) del nuevo camino es más bajo, cambiamos el padre del cuadro adyacente al cuadro seleccionado (en el diagrama superior, cambia la dirección del puntero para que señale al cuadro seleccionado). Finalmente, recalculamos \(f(n)\) y \(g(n)\) para ese cuadrado.
   \end{enumerate}
 \end{enumerate}
 
@@ -139,14 +133,14 @@ Tu trabajo consiste en implementar la función:
 \noindent de la clase \code{pacman.personajes.navegacion.AEstrella}.
 La variable \code{estadoInicial} contiene información con las coordenadas de la casilla inicial, mientras que \code{estadoFinal} indica a qué casilla se quiere ir.  El trabajo de esta función es devolver la secuencia de acciones que se deben realizar (movimientos) hasta llegar a la casilla final.
 
-Para que ubiques mejor cómo será usada esta función te informan que, de momento, el estadoInicial corresponde a la posición actual de Sombra y estadoFinal es la posición de Pacman.  Sombra manda llamar esta función en cada tick del reloj con las nuevas posiciones suya y de Pacman.  De hecho, lo único que se utiliza es el primer movimiento de la trayectoria... pero no te confíes, las cosas pueden cambiar, otras optimizaciones podrían ser introducidas y por lo tanto debes calcular la lista completa de movimientos.  Aunque estos detalles son irrelevantes para tu código, saber cómo será usado te ayudará a visualizar lo que necesitas hacer.  Sin embargo, observa que por ser general, esta función podría llegar a utilizarse no sólo para mover a Sombra sino que, en algún momento, otro fantasma con otro comportamiento también podría aprovecharla.  Por ejemplo, el encargado de las emboscadas \textbf{\textit{Pinky}} podría usar A* para llegar a la esquina más cercana a Pacman enviado como parámetros sus coordenadas y las de dicha esquina.  Por lo tanto, no debes usar información de más o de menos confiándote en el estado actual de la aplicación, ni afectar el resto del juego con intervenciones innecesarias para que tu código sea reutilizable con facilidad.
+Para que ubiques mejor cómo será usada esta función te informan que, de momento, el estadoInicial corresponde a la posición actual de Sombra y estadoFinal es la posición de Pacman.  Sombra manda llamar esta función en cada tick del reloj con las nuevas posiciones suya y de Pacman.  De hecho, lo único que se utiliza es el primer movimiento de la trayectoria... pero no te confíes, las cosas pueden cambiar, otras optimizaciones podrían ser introducidas y por lo tanto debes calcular la lista completa de movimientos.  Aunque estos detalles son irrelevantes para tu código, saber cómo será usado te ayudará a visualizar lo que necesitas hacer.  Sin embargo, observa que por ser general, esta función podría llegar a utilizarse no sólo para mover a Sombra sino que, en algún momento, otro fantasma con otro comportamiento también podría aprovecharla.  Por ejemplo, el encargado de las emboscadas \textbf{\textit{Pinky}} podría usar A* para llegar a la esquina más cercana a Pacman enviando como parámetros sus coordenadas y las de dicha esquina.  Por lo tanto, no debes usar información de más o de menos confiándote en el estado actual de la aplicación, ni afectar el resto del juego con intervenciones innecesarias para que tu código sea reutilizable con facilidad.
 
 Para ayudarte a realizar esta tarea el paquete te ofrece las herramientas siguientes:
 
 \begin{enumerate}
  \item La clase \code{Estado} pertenece al subpaquete \code{navegación}.  Es una especie de envoltura con una referencia a un \code{Pasillo} por donde puede pasar el fantasma.  Un objeto de este tipo puede almacenar la información de ejecución relevante para el algoritmo A* como es el valor de la función \(h(n)\).  De este modo te brinda acceso al estado en el mundo (el laberinto donde se encuentran nuestros personajes) y te brinda un espacio para no afectar al mundo con información que sólo concierne al algoritmo de navegación de un fantasma.
  
- \item La superclase \code{Algoritmo} se encarga de inicializar, tras la creación del laberinto, un arreglo de objetos tipo \code{Estado}.  De este modo cuentas ya con un objeto estado por cada pasillo en el laberinto, en el mismo renglón y columna que el pasillo en el mundo.  Ojo, los valores de la heurística $h(n)$ cambian cada vez que cambia el lugar al quiere moverse el fantasma, así que recuerda recalcular tantos valores como sean necesarios cada vez que ejecutes el algoritmo con metas distintas.
+ \item La superclase \code{Algoritmo} se encarga de inicializar, tras la creación del laberinto, un arreglo de objetos tipo \code{Estado}.  De este modo cuentas ya con un objeto estado por cada pasillo en el laberinto, en el mismo renglón y columna que el pasillo en el mundo.  Ojo, los valores de la heurística $h(n)$ cambian cada vez que cambia el lugar al que quiere moverse el fantasma, así que recuerda recalcular tantos valores como sean necesarios cada vez que ejecutes el algoritmo con metas distintas.
  
  \item La clase \code{NodoBusqueda} contiene la información del grafo de búsqueda que va generando A* conforme explora los estados.  Por eso su primer atributo es una referencia al estado que está explorando.  También aquí se almacena el valor de $g(n)$, pues este valor depende de la ruta que se siga para llegar al estado $n$ desde el estado inicial; por ello mismo incluye la referencia al nodo padre y la acción que se realizó para llegar al estado que contiene.  Recuerda que, en general, varios nodos de búsqueda podrían apuntar al mismo estado.  Como en esta práctica se realizará una búsqueda en grafo no será el caso.
  
@@ -192,7 +186,7 @@ Los requisitos para tu trabajo son los siguientes:
  \item No debes agregar ni atributos ni funciones a ninguna otra clase, ya tienes toda la información que necesitas; piensa que el resto del programa está siendo desarrollado por otros compañeros de la empresa y no tienes permiso de tocar sus componentes.
 \end{enumerate}
 
-Cuando termines tu implementación podrás ver a Sombra persiguiendo a Pacman por la ruta óptima; la única forma de alejarlo un poco será transportándose por los pasillos que sacan a Pacman por un lado de la pantalla y lo regresan por el otro.  Si gustas, borrar e iluminar la ruta que sigue Sombra a cada paso es muy fácil ya teniendo la trayectoria completa.
+Cuando termines tu implementación podrás ver a Sombra persiguiendo a Pacman por la ruta óptima; la única forma de alejarlo un poco será transportándote por los pasillos que sacan a Pacman por un lado de la pantalla y lo regresan por el otro.  Si gustas, borrar e iluminar la ruta que sigue Sombra a cada paso es muy fácil ya teniendo la trayectoria completa.
 
 \begin{figure}
   \centering
