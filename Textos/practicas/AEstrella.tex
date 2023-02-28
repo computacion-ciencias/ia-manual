@@ -5,9 +5,26 @@ Que el alumno implemente y refuerce su comprensión del algoritmo A*.
 
 \section{Introducci\'on}
 
-Una de las aplicaciones más populares del algoritmo A* es el problema de navegación en videojuegos y robótica.  Por ello, un curso de Inteligencia Artificial no estaría completo sin haber implementado este algoritmo.  Comenzaremos siguiendo el ejemplo de Patrick \cite{Lester2003} en un mundo hecho de mosaicos.
+El algoritmo A* es el algoritmo de búsqueda en el espacio de estados que tiene garantizado encontrar la solución de menor costo explorando la menor cantidad de estados en el espacio de búsqueda.  Para ello se beneficia de las propiedades del algoritmo de Dijkstra para encontrar la ruta mínima entre dos puntos de un grafo, aumentada con el uso de información del dominio a través de una función heurística, que estima la distancia faltante hasta la meta, permitiéndole así, explorar primero los caminos más prometedores.
 
-En el ejemplo de Patrick, asumimos que tenemos un personaje que quiere ir desde un punto A hasta un punto B y que ambos puntos están separados por una pared. Este ejemplo se puede apreciar en la figura~\ref{fig:AEstrellaIni}, donde el cuadrado verde es el punto A, el rojo es el punto B y el rectángulo gris, la pared mencionada anteriormente.  Curiosamente, este sencillo escenario no puede ser resuelto por ascenso de colinas, pero para A* es pan comido.
+Para que al ejecutar el algoritmo se cumplan estas características, la función heurística debe ser:
+\begin{description}
+ \item [Admisible] También le podemos decir \textbf{optimista}, nunca debe sobreestimar el costo hasta la meta.
+
+ \item [Consistente] Ir directamente de un estado $A$ a un estado $B$ debe ser igual o menos costoso, que si hay una desviación pasando por $C$.  Esto se expresa en la desigualdad:
+ \begin{align*}
+  h(n) \leq c(n,a,n') + h (n')
+ \end{align*}
+ Donde el punto $A$ es el estado $n$ y $B$ es la meta.  Se debe cumplir entonces que la distancia estimada desde $n$ sea menor o igual que si se pasa por $n'$ al ejecutar la acción $a$.
+\end{description}
+
+
+
+\subsection{Navegación}
+
+Un curso de Inteligencia Artificial no estaría completo sin haber implementado A*.  Una de las aplicaciones más populares de este algoritmo es el problema de navegación en videojuegos y robótica.  Comenzaremos siguiendo el ejemplo de Patrick \cite{Lester2003} en un mundo hecho de mosaicos.
+
+En el ejemplo de Patrick, asumimos que tenemos un personaje que quiere ir desde un punto A hasta un punto B y que ambos puntos están separados por una pared. Este ejemplo se puede apreciar en la \fref{fig:AEstrellaIni}, donde el cuadrado verde es el punto A, el rojo es el punto B y el rectángulo gris, la pared mencionada anteriormente.  Curiosamente, este sencillo escenario no puede ser resuelto por ascenso de colinas, pero para A* es pan comido.
 
 \begin{figure}
   \centering
@@ -16,36 +33,37 @@ En el ejemplo de Patrick, asumimos que tenemos un personaje que quiere ir desde 
   \label{fig:AEstrellaIni}
 \end{figure}
 
-Si el mundo donde se encuentran nuestros personajes es continuo, el primer paso que debemos hacer es simplificar el área de búsqueda, dividiendo nuestro mundo en una rejilla de mosaicos cuadrados.  En los videojuegos algunos mundos ya son así desde un prinicipio.  En el caso de robótica se puede proceder a crear rejillas de ocupación discretizando las coordenadas del plano y representando al mundo con mosaicos ocupados/libres, semejantes a los de los videojuegos.  Con esto, podremos representar el mundo con una matriz bidimensional. Cada posición en la matriz representará un mosaico del mundo, el cual será transitable o no transitable. Entonces, el objetivo del algoritmo A* es calcular a qué mosaico nos debemos mover en cada turno para lograr llegar al punto B. Una vez calculado esto, el personaje del juego se moverá del centro del mosaico donde se encuentra actualmente al centro del mosaico obtenido con A*.  Observa entonces que cada mosaico del mundo es un estado posible para nuestro personaje.
+Si el mundo donde se encuentran nuestros personajes es continuo, como los ambientes donde se mueve un robot, el primer paso que debemos hacer es simplificar el área de búsqueda, dividiendo nuestro mundo en una rejilla de mosaicos.  En los videojuegos algunos mundos ya son así desde un prinicipio.  En el caso de robótica se puede proceder a crear rejillas de ocupación discretizando las coordenadas del plano y representando al mundo con mosaicos ocupados/libres, semejantes a los de los videojuegos.  Con esto, podremos representar el mundo con una matriz bidimensional. Cada posición en la matriz representará un mosaico del mundo, el cual será transitable o no transitable. Entonces, el objetivo del algoritmo A* es calcular a qué mosaico nos debemos mover en cada turno para lograr llegar al punto B. Una vez calculado esto, el personaje del juego se moverá del centro del mosaico donde se encuentra actualmente al centro del mosaico obtenido con A*.  Observa entonces que cada mosaico del mundo es un estado posible para nuestro personaje.
 
-A los puntos centrales dentro del mosaico se les llama \classname{nodos}. Pudimos haber dividido el mundo en círculos, en hexágonos o triángulos, cada mundo puede tener características diferentes y ser simplificado de distintas formas.  Nosotros usaremos cuadrados.
 
-Ahora pensaremos en el mundo como un grafo.  Cuando dos mosaicos son adyacentes y es posible desplazarse de uno hacia el otro, decimos que hay un arista conectándolos.  De este modo, el algoritmo que busca la ruta más corta entre el punto A y el punto B es un recorrido sobre un grafo.
+Ahora pensaremos en el mundo como un grafo, el puntos central de cada mosaico corresponde a un \textit{nodo}; de este modo los mosaicos podrían ser círculos, hexágonos o triángulos, no sólo cuadrados; cada mundo puede tener características diferentes y ser simplificado de distintas formas.  Cuando dos mosaicos son adyacentes y es posible desplazarse de uno hacia el otro, decimos que hay un arista conectándolos.  Así, el algoritmo que busca la ruta más corta entre el punto A y el punto B es un recorrido sobre un grafo.
+
+
 
 \subsection{Iniciando la b\'usqueda}
 
-Después de haber simplificado el área de búsqueda en nodos, el siguiente paso es dirigir una búsqueda para encontrar el camino más corto.  Comenzamos por el punto A, luego consideramos los cuadros adyacentes (estados sucesores) para ver en qué dirección movernos y continuamos alejándonos hasta que encontremos nuestro destino.
+Después de haber simplificado el área de búsqueda a un grafo con nodos y aristas, el siguiente paso es dirigir una búsqueda para encontrar el camino más corto.  Comenzamos por el punto A, luego consideramos los cuadros adyacentes (estados sucesores) para ver en qué dirección movernos y continuamos alejándonos hasta que encontremos nuestro destino.  Para ello utilizaremos dos estructuras a las cuales llamaremos \emph{lista abierta} y \emph{lista cerrada}.
 
 \noindent Empezamos la búsqueda haciendo lo siguiente:
 
 \begin{enumerate}
   \item Añadimos el punto inicial A a la \textbf{lista abierta}. Esta lista contiene los cuadrados que vamos a considerar para que formen parte del camino. Si, por azares del destino, el punto A es igual al punto B, terminamos nuestra ejecución con un plan vacío: el personaje no necesita hacer nada, ya está en su destino.
   
-  \item Sacamos el cuadro inicial A de la lista abierta y lo añadimos a una \textbf{lista cerrada} de cuadrados que no necesitan ser vistos de nuevo.
+  \item Sacamos el cuadro inicial A de la lista abierta y lo añadimos a una \textbf{lista cerrada} de cuadrados que no necesitan ser considerados de nuevo.
   
-  \item Nos fijamos en todos los cuadrados alcanzables o transitables adyacentes al punto de inicio, ignorando cuadrados no transitables (por contener muros, muebles, agua, precipicios, etc.). Se añaden a la lista abierta, marcando que el punto A es su \textbf{cuadrado padre}, pues estamos considerando llegar desde ahí. El cuadrado padre es muy importante para trazar nuestro camino.  La estructura dentro de la cual guardaremos esta información, y que ofreceremos a la lista abierta, se llama \textbf{nodo de búsqueda}.
+  \item Nos fijamos en todos los cuadrados alcanzables o transitables adyacentes al punto de inicio, ignorando cuadrados no transitables (por contener muros, muebles, agua, precipicios, etc.). Se añaden a la lista abierta, marcando que el punto A es su \textbf{cuadrado padre}, pues estamos considerando llegar desde ahí. El cuadrado padre será muy importante para trazar nuestro camino al final de la búsqueda.  La estructura dentro de la cual guardaremos una referencia al cuadrado vecino y a su padre, y que ofreceremos a la lista abierta, se llama \textbf{nodo de búsqueda}.
 \end{enumerate}
 
-En este punto, se tendrá algo como la figura~\ref{fig:fig2P4}, en un momento explicaremos el significado de los números en las casillas. En este diagrama, el cuadrado verde es el \textbf{estado inicial} y ya ha sido añadido a la lista cerrada. Todos los cuadros adyacentes están ahora en la lista abierta para ser considerados. Cada uno tiene un indicador que señala a su padre, que es el cuadro inicial.
+En este punto, se tendrá algo como la figura~\ref{fig:fig2P4}, en un momento explicaremos el significado de los números en las casillas. En este diagrama, el cuadrado verde es el \textbf{estado inicial} y ya ha sido añadido a la lista cerrada. Todos los cuadrados adyacentes están ahora en la lista abierta para ser considerados. Cada uno tiene un indicador que señala a su padre, que es el cuadro inicial.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.4\textwidth]{aestrella/PrimerosVecinos.png}
+  \includegraphics[width=0.6\textwidth]{aestrella/PrimerosVecinos.png}
   \caption{Mosaicos en la lista abierta con referencia a su padre.}
   \label{fig:fig2P4}
 \end{figure}
 
-Ahora necesitamos elegir a uno de los cuadrados de la lista abierta para explorar esa ruta. Elegimos aquel vecino que tenga costo estimado más bajo, es decir, aquel que promete estar más cerca de la meta, hasta donde sabemos, para ello calcularemos la función $f(n)$.
+Ahora necesitamos elegir a uno de los cuadrados de la lista abierta para explorar esa ruta. Elegimos aquel vecino que tenga costo estimado más bajo, es decir, aquel al que hemos llegado por la mejor ruta y promete estar más cerca de la meta, hasta donde sabemos, para ello calcularemos la función $f(n)$.
 
 \subsection{Puntuando el camino}
 
@@ -58,31 +76,39 @@ Para determinar qué cuadrado exploraremos a continuación usaremos la siguiente
 donde:
 
 \begin{itemize}
-  \item \(g(n)\) es el costo del movimiento para ir desde el punto inicial A al cuadro \(n\) de la rejilla, siguiendo el camino que se ha ido generado para llegar ahí.
+  \item \(g(n)\) es el costo del movimiento para ir desde el punto inicial A al cuadro \(n\) de la rejilla, siguiendo el mejor camino que se generó para llegar a $n$.
 
-  \item \(h(n)\) es el costo estimado del movimiento para ir desde ese cuadro \(n\) hasta el destino final, el punto B. Si conociéramos ese costo exactamente no necesitaríamos buscar la mejor ruta, bastaría con movernos hacia el vecino con el valor más bajo, en lugar de ello sólo contaremos con una aproximación, a esta se le llama \textbf{heurística}.  Cuando se trata de problemas de desplazamiento, como es el caso aquí, una aproximación utilizada frecuentemente es la distancia Euclidiana (la ruta más corta, si no hubiera obstáculos, sería la línea recta), aunque existen otras aproximaciones, que pueden ser más o menos adecuadas, dependiendo del ambiente.
+  \item \(h(n)\) es el costo estimado del movimiento para ir desde ese cuadro \(n\) hasta el destino final, el punto B. Si conociéramos ese costo exactamente no necesitaríamos buscar la mejor ruta, bastaría con movernos hacia el vecino con el valor más bajo, en lugar de ello sólo contaremos con una aproximación, a esta se le llama \textbf{heurística}.
 \end{itemize}
 
 Para generar el camino completo de A a B, tendremos que ir sacando a los nodos de la lista abierta con menor \(f(n)\) hasta llegar a la meta.  Sin embargo, calcular esta función tiene su chiste, pues su valor puede cambiar conforme exploramos.  Veamos entonces cómo se hace ese cálculo.
 
+
+\subsubsection{Heurística}
+
 La primer función que podemos calcular es \(h(n)\), pues su valor no cambia una vez dado el ambiente.  Lo óptimo es calcularla la primera vez que el algoritmo ve al cuadrado \(n\), cuando crea el nodo búsqueda y lo inserta a la lista abierta.
 
-Además de la distancia Euclidiana, otra técnica para aproximar distancias es el método Manhattan, donde se calcula el número total de cuadros movidos horizontalmente y verticalmente para alcanzar el cuadrado destino desde el cuadro actual, sin hacer uso de movimientos diagonales e ignorando cualquier obstáculo.  Para hacer el cálculo numérico más eficiente (usar enteros en lugar de flotantes), se multiplicará el total por 10, esto nos ayudará a evitar más adelante el cálculo de una raíz cuadrada. Se llama método Manhattan porque está inspirado en la ciudad que lleva ese nombre, donde las manzanas están diseñadas en forma de rejilla y para ir desde un lugar a otro no es posible tomar atajos atravesando una manzana en diagonal.  Observa que esta estimación es mejor si el agente no puede moverse en diagonal, pues de este modo nunca sobreestimará qué tan lejos está la meta, pero la usarmos aquí de todos modos para mostrar qué sucede.
+Cuando se trata de problemas de desplazamiento, como es el caso aquí, una aproximación utilizada frecuentemente es la distancia Euclidiana (la ruta más corta, si no hubiera obstáculos, sería la línea recta), aunque tiene la desventaja de involucrar el cálculo de una raíz cuadrada. Por ello existen otras aproximaciones, que pueden ser más o menos adecuadas, dependiendo del ambiente.
+
+Además de la distancia Euclidiana, otra técnica para aproximar distancias es el método Manhattan, donde se calcula el número total de cuadros movidos horizontalmente y verticalmente para alcanzar el cuadrado destino desde el cuadro actual, sin hacer uso de movimientos diagonales e ignorando cualquier obstáculo. Se llama método Manhattan porque está inspirado en la ciudad que lleva ese nombre, donde las manzanas están diseñadas en forma de rejilla y para ir desde un lugar a otro no es posible tomar atajos atravesando una manzana en diagonal.  Observa que esta estimación es mejor si el agente no puede moverse en diagonal, pues de este modo nunca sobreestimará qué tan lejos está la meta.
+
+En esta práctica asignaremos un costo de 10 por cada movimiento vertical u horizontal a través de un cuadrado y un costo de 14 para un movimiento diagonal (una aproximación razonable de \(\sqrt{2}\times10\)), pues usar números enteros es mucho más rápido para la computadora y la diferencia en tiempo puede ser significativa si el algoritmo se ejecutará muchas veces sobre muchos nodos.
+
+Las puntuaciones \(h(n)\) se calcularán estimando la distancia Manhattan desde $n$ hasta el cuadrado objetivo (en rojo), moviéndose solo horizontal y verticalmente e \textbf{ignorando el muro} que está en el camino. Usando este método, en la \fref{fig:fig2P4} el cuadro a la derecha del inicial, está a 3 cuadros del cuadrado rojo lo que da una puntuación \(h(n)\) de 30. Los cuadrados arriba y abajo del incial están a sólo 4 cuadros de distancia (tomando sólo movimientos en dirección horizontal y vertical), dando una puntuación \(h(n)\) de 40.
 
 
-La siguiente función a estimar es \(g(n)\), el costo del movimiento para ir desde el punto de inicio al cuadro \(n\), usando el camino generado para llegar ahí.  Observa que por lo mismo, solamente se puede calcular conforme se van eligiendo los nodos durante la búsqueda.  En esta práctica asignaremos un costo de 10 por cada cuadro vertical u horizontal hacia el que nos movamos, y un costo de 14 para un movimiento diagonal (una aproximación razonable de \(\sqrt{2}\times10\)), pues usar números enteros es mucho más rápido para la computadora y, después de todo, sólo estamos estimando.
+\subsubsection{Costo parcial}
 
-Una vez calculado el costo \(g(n)\) mediante un camino específico hasta el cuadro $n$, el costo \(g(n')\) para su vecino $n'$, al que estamos llegando, es el costo \(g(n)\) de su padre más 10 o 14 dependiendo de si el movimiento para llegar a él es ortogonal o se realiza en diagonal con respecto al cuadro padre.
+La siguiente función a estimar es \(g(n)\), el costo del movimiento para ir desde el punto de inicio al cuadro \(n\), usando el camino generado para llegar ahí.  Observa que por lo mismo, solamente se puede calcular conforme se van eligiendo los nodos durante la búsqueda.
 
-\(f(n)\) se calcula sumando \(g(n)\) y \(h(n)\).  Los números en la \fref{fig:fig2P4} corresponden precisamente a estos cálculos.
+Una vez calculado el costo \(g(n)\), el costo \(g(n')\) para su vecino $n'$, al que estamos llegando, es \(g(n)\) más 10 o 14 dependiendo de si el movimiento para llegar a él es ortogonal o se realiza en diagonal desde su cuadro padre.
 
-En el cuadrado a la derecha del inicial \(g(n)=10\). Esto es debido a que está solo a un cuadro del cuadrado inicial en dirección horizontal. Los cuadrados inmediatamente encima, abajo y a la izquierda del cuadrado inicial tienen todos el mismo valor \(g(n)\) de 10. Los cuadros diagonales tienen un valor \(g(n)\) de 14.
+En la \fref{fig:fig2P4} se pueden ver estos cálculos.  En el cuadrado a la derecha del inicial \(g(n)=10\). Esto es debido a que está solo a un cuadro del cuadrado inicial en dirección horizontal. Los cuadrados inmediatamente encima, abajo y a la izquierda del cuadrado inicial tienen todos el mismo valor \(g(n)\) de 10. Los cuadros diagonales tienen un valor \(g(n)\) de 14.  \(f(n)\) se calcula sumando \(g(n)\) y \(h(n)\).
 
-Las puntuaciones \(h(n)\) se calculan estimando la distancia Manhattan desde $n$ hasta el cuadrado objetivo (en rojo), moviéndose solo horizontal y verticalmente e \textbf{ignorando el muro} que está en el camino. Usando este método, el cuadro a la derecha del inicial, está a 3 cuadros del cuadrado rojo lo que da una puntuación \(h(n)\) de 30. Los cuadrados arriba y abajo del incial están a sólo 4 cuadros de distancia (tomando sólo movimientos en dirección horizontal y vertical), dando una puntuación \(h(n)\) de 40.  Observa que, para este mapa donde se permiten movimientos en diagonal, esta heurística no es \textbf{admisible}, pues la ruta más corta puede utilizar diagonales y, entonces, estar más cerca de lo que estima.  La consecuencia es qu A* no siempre encuentra la ruta óptima en estas condiciones.
 
 \subsection{Continuando la b\'usqueda}
 
-Para continuar la búsqueda, se elige al nodo con la puntuación \(f(n)\) más baja de todos aquellos que estén en la lista abierta. Para que esta operación se realize lo más eficientemente posible, la lista abierta se implementará con una cola de prioridades. Después hacemos lo siguiente con el cuadro seleccionado:
+Para continuar la búsqueda, se elige al nodo con la puntuación \(f(n)\) más baja de todos aquellos que estén en la lista abierta. Para que esta operación se realize lo más eficientemente posible, la lista abierta se debe implementar con una cola de prioridades. Después hacemos lo siguiente con el cuadro seleccionado:
 
 \begin{enumerate}
   \item Lo sacamos de la lista abierta y lo añadimos a la lista cerrada.  
@@ -101,17 +127,25 @@ Para continuar la búsqueda, se elige al nodo con la puntuación \(f(n)\) más b
 
 \begin{figure}[h!]
   \centering
+  \includegraphics[width=0.95\textwidth]{aestrella/AEstrellaNoAdmisible.png}
+  \caption{Ejecución completa del algoritmo con distancia Manhattan. A* encuentra una ruta, pero no es la óptima.}
+  \label{fig:NoAdmisible}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
   \includegraphics[width=0.95\textwidth]{aestrella/screen5.png}
-  \caption{Ejecución completa del algoritmo.}
+  \caption{Ejecución completa del algoritmo con distancia Euclidiana.  A* encuentra la ruta óptima.}
   \label{fig:fig4P4}
 \end{figure}
 
-La \fref{fig:fig4P4} muestra la ejecución completa del algoritmo para un escenario ligeramente más complejo.  En esta imagen también se muestra el contenido final de las estructuras auxiliares, las listas cerrada y abierta.
+
+A continuación se muestran dos versiones de la ejecución completa del algoritmo para un escenario ligeramente más complejo.  En la primer versión usamos distancia Manhattan.  La \fref{fig:NoAdmisible} muestra el contenido final de las estructuras auxiliares, las listas cerrada y abierta y los valores calculados de $h$, $g$ y $f$.  Observa que, para este mapa donde se permiten movimientos en diagonal, esta heurística no es \textbf{admisible}, pues la ruta más corta puede utilizar diagonales y, entonces, estar más cerca de lo que estima.  La consecuencia es que A* no siempre encuentra la ruta óptima en estas condiciones.  La \fref{fig:fig4P4} muestra lo que sucede cuando se usa la distancia Euclidiana, que sí es una heurística admisible.
 
 
 \section{Desarrollo e implementaci\'on}
 
-Para esta práctica, considerate un miembro nuevo en un compañía de programación de videojuegos.  El resto del equipo ha estado trabajando en un \textit{remake} de Pacman con \code{JavaFX} y a ti te han asignado la siguiente tarea: programar al más férreo perseguidor de Pacman, el fantasma rojo \textbf{\textit{Sombra}}, mejor conocido como Blinky. Para ello, has decidido utilizar el mejor algoritmo para mundos finitos deterministas: A*.
+Para esta práctica, considérate un miembro nuevo en un compañía de programación de videojuegos.  El resto del equipo ha estado trabajando en un \textit{remake} de Pacman con \code{JavaFX} y a ti te han asignado la siguiente tarea: programar al más férreo perseguidor de Pacman, el fantasma rojo \textbf{\textit{Sombra}}, mejor conocido como Blinky. Para ello, has decidido utilizar el mejor algoritmo para mundos finitos deterministas: A*.
 
 Para realizar esta tarea se te entrega el código con el escenario listo para jugar y la documentación que han elaborado tus colegas.  El código aún no está terminado, pero ya incluye como muestra el primer nivel del juego y está listo para añadirle archivos de configuración con cualquier otro nivel.  Igualmente el código para controlar a Pacman usando las flechas del teclado ya funciona.  El único detalle es que Sombra aún no persigue a Pacman, se mueve siempre en una dirección fija que, lo notarás de inmediato, no lo lleva muy lejos.
 
