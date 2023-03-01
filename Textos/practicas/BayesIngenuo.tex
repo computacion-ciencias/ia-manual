@@ -21,7 +21,7 @@ Supongamos que queremos construir un clasificador que nos diga las etiquetas má
     \begin{tabular}{ l | c }
       Texto & Etiqueta \\ \hline
       de acuerdo con el portal de datos abiertos de la ciudad de méxico & CDMX  \\ \hline
-      el gobierno capitalino mejora la seguridad en ciudad de méxico & CDMX  \\ \hline
+      el gobierno capitalino trabaja en la seguridad en ciudad de méxico & CDMX  \\ \hline
       claudia sheinbaum aseguró que no se elevarán las tarifas para los capitalinos & CDMX  \\ \hline
       clasificación a octavos de final de la champions league & Deportes\\ \hline
       la fifa determinó que deberá pagar seis millones de dólares & Deportes  \\ \hline
@@ -82,7 +82,7 @@ facilitándonos el cálculo de esta probabilidad, ya que estas palabras aparecen
 
 \subsection{Calculando probabilidades}
 
-Como habíamos mencionado, haremos un conteo de palabras y de etiquetas. Primero, calculamos la probabilidad \textit{a priori} de las etiquetas: \(P(CDMX) = {1 \over 3}\), \(P(Nacional) = {1 \over 3}\) y \(P(Deportes) = {1 \over 3}\). Después, para calcular \(P(desde|CDMX)\) debemos tomar el número de veces que aparece la palabra \quotes{desde} dentro de los textos con la etiqueta \quotes{CDMX} y lo dividimos entre el número de palabras totales con la etiqueta \quotes{CDMX}, pero podemos ver que \quotes{desde} no aparece dentro de los textos con la etiqueta de \quotes{CDMX}, lo cual nos arroja que \(P(desde|CDMX) = 0\), pero al hacer las multiplicaciones para determinar \(P(x| CDMX)\) causaría que la probabilidad del texto completo sea $0$ y se pierda información sobre las probabilidades.
+Como habíamos mencionado, haremos un conteo de palabras y de etiquetas. Primero, calculamos la probabilidad \textit{a priori} de las etiquetas, suponiendo que estas son equiprobables: \(P(CDMX) = {1 \over 3}\), \(P(Nacional) = {1 \over 3}\) y \(P(Deportes) = {1 \over 3}\). Después, para calcular \(P(desde|CDMX)\) debemos tomar el número de veces que aparece la palabra \quotes{desde} dentro de los textos con la etiqueta \quotes{CDMX} y lo dividimos entre el número de palabras totales con la etiqueta \quotes{CDMX}, pero podemos ver que \quotes{desde} no aparece dentro de los textos con la etiqueta de \quotes{CDMX}, lo cual nos arroja que \(P(desde|CDMX) = 0\), pero al hacer las multiplicaciones para determinar \(P(x| CDMX)\) causaría que la probabilidad del texto completo sea $0$ y se pierda información sobre las probabilidades.
 
 Para resolver este problema se aplican técnicas de suavizado \parencite[ver][202]{ManningSchutze1999} como el suavizado de Laplace, sumando $1$ a cada dividendo y lo contrarrestamos sumando el número de palabras posibles sin repetirse a cada divisor, así tendríamos \(P(desde|CDMX) = {{0 + 1} \over {35 + 67} }\). Esto lo repetimos con cada palabra del texto \quotes{desde el aeropuerto capitalino fue trasladada} y con cada etiqueta, obteniendo las siguientes tablas:
 
@@ -145,9 +145,9 @@ Con lo cual nuestro clasificador le otorga la etiqueta \textbf{CDMX} al texto \q
 
 \subsection{Mejorando el clasificador}
 
-Una manera sencilla de mejorar la clasificación de los textos es quitando palabras vacías \textit{(stop words)}, donde una palabra vacía es aquella que \quotes{no aporta información al texto que está siendo procesado}\parencite[533]{ManningSchutze1999}. En cualquier lenguaje, estas palabras vacías sirven para proveer contexto a un texto, pero el Clasificador Bayesiano Ingenuo no hace uso del contexto para determinar las etiquetas pertenecientes a cada texto, entonces estas palabras sólo hacen más lento la obtención de etiquetas y pueden introducir falsos positivos en la clasificación. En este caso procederíamos a quitarlas de nuestros conjuntos de entrenamiento y prueba.
+Una manera sencilla de mejorar la clasificación de los textos es quitando palabras vacías \textit{(stop words)}, donde una palabra vacía es aquella que \quotes{no aporta información al texto que está siendo procesado}\parencite[533]{ManningSchutze1999}. En cualquier lenguaje, estas palabras vacías sirven para proveer contexto a un texto, pero el Clasificador Bayesiano Ingenuo no hace uso del contexto para determinar las etiquetas pertenecientes a cada texto, entonces estas palabras sólo hacen más lenta la obtención de etiquetas y pueden introducir falsos positivos en la clasificación. En este caso procederíamos a quitarlas de nuestros conjuntos de entrenamiento y prueba.
 
-Utilizando las palabras vacías que define Alir3z4 en su repositorio de GitHub (https://github.com/Alir3z4/stop-words) en el ejemplo anterior, podemos ver que los datos de entrenamiento se reducen a
+Utilizando las palabras vacías que define Alir3z4 en su repositorio de GitHub\footnote{\hurl{https://github.com/Alir3z4/stop-words}} en el ejemplo anterior, podemos ver que los datos de entrenamiento se reducen a:
 
 \begin{figure}[H]
   \begin{center}
@@ -219,7 +219,7 @@ Con esto podemos ver que es más sencillo hacer las operaciones, obtenemos proba
 
 La práctica consiste en obtener el texto de las noticias proporcionadas por el feed RSS de Aristegui Noticias, separar las noticias en dos conjuntos: de entrenamiento y de prueba, eliminar las palabras vacías haciendo uso del repositorio de GitHub proporcionado anteriormente, entrenar un Clasificador Bayesiano Ingenuo con el primer conjunto y evaluar qué tan bien predice las etiquetas de las noticias del segundo conjunto. Para lograrlo deberán usar el ejemplo anterior como guía para obtener las probabilidades de cada etiqueta presente en la base de prueba y después comparar las etiquetas obtenidas por el clasificador contra las etiquetas reales.
 
-Incluido en el apéndice~\ref{appe:auxiliar} se encuentra el archivo \classname{feed.db} que contiene al menos 50 notas con título, texto, tags y link con el siguiente formato:
+En el código auxiliar se encuentra el archivo \classname{feed.db} que contiene al menos 50 notas con título, texto, etiquetas y liga con el siguiente formato:
 
 \begin{minted}[mathescape,
                linenos,
@@ -288,7 +288,7 @@ Podemos ver que terminaremos con tres variables aleatorias, las cuales debemos c
 
 Una vez que tengan sus probabilidades, habrán acabado con la fase de entrenamiento de su Clasificador Bayesiano Ingenuo. Solo faltaría evaluar qué tan bien predice las etiquetas de las noticias incluidas en su base de datos de prueba. Para esto, tendrán que determinar a qué etiqueta pertenece el texto de las noticias. Deberán proporcionar las 3 más probables, y comparar con las etiquetas reales imprimiendo ambos conjuntos de etiquetas lado a lado.
 
-En el apéndice~\ref{appe:auxiliar} podrán encontrar un script auxiliar que obtiene las noticias y las guarda en la base de datos, que es un archivo de texto plano. Lo pueden utilizar para obtener bases de datos actualizadas.
+En el código auxiliar también podrán encontrar un script auxiliar que obtiene las noticias y las guarda en la base de datos, que es un archivo de texto plano. Lo pueden utilizar para obtener bases de datos actualizadas.
 
 \section{Requisitos y resultados}
 
