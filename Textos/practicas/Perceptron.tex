@@ -48,13 +48,13 @@ Esta plasticidad permite que las conexiones hacia las neuronas que conducen a la
 
 \subsubsection{¿C\'omo se determina la salida?}
 
-\noindent La neurona calcula la suma de las señales de entrada multiplicadas por el peso de su conexión con la neurona siguiente (combinador lineal) y compara este resultado con un umbral $\theta$. Si el total es menor que el umbral, la salida de la neurona es(\ -1)\ , si es mayor entonces la neurona se activa y su salida es (\ 1)\ . A lo descrito anteriormente se le llama función de activación.\par
+\noindent La neurona calcula la suma de las señales de entrada multiplicadas por el peso de su conexión con la neurona siguiente (combinación lineal) y compara este resultado con un umbral $\theta$. Si el total es menor que el umbral, la salida de la neurona es (\ -1)\ , si es mayor entonces la neurona se activa y su salida es (\ 1)\ . A lo descrito anteriormente se le llama función de activación.\par
 
 Hay varias funciones que se pueden llegar a utilizar en lugar de esta, la figura~\ref{fig:screen3} presenta algunas de ellas.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale=0.45]{perceptron/screen3-1.png}
+  \includegraphics[scale=0.6]{perceptron/screen3-1.png}
   \caption{Ejemplos de funciones de activación de una neurona. \parencite[169]{Nengnevitsky2005}}
   \label{fig:screen3}
 \end{figure}
@@ -65,7 +65,7 @@ Un perceptrón es la forma más simple de una red neuronal, ya que representa a 
 
 El perceptrón consiste en un combinador lineal seguido de una función de activación. Se le aplica la función umbral a la suma con pesos de las entradas menos el umbral, la cual produce una salida positiva si la suma es positiva, o una salida negativa si la suma es negativa. El objetivo del perceptrón es clasificar entradas en una de dos clases. Esto se expresa con la siguiente función: 
 
-\[Y = f\left[\sum_{i=1}^{n}x_iw_i-\theta\right]\]
+\[Y = f\left(\sum_{i=1}^{n}x_iw_i-\theta\right)\]
 \parencite[169]{Nengnevitsky2005}
 
 \subsubsection{Pero ¿c\'omo aprende a clasificar?}
@@ -90,7 +90,7 @@ Si $e(j)$ es positivo, se necesita incrementar $Y(j)$, pero si es negativo, se n
   \item \textbf{Inicialización:} Fijar los pesos iniciales \(w_1, w_2, ..., w_n\) y el umbral $\theta$ a números aleatorios en el rango $[-0.5, 0.5]$ (recomendado).
   
   \item \textbf{Activación:} Para un ejemplar $j$, activar el perceptrón aplicando las entradas\\ \(x_1(j), x_2(j), ..., x_n(j)\).
-  \[Y(j) = f\left[\sum_{i=1}^{n}x_i(j)w_i(j)-\theta\right]\]
+  \[Y(j) = f\left(\sum_{i=1}^{n}x_i(j)w_i(j)-\theta\right)\]
   donde $n$ es el número de entradas y $f$ es la función de activación.
   
   \item \textbf{Entrenamiento de pesos:} Se actualizan los pesos del perceptrón:
@@ -100,7 +100,7 @@ Si $e(j)$ es positivo, se necesita incrementar $Y(j)$, pero si es negativo, se n
   
   El umbral $\theta$ se queda fijo en el valor que le fue asignado al inicio.
   
-  \item \textbf{Iteración:} Repetir el paso 2 y 3 para cada ejemplar del conjunto de entrenamiento hasta minimizar lo mejor posible el error. Si el resultado no es satisfactorio, continuar ejecutando otra vez desde el primer ejemplar.
+  \item \textbf{Iteración:} Repetir los pasos 2 y 3 para cada ejemplar del conjunto de entrenamiento hasta minimizar lo mejor posible el error. Si el resultado no es satisfactorio, continuar ejecutando otra vez desde el primer ejemplar.
   \label{algo:b}
 \end{enumerate}
 
@@ -164,7 +164,7 @@ Para probar su perceptrón, deberán utilizar el siguiente conjunto de entradas:
 
 \section{Requisitos y resultados}
 
-Generen un reporte con observaciones de cómo se comporta el perceptrón con cada uno de los conjuntos de entrenamiento. Lo podrán programar en \classname{Java} o \classname{Python}. No olviden comentar su código.\medskip
+Entreguen el código donde implementaron el perceptrón y su entrenamiento.  Generen un reporte con observaciones de cómo se comporta el perceptrón con cada uno de los conjuntos de entrenamiento. Lo podrán programar en \classname{Java} o \classname{Python}. No olviden comentar su código.\medskip
 
 
 % \begin{thebibliography}{1}
