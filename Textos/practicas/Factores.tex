@@ -1,6 +1,6 @@
 \section{Objetivo}
 
-Que el alumno implemente una clase \classname{Factor} para familiarizarse con las operaciones entre factores que se utilizan para realizar inferencia en redes Bayesianas
+Que el alumno implemente una clase \classname{Factor} para familiarizarse con las operaciones entre factores que se utilizan para realizar inferencia en redes Bayesianas.
 
 \section{Introducción}
 
@@ -12,11 +12,11 @@ Un factor es una estructura matemática que nos ayudará a sistematizar las dive
  \parencite[104]{KollerFriedman2009}.
 \end{definition}
 
-Tomando como base la definición de Koller y Friedman, podemos realizar un parafraseo y afirmar que un Factor es \quotes{Una estructura matemática definida sobre un conjunto de variables donde cada variable puede tomar valores de su dominio, el cual debe ser finito. A este conjunto de variables se les denomina como el alcance del factor; el factor asocia un número real a cada posible asignación de valores de esas variables}.
+Tomando como base la definición de Koller y Friedman, podemos realizar un parafraseo y afirmar que un factor es una estructura matemática definida sobre un conjunto de variables donde cada variable puede tomar valores de su dominio, el cual debe ser finito. El factor asocia un número real a cada posible asignación de valores de esas variables.
 
-En cuanto a las operaciones de Factores que se explicarán en esta práctica, nos basamos en las operaciones que presentan Koller y Friedman y que se utilizan en la materia: multiplicación, reducción, marginalización y normalización.
+En cuanto a las operaciones de factores que se explicarán en esta práctica, nos basamos en las operaciones que presentan Koller y Friedman: multiplicación, reducción, marginalización y normalización.
 
-Utilizaremos a los factores para realizar operaciones con distribuciones de probabilidad, sin embargo es importante notar que, debido a la misma definición del Factor, el resultado de cada operación entre factores no siempre será una medida de probabilidad, pues esta limita su valores al intervalo $[0,1]$, mientras que los factores ocupan todo \(\mathbb{R}\).  Adicionalmente, sus operaciones no siempre incluyen las normalizaciones requeridas por las distribuciones de probabilidad; pero esto se convertirá en una ventaja para nosotros, como veremos más adelante.
+Utilizaremos a los factores para realizar operaciones con distribuciones de probabilidad, sin embargo es importante notar que, debido a la misma definición de factor, el resultado de cada operación entre factores no siempre será una medida de probabilidad, pues esta limita su valores al intervalo $[0,1]$, mientras que los factores ocupan todo \(\mathbb{R}\).  Adicionalmente, sus operaciones no siempre incluyen las normalizaciones requeridas por las distribuciones de probabilidad; pero esto se convertirá en una ventaja para nosotros, como veremos más adelante.
 
 \subsection[Operaciones]{Operaciones entre Factores}
 
@@ -65,7 +65,7 @@ La operación de multiplicación es sencilla. Si los conjuntos de variables de l
     \caption{Factores sobre variables aleatorias binarias.}\label{fig:ABC}
 \end{figure}
 
-Por ejemplo: Tenemos los tres factores $A$, $B$ y $C$ de la \fref{fig:ABC}. Para obtener el factor $AB = A \times B$, se multiplicaría el renglón $A=0$ con $B=0$, luego $A=0$ con $B=1$, $A=1$ con $B=0$ y por último $A=1$ con $B=1$ como en la \fref{fig:FactorAB}.
+Por ejemplo: Tenemos los tres factores $A$, $B$ y $C$ de la \fref{fig:ABC}. Para obtener el factor $AB = A \times B$, se multiplicaría el renglón $A=0$ con $B=0$, luego $A=0$ con $B=1$, $A=1$ con $B=0$ y por último $A=1$ con $B=1$ como en la \fref{fig:FactorAxB}.
 
 \begin{figure}[H]
   \begin{center}
@@ -78,7 +78,7 @@ Por ejemplo: Tenemos los tres factores $A$, $B$ y $C$ de la \fref{fig:ABC}. Para
     \end{tabular}
   \end{center}
   \caption{Factor $AB$}
-  \label{fig:FactorAB}
+  \label{fig:FactorAxB}
 \end{figure}
 
 \noindent Si el alcance de ambos factores tiene variables en común, se debe asegurar que tengan el mismo valor en cada renglón por multiplicar en ambos factores. Por ejemplo, si se tienen los factores $AB$ y $AC$, al momento de multiplicar el renglón $\{A=0,B=0\}$ se debe seleccionar los renglones donde $A=0$ en el factor $AC$, estos son $\{A=0,C=0\}$ y $\{A=0,C=1\}$, como muestran \fref{fig:FAFB} y \fref{fig:FactorABC}.
@@ -172,7 +172,7 @@ La operación de reducción consiste en seleccionar un valor de alguna variable 
 \end{figure}
 
 \subsubsection{Normalización}
-Para normalizar un factor, esto es, que los valores que toma el factor sumen 1, basta con sumar todos los valores asociados a las asignaciones y dividir cada uno entre esta suma. Por ejemplo: Tenemos el factor \(\phi(B)\), la suma de sus posibles valores es .3, entonces el factor normalizado queda como en la \fref{fig:FactorA0BNorm}.
+Para normalizar un factor, esto es, que los valores que toma el factor sumen 1, basta con sumar todos los valores asociados a las asignaciones y dividir cada uno entre esta suma. Por ejemplo: Tenemos el factor \(\phi(B)\) obtenido en la \fref{fig:FactorA0B}, la suma de sus posibles valores es .3, entonces el factor normalizado queda como en la \fref{fig:FactorA0BNorm}.
 
 \begin{figure}[H]
   \begin{center}
@@ -191,7 +191,7 @@ Para normalizar un factor, esto es, que los valores que toma el factor sumen 1, 
 \subsubsection{Marginalización}
 \quotes{Sea $X$ un conjunto de variables y sea \(Y \notin X\) una variable y $\phi(X,Y)$ un factor. Se define la marginalización de $Y$ en $\phi$, denotado como \(\sum_Y \phi\), como un factor $\psi$ sobre $X$ de tal forma que \[\psi(X) = \sum_Y \phi(X,Y)\]} \parencite[297]{KollerFriedman2009}.
 
-La operación de marginalización consiste en tomar la variable a marginalizar, sumar los valores en los renglones en que cambia su valor pero el de las demás variables no, y asignar esta suma al renglón correspondiente de las variables restantes. Por ejemplo: tenemos el factor AB y deseamos marginalizar la variable B. Entonces, tomamos los renglones donde A=0 y los sumamos, tomamos los renglones donde A=1 y los sumamos:
+La operación de marginalización consiste en tomar la variable a marginalizar, sumar los valores en los renglones en que cambia su valor pero el de las demás variables no, y asignar esta suma al renglón correspondiente de las variables restantes. Por ejemplo: tenemos el factor AB y deseamos marginalizar la variable B. Entonces, tomamos los renglones donde A=0 y los sumamos [\fref{fig:MargA}], tomamos los renglones donde A=1 y los sumamos [\fref{fig:MargB}].
 
 \begin{figure}[H]
     \centering
@@ -215,7 +215,7 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
         \end{tabular}
         \caption{Factor A}
     \end{subfigure}
-    \caption{Paso 1}
+    \caption{Paso 1}\label{fig:MargA}
 \end{figure}
 
 % \noindent y
@@ -243,20 +243,20 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
         \end{tabular}
         \caption{Factor A}
     \end{subfigure}
-    \caption{Paso 2}
+    \caption{Paso 2}\label{fig:MargB}
 \end{figure}
 
 
-\subsection{Desarrollo e implementaci\'on}
+\section{Desarrollo e implementaci\'on}
 
-\noindent La práctica consiste en crear una clase \classname{Factor} que implemente la operaciones de multiplicación, reducción y normalización de factores y marginalización de variables. Todo esto utilizando el lenguaje de programación \classname{Python}.
+\noindent La práctica consiste en crear una clase \classname{Factor} que implemente las operaciones de multiplicación, reducción y normalización de factores y marginalización de variables. Todo esto utilizando el lenguaje de programación \classname{Python}.  Para guiar tu implementación, el código auxiliar de esta práctica consiste en un \code{script} de uso llamado \code{PruebaFactores.py}, que deberá funcionar correctamente utilizando tu clase, la cual deberá estar implementada en un archivo \code{Factores.py} al lado de éste.
 
 
 \subsubsection{Implementaci\'on}
 
 \begin{enumerate}
   \item Crear una clase \classname{Variable}, con los siguientes atributos: \classname{nombre} y \classname{valores\_posi \linebreak bles} y sobrescribir el método \classname{\_\_str\_\_}.
-  % \item Programar un método \classname{tabla\_de\_valores} que reciba como parámetro una lista de objetos tipo \classname{Variable} y que regrese una matriz (lista de listas) que contenga todas las combinaciones de los valores que pueden tomar las variables. TIP: Inicializa la matriz con una única columna que contenga los valores posibles de la primer variable. Después, para cada variable restante, crear una nueva tabla. La nueva tabla es el resultado de anexar los valores posibles de la variable actual por cada renglón de la tabla anterior.
+
   \item Crear una clase \classname{Factor} que contenga los atributos: 
     \begin{itemize}
       \item \classname{alcance}: una lista de objetos de clase \classname{Variable}.
@@ -301,11 +301,21 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
   
   Usando esto, sobreescrbir el método \code{\_\_str\_\_}.
 
+  \textbf{TIP:} Como tu método debe funcionar para cualquier número de variables en el alcance generar esta tabla requerirá una forma creativa de anidar ciclos \code{for}.  En algún lugar necesitarás iterar sobre la misma tabla de valores que estás generando.
+
+  % \item Programar un método \classname{tabla\_de\_valores} que reciba como parámetro una lista de objetos tipo \classname{Variable} y que regrese una matriz (lista de listas) que contenga todas las combinaciones de los valores que pueden tomar las variables. TIP: Inicializa la matriz con una única columna que contenga los valores posibles de la primer variable. Después, para cada variable restante, crear una nueva tabla. La nueva tabla es el resultado de anexar los valores posibles de la variable actual por cada renglón de la tabla anterior.
+
   \item Programar un método auxiliar que reciba como parámetro un diccionario, cuyas llaves sean variables y los valores sean el valor asignado a cada una.  Este método deberá obtener el índice en la tabla de valores que corresponda a esta asignación.  Observa que para obtener el índice no es necesario haber desarrollado la tabla explícitamente, se utiliza un polinomio de direccionamiento.
   
   Por ejemplo, el polinomio de direccionamiento para un factor de 3 variables (A, B y C) se vería así:
       \[\iacute ndice = (pos(a) * |B| * |C|) + (pos(b) * |C|) + pos(c)\]
     donde \(pos(a)\) es la posición del valor asociado a la variable \(A\) en su lista de valores posibles y \(|A|\) es el tamaño de esta lista.
+
+  En su forma más general el polinomio de direccionamiento tiene la forma:
+  \begin{align*}
+   \iacute ndice &= \sum_{Var \in D} \left( pos(Val(Var)) \prod_{Var \in >D} |Var| \right)
+  \end{align*}
+  donde $Var \in >D$ son todas las variables a la derecha de $Var$ en la lista de \code{valores\_posibles}.
     
   \textbf{TIP:} Pueden factorizar los términos comunes (los tamaños de las listas) e implementar una función auxiliar que calcule recursivamente el valor del polinomio de direccionamiento.
   
@@ -319,7 +329,7 @@ La operación de marginalización consiste en tomar la variable a marginalizar, 
    \item En la reducción, si se reduce la única variable, devuelve el valor del factor que corresponda al valor indicado de la variable.
   \end{itemize}
 
-  \textbf{TIP:} Crea primero el factor resultado. Para cada renglón en la tabla de valores de este factor, encuentra los renglones relevantes en los operandos utilizando el método auxiliar mencionado en el punto anterior y realiza la operación correspondiente.
+  \textbf{TIP:} Crea primero el factor resultado con lista de variables en su alcance. Para cada renglón en la tabla de valores de este factor, encuentra los renglones relevantes en los operandos utilizando el método auxiliar mencionado en el punto anterior y realiza la operación correspondiente.
 \end{enumerate}
 
 % \textbf{\\Entrada} (opcional)\bigskip
