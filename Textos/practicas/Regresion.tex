@@ -2,25 +2,25 @@
 % Regresión Logística
 %----------------------------------------------------------------------------------------
 
-Esta práctica introduce el concepto de Regresión Logística para estimar probabilidades de datos, así como para la clasificación de estos. Se definirá el algoritmo de aprendizaje para la regresión logística, y se verán sus similitudes con el Perceptrón.
+Esta práctica introduce el concepto de \emph{regresión logística} para estimar probabilidades de datos, así como para la clasificación de estos. Se definirá el algoritmo de aprendizaje para la regresión logística y se verán sus similitudes con el Perceptrón.
 
 
 \section{Objetivo}
 
-Que el alumno conozca el concepto de Regresión Logística, sus aplicaciones tanto para la estimación de distribuciones de probabilidad, como para su clasificación. Que el alumno implemente el algoritmo de aprendizaje para poder estimar las probilidades de un problema binario.
+Que el alumno conozca el concepto de Regresión Logística, sus aplicaciones tanto para la estimación de distribuciones de probabilidad, como para su clasificación. Que el alumno implemente el algoritmo de aprendizaje para poder estimar las probabilidades en un problema de clasificación binaria.
 
 \section{Introducción}
 
-El aprendizaje supervisado comprende dos tipos de problemas básicos: 1) la clasificación; y 2) la regresión. Estos problemas pueden definirse a partir del tipo de valores que se esperan a la salida. En la clasificación, la salida de los métodos supervisado es una categoría, un valor discreto; por ejemplo $Y = \{0,1,2,...,N\}$. En el caso de la regresión, el valor de salida es continuo, ya sea $\mathbb{R}$ o un intervalo. 
+El aprendizaje supervisado comprende dos tipos de problemas básicos: 1) la clasificación; y 2) la regresión. Estos problemas pueden definirse a partir del tipo de valores que se esperan a la salida. En la clasificación, la salida de los métodos supervisados es una categoría, un valor discreto; por ejemplo $Y = \{0,1,2,...,N\}$. En el caso de la regresión, el valor de salida es continuo, ya sea $\mathbb{R}$ o un intervalo.
 
-Los modelos lineales, determinan una función lineal para poder solucionar alguno de estos problemas. Una función lineal multivariable será una función de la forma: $$a(x) = \sum_{i=1}^n x_iw_i + \theta$$
+Los modelos lineales determinan una función lineal para poder solucionar alguno de estos problemas. Una función lineal multivariable será una función de la forma: $$a(x) = \sum_{i=1}^n x_iw_i + \theta$$
 Los modelos lineales utilizan una función de este tipo para tratar los datos. Por ejemplo, el Perceptrón es un modelo lineal de clasificación, donde el valor final es determinado como 0, si $a(x)$ es un valor negativo, o 1 si es positivo.
 
 En el caso de la regresión lineal, lo que buscamos no es una clasificación, sino una regresión. En particular, la regresión logística obtendrá una probabilidad; es decir, un valor continuo en el intervalo $[0,1]$. Ya que se trata de un modelo lineal, usará una función lineal para obtener el valor de regresión. A continuación desarrollamos con más detalle el modelo de regresión logística.  
 
 \subsection{Regresión lineal}
 
-Se trata de un modelo de regresión para obtener valores probabilísticos en una distribución binaria. Así, dado un dato de entrada $x$, representado como un vector, se obtiene la probabilidad de que este vector pertenece a la clase 1 o a la clase 0. En particular, nos enfocaremos en la probabilidad de la clase 1. Dado un conjunto de datos $X$ y el conjunto de clases $Y$, asumiremos que la distribución sobre $Y$ dado $X$ es binaria o Bernoulli. En este sentido, buscamos estimar:
+Se trata de un modelo de regresión para obtener valores probabilísticos en una distribución binaria. Así, dado un dato de entrada $x$, representado como un vector, se obtiene la probabilidad de que este vector pertenezca a la clase 1 o a la clase 0. En particular, nos enfocaremos en la probabilidad de la clase 1. Dado un conjunto de datos $X$ y el conjunto de clases $Y$, asumiremos que la distribución sobre $Y$ dado $X$ es binaria o Bernoulli. En este sentido, buscamos estimar:
 
 $$p := P(Y=1|x)$$
 
@@ -32,7 +32,7 @@ Al despejar $p$ en esta función obtenemos la llamada función logística:
 
 $$p = \sigma(x) \frac{1}{1 + e^{-\big(\sum_{i=1}^n x_i + \theta\big)}} $$
 
-La función logística toma valores entre 0 y 1, y toma el valor $0.5$ cuando $\sum_{i=1}^n x_i + \theta = 0$. En la Figura~\ref{Fig:Logistic}. Los valores de 0 y 1 sólo se alcanzan en el límite. Los valores $w_i$, $i=1,...,n$ y $\theta$ son los parámetros que se deben aprender. La función logística es entonces la función que determina el modelo de regresión logística.
+La función logística toma valores entre 0 y 1, y toma el valor $0.5$ cuando $\sum_{i=1}^n x_i + \theta = 0$. En la \fref{Fig:Logistic}. Los valores de 0 y 1 sólo se alcanzan en el límite. Los valores $w_i$, $i=1,...,n$ y $\theta$ son los parámetros que se deben aprender. La función logística es entonces la función que determina el modelo de regresión logística.
 
 
 \begin{figure}
@@ -44,7 +44,7 @@ La función logística toma valores entre 0 y 1, y toma el valor $0.5$ cuando $\
 
 
 
-\begin{definition}[Regresión logística}
+\begin{definition}[Regresión logística]
 La regresión logística es un modelo gráfico lineal para estimar probabilidades en distribuciones binarias. En este modelo, la distribución probabilística está definida por la función logística:
 
 $$ \sigma(x; w, \theta) \frac{1}{1 + e^{-\big(\sum_{i=1}^n x_i + \theta\big)}} $$
@@ -109,7 +109,7 @@ En el Algoritmo¬\ref{alg:AlgReg} se describe la implementación del aprendizaje
             \State $\theta \leftarrow \theta - \eta \big( f(x) - y \big) $
         \EndFor
     \EndFor
-    \Statte \textbf{return} La función $\sigma(\cdot; w, \theta)$ con parámetros óptimos
+    \State \textbf{return} La función $\sigma(\cdot; w, \theta)$ con parámetros óptimos
   \EndFunction
  \end{algorithmic}
 \end{algorithm}
