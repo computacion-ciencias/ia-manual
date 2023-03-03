@@ -11,26 +11,28 @@ Que el alumno conozca el concepto de Regresión Logística, sus aplicaciones tan
 
 \section{Introducción}
 
-El aprendizaje supervisado comprende dos tipos de problemas básicos: 1) la clasificación; y 2) la regresión. Estos problemas pueden definirse a partir del tipo de valores que se esperan a la salida. En la clasificación, la salida de los métodos supervisados es una categoría, un valor discreto; por ejemplo $Y = \{0,1,2,...,N\}$. En el caso de la regresión, el valor de salida es continuo, ya sea $\mathbb{R}$ o un intervalo.
+El aprendizaje supervisado comprende dos tipos de problemas básicos: 1) la clasificación; y 2) la regresión. Estos problemas pueden definirse a partir del tipo de valores que se esperan a la salida. En la clasificación, la salida de los métodos es una categoría, un valor discreto; por ejemplo $Y = \{0,1,2,...,N\}$. En el caso de la regresión, el valor de salida es continuo, ya sea $\mathbb{R}$ o un intervalo.
 
 Los modelos lineales determinan una función lineal para poder solucionar alguno de estos problemas. Una función lineal multivariable será una función de la forma: $$a(x) = \sum_{i=1}^n x_iw_i + \theta$$
 Los modelos lineales utilizan una función de este tipo para tratar los datos. Por ejemplo, el Perceptrón es un modelo lineal de clasificación, donde el valor final es determinado como 0, si $a(x)$ es un valor negativo, o 1 si es positivo.
 
-En el caso de la regresión lineal, lo que buscamos no es una clasificación, sino una regresión. En particular, la regresión logística obtendrá una probabilidad; es decir, un valor continuo en el intervalo $[0,1]$. Ya que se trata de un modelo lineal, usará una función lineal para obtener el valor de regresión. A continuación desarrollamos con más detalle el modelo de regresión logística.  
+En el caso de la regresión logística lineal, lo que buscamos no es una clasificación, sino una regresión. En particular, la regresión logística obtendrá una probabilidad; es decir, un valor continuo en el intervalo $[0,1]$. Ya que se trata de un modelo lineal, usará una función lineal para obtener el valor de regresión. A continuación desarrollamos con más detalle el modelo de regresión logística.
 
-\subsection{Regresión lineal}
+\subsection{Regresión logística lineal}
 
 Se trata de un modelo de regresión para obtener valores probabilísticos en una distribución binaria. Así, dado un dato de entrada $x$, representado como un vector, se obtiene la probabilidad de que este vector pertenezca a la clase 1 o a la clase 0. En particular, nos enfocaremos en la probabilidad de la clase 1. Dado un conjunto de datos $X$ y el conjunto de clases $Y$, asumiremos que la distribución sobre $Y$ dado $X$ es binaria o Bernoulli. En este sentido, buscamos estimar:
 
 $$p := P(Y=1|x)$$
 
-La probabilidad de la clase 0 se puede obtener de esta como $P(Y=0|x) = 1-P(Y=1|x) = 1-p$. La función logística, que es la función a partir de la cual podemos obtener $p$, se obtiene asumiendo que el logit de la distribución es lineal. El logit es una estadística que determina el logarítmo de la verosimilitud de la distribución. El logit es igual a 0 cuando $ p = 1-p$, es decir, cuando el evento es aleatorio, toma valores positivos cuando $p > 1-p$ y valores negativos cuando $p < 1-p$. Así la función logit está determinada como $\ln \frac{p}{1-p}$. Finalmente, si asumimos que el logit es lineal, tenemos:
+La probabilidad de la clase 0 se puede obtener de esta como $P(Y=0|x) = 1-P(Y=1|x) = 1-p$. {\color{gray}La función logística, que es la función a partir de la cual podemos obtener $p$, se obtiene asumiendo que el logit de la distribución es lineal. El \emph{logit} es una estadística que determina el logaritmo de la verosimilitud de la distribución.
+
+El logit es igual a 0 cuando $ p = 1-p$, es decir, cuando el evento es aleatorio, toma valores positivos cuando $p > 1-p$ y valores negativos cuando $p < 1-p$. Así la función logit está determinada como $\ln \frac{p}{1-p}$. Finalmente, si asumimos que el logit es lineal, tenemos:}
 
 $$\ln \frac{p}{1-p} = \sum_{i=1}^n x_i + \theta$$
 
 Al despejar $p$ en esta función obtenemos la llamada función logística:
 
-$$p = \sigma(x) \frac{1}{1 + e^{-\big(\sum_{i=1}^n x_i + \theta\big)}} $$
+$$p = \sigma(x) = \frac{1}{1 + e^{-\big(\sum_{i=1}^n x_i + \theta\big)}} $$
 
 La función logística toma valores entre 0 y 1, y toma el valor $0.5$ cuando $\sum_{i=1}^n x_i + \theta = 0$. En la \fref{Fig:Logistic}. Los valores de 0 y 1 sólo se alcanzan en el límite. Los valores $w_i$, $i=1,...,n$ y $\theta$ son los parámetros que se deben aprender. La función logística es entonces la función que determina el modelo de regresión logística.
 
@@ -47,11 +49,11 @@ La función logística toma valores entre 0 y 1, y toma el valor $0.5$ cuando $\
 \begin{definition}[Regresión logística]
 La regresión logística es un modelo gráfico lineal para estimar probabilidades en distribuciones binarias. En este modelo, la distribución probabilística está definida por la función logística:
 
-$$ \sigma(x; w, \theta) \frac{1}{1 + e^{-\big(\sum_{i=1}^n x_i + \theta\big)}} $$
+$$ \sigma(x; w, \theta) = \frac{1}{1 + e^{-\big(\sum_{i=1}^n x_i + \theta\big)}} $$
 Donde $w = \begin{pmatrix} w_1 & w_2 & \cdots & w_n \end{pmatrix}$ y $\theta$ son los parámetros del modelo que debemos aprender.
 \end{definition}
 
-El modelo gráfico que define la regresión logística se puede ver en la Figura~\ref{Fig:LinearReg}. Como se puede observar, la gráfica del modelo es similar a la de un modelo de Bayes Naïve; sin embargo, ambos modelos operan de forma diferente. Se dice que el modelo de Bayes Naïve es un modelo generativo, mientras que el modelo de regresión logística es un modelo discriminativo.
+El modelo gráfico que define la regresión logística se puede ver en la Figura~\ref{Fig:LinearReg}. Como se puede observar, la gráfica del modelo es similar a la de un modelo de Bayes Ingenuo; sin embargo, ambos modelos operan de forma diferente. Se dice que el modelo de Bayes Ingenuo es un modelo generativo, mientras que el modelo de regresión logística es un modelo discriminativo.
 
 \begin{figure}
  \centering
@@ -60,19 +62,17 @@ El modelo gráfico que define la regresión logística se puede ver en la Figura
 \end{figure}    
 
 
-Los valores de $w_1, w_2, ..., w_n$ y $\theta$ son los parámetros que debemos aprender en el modelo. 
-
 
 
 \subsection{Estimación del modelo}
 
-Para aprender los parámetros de la regresión logística, utilizaremos el algoritmo de gradiente descendiente. Básicamente, el algoritmo de gradiente descendiente busca encontrar el mínimo de una función objetivo a partir de observar el comportamiento del vector gradiente (si la dirección es ascendente, nos indica que nos alejamos del mínimo, por lo que debemos reducir los valores de los parámetros; por el contrario, si la dirección del gradiente es descendente, seguimor avanzando por esta dirección para alcanzar el mínimo). Este algoritmo se define como:
+Para aprender los parámetros de la regresión logística, utilizaremos el algoritmo de descenso por el gradiente. Básicamente, el algoritmo de descenso por el gradiente busca encontrar el mínimo de una función objetivo a partir de observar el comportamiento del vector gradiente {\color{gray}(si la dirección es ascendente, nos indica que nos alejamos del mínimo, por lo que debemos reducir los valores de los parámetros; por el contrario, si la dirección del gradiente es descendente, seguimor avanzando por esta dirección para alcanzar el mínimo)}. Este algoritmo se define como:
 
 $$ x \leftarrow x - \alpha \nabla_x f(x) $$
 
-Es decir, actualizamos los valores de los parámetros restando el gradiente ponderado por un valor real $\alpha$. Al valor $\alpha$ se le conoce como el rango de aprendizaje, y funciona de manera idéntica que en el Percpetrón.
+Es decir, actualizamos los valores de los parámetros restando el gradiente ponderado por un valor real $\alpha$. Al valor $\alpha$ se le conoce como taza de aprendizaje y funciona de manera idéntica que en el Perceptrón.
 
-En el caso de la regresión logística, la función objetivo (ya que trabajamos con probabilidades) será la estimación por máxima verosimilitud logarítmica. Pero está función busca maximizar los valores por lo que tomaremos el negativo de esta función.\footnote{A la función objetiva definida de esta forma también se le conoce como entropía cruzada} Esta función está dada como:
+En el caso de la regresión logística, la función objetivo (ya que trabajamos con probabilidades) será la estimación por máxima verosimilitud logarítmica. Pero esta función busca maximizar los valores por lo que tomaremos el negativo de esta función.\footnote{A la función objetivo definida de esta forma también se le conoce como entropía cruzada} Esta función está dada como:
 
 \begin{equation*}
     J(w, \theta) = - y \ln\big( \sigma(x; w, \theta)\big) - (1- y) \ln\big( 1-\sigma(x; w, \theta) \big)
@@ -80,27 +80,27 @@ En el caso de la regresión logística, la función objetivo (ya que trabajamos 
 
 Dado que tenemos una distribución binaria, se toman dos términos: el término $y \ln\big( \sigma(x; w, \theta)\big)$ que corresponde a la probabilidad de la clase 1, y el término $(1-y) \ln\big( 1-\sigma(x; w, \theta)\big)$ que corresponde a la probabilidad de la clase 0. Claramente si el dato $x$ de entrada pertenece a la clase 1, minimizar el primer término corresponde a maximizar la probabilidad $\sigma(x; w, \theta)$. Análogamente, se maximiza la probabilidad de la clase 0 cuando los datos de entrada son de esta clase.
 
-Para aplicar el gradiente descendiente debemos obtener el vector gradiente, lo que implica obtener las derivadas parciales de la función objetivo. Podemos observar que:
+Para aplicar el descenso por el gradiente debemos obtener el vector gradiente, lo que implica obtener las derivadas parciales de la función objetivo con respecto a los parámetros entrenable. Podemos observar que:
 
 \begin{align*}
     \frac{\partial J }{\partial w_i} &= - y \frac{\partial}{\partial w_i} \ln\big( \sigma(x; w, \theta)\big) - (1- y) \frac{\partial }{\partial w_i}  \ln\big( 1-\sigma(x; w, \theta) \big) \\
         &= \big( \sigma(x; w, \theta) - y \big) x_i 
 \end{align*}
 
-Pues la derivada del sigmoide es $\sigma(x; w, \theta)\big(1-(x; w, \theta)\big)$ y desarrollando por los dos casos, $y=1$ y $y=0$, podemos obtener el resultado. De igual forma es fácil notar que para $\theta$ tenemos:
+Pues la derivada de la sigmoide es $\sigma(x; w, \theta)\big(1-(x; w, \theta)\big)$ y desarrollando por los dos casos, $y=1$ y $y=0$, podemos obtener el resultado. De igual forma es fácil notar que para $\theta$ tenemos:
 
 \begin{align*}
     \frac{\partial J }{\partial \theta} &= - y \frac{\partial}{\partial \theta} \ln\big( \sigma(x; w, \theta)\big) - (1- y) \frac{\partial }{\partial \theta}  \ln\big( 1-\sigma(x; w, \theta) \big) \\
         &= \big( \sigma(x; w, \theta) - y \big)
 \end{align*}
 
-En el Algoritmo¬\ref{alg:AlgReg} se describe la implementación del aprendizaje en la regresión logística.
+En el \pref{alg:AlgReg} se describe la implementación del aprendizaje en la regresión logística.
 
 
 \begin{algorithm}
  \caption{Algoritmo de aprendizaje para la regresión logística}\label{alg:AlgReg}
  \begin{algorithmic}
-  \Function{Fit-Linear-Regression}{$X$, $Y$, $\eta$, $T$}
+  \Function{Fit-Linear-Regression}{$X$, $Y$, $\alpha$, $T$}
     \State $w, \theta \leftarrow$ \textsc{Random}$(w, \theta)$
     \For{$t \leftarrow 1$ hasta $T$}
         \For{ $x, y \in X,Y$ }
@@ -114,7 +114,7 @@ En el Algoritmo¬\ref{alg:AlgReg} se describe la implementación del aprendizaje
  \end{algorithmic}
 \end{algorithm}
 
-El algoritmo para aprendizaje en regresión logística debe tomar un conjunto de datos de entrenamiento $X$ y las clases cuyas probabilidades se desean estimar $Y$. Además se indica el rango de aprendizaje $\eta$ y el número máximo de iteraciones $T$. Los valores de $w$ y $\theta$ se inician aleatoriamente y se ajustan hasta obtener una solución adecuada.
+El algoritmo para aprendizaje en regresión logística debe tomar un conjunto de datos de entrenamiento $X$ y las clases cuyas probabilidades se desean estimar $Y$. Además se indica la taza de aprendizaje $\alpha$ y el número máximo de iteraciones $T$. Los valores de $w$ y $\theta$ se inician aleatoriamente y se ajustan hasta obtener una solución adecuada.
 
 
 \subsection{Clasificación con regresión logística}
@@ -150,7 +150,7 @@ En conclusión, podemos ver que la regresión logística está ampliamente relac
 
 \section{Desarrollo}
 
-En esta práctica se implementará el modelo de regresión lineal y el algoritmo de aprendizaje para esta en un conjunto de datos lógico. Se propone generar un conjunto de datos en base al problema lógico \textsc{And}, pero introduciendo ruido para dispersar los datos en el espacio $\mathbb{R}^2$. Se entrenará un modelo de regresión y se obtendrán las probabilidades de que los datos pertenezcan a una clase o a otra.
+En esta práctica se implementará el modelo de regresión logística lineal y el algoritmo de aprendizaje para esta en un conjunto de datos lógico. Se propone generar un conjunto de datos en base al problema lógico \textsc{And}, pero introduciendo ruido para dispersar los datos en el espacio $\mathbb{R}^2$. Se entrenará un modelo de regresión y se obtendrán las probabilidades de que los datos pertenezcan a una clase o a otra.
 
 
 
@@ -175,10 +175,15 @@ Para la implementación del código se manejarán arreglos en \code{numpy} y se 
         \code{numpy.random.normal(loc=0,scale=1,size=(200,2))}
     \end{center}
     Esto generará ruido con media 0 y varianza 1 para los 200 datos de dos dimensiones. Se sumará a los este ruido escalado por un factor; se sugiere escalar el ruido por un factor entre 0.1 y 0.2.
-    \item Se generará la clase \code{LogisticRgression}. Dentro de esta clase, se definirán las funciones \code{fit}, \code{predict\_proca} y \code{predict}.
-    \item La función \code{fit} deberá tomar como argumentos los datos $X$ y sus clases $Y$ para el entrenamiento; además se deberá indicar el rango de aprendizaje (se sugiere un valor de 0.1) y un número máximo de iteraciones (se sugiere 100). Esta función aprenderá el algoritmo de aprendizaje (Algoritmo~\ref{alg:AlgReg}). Se sugiere inicializar los parámetros de manera aleatoria con valores en el intervalo $[-0.5,0.5]$.
+
+    \item Se generará la clase \code{LogisticRegression}. Dentro de esta clase, se definirán las funciones \code{fit}, \code{predict\_proca} y \code{predict}.
+
+    \item La función \code{fit} deberá tomar como argumentos los datos $X$ y sus clases $Y$ para el entrenamiento; además se deberá indicar la taza de aprendizaje (se sugiere un valor de 0.1) y un número máximo de iteraciones (se sugiere 100). Esta función ejecutará el algoritmo de aprendizaje (\pref{alg:AlgReg}). Se sugiere inicializar los parámetros de manera aleatoria con valores en el intervalo $[-0.5,0.5]$.
+
     \item La función \code{predict\_proba} tomará como argumento un vector o varios vectores de entrada $x$ y devolverá la probabilidad de clase de estas entradas. Puede utilizarse esta función dentro de la función de entrenamiento \code{fit}.
+
     \item La función \code{predict} tomará como argumento un vector o varios vectores de entrada $x$ y devolverá la clase propuesta para estas entradas. Es decir, esta función se encargará de clasificar los datos de entrada.
+
     \item Se sugiere comparar los resultados de clasificación con aquellos obtenidos con el Perceptrón. 
 \end{itemize}
 
