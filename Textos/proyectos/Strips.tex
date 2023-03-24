@@ -135,13 +135,20 @@ Las tareas que debes realizar son las siguientes:
 \begin{enumerate}
 \subsubsection{Parte I}
  \item Dibuja el estado inicial.  Puedes incluirlo como comentario en tu código como arte ASCII o adjuntar un archivo de imagen (no debe ser un archivo pesado).
+
  \item Crea a mano los objetos correspondientes al dominio y problema anteriores.
        Imprímelos y observa que todo esté correcto.
+
  \item Observa que el estado del mundo se representa como una lista de predictados aterrizados.
        Agrega el código necesario (clases o funciones) para que, dado un estado determine si una
        acción es aplicable o no y con qué sustitución (qué objeto se asigna a qué variable).
- \item Agrega el código para determinar si un estado satisface las condiciones indicadas en el 
-       campo \emph{meta}.
+
+ \item Crea una función para aplicar una función aplicable sobre el estado actual y devolver el estado sucesor.  Esta función debe clonar el estado y transformar al clon para que describa ahora al estado sucesor.
+
+ \textbf{TIP:}  Recuerda que al clonar, los objetos nuevos son distintos a sus originales y sus códigos hash cambian, define tu propia función para que puedas determinar si dos predicados son iguales o no, considerando que no son el mismo objeto, sólo tienen valores equivalentes.
+
+ \item Agrega el código para determinar si un estado satisface las condiciones indicadas en el campo \emph{meta}.
+
  \item Incluye código con pruebas que muestren que tus implementaciones son correctas.
        
 \subsubsection{Parte II}

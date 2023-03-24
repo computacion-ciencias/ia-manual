@@ -10,7 +10,7 @@ Que el alumno se familiarice con la estrategia de mejoramiento iterativa para la
 
 Este algoritmo puede ser visto como una mejora al algoritmo de ascenso de colinas.  Ascenso de colinas comienza con la propuesta de una solución parcial o no óptima a un problema, la cual mejora de manera iterativa hasta encontrarse con la óptima o estancarse en un máximo local.  Recocido simulado integra una selección de soluciones estocástica, es decir, para elegir la siguiente solución no siempre escoge a la mejor vecina, con lo cual se le da la libertad de explorar zonas distintas del espacio de soluciones, en las cuales el ascenso de colinas puede detenerse fácilmente.
 
-El pseudocódigo de este algoritmo es descrito en el libro de  \cite{Russell2010} en la sección de algoritmos de mejoramiento iterativo y lo podemos ver en el \pref{alg:annealing}.
+El pseudocódigo de este algoritmo es descrito en el libro de  \cite{Russell2010} en la sección de algoritmos de mejoramiento iterativo y lo podemos ver en el \pref{alg:annealing}.  Observa que, en esta versión, se asume que una mejor solución tendrá un valor más alto.  Si se desea minimizar el valor hay que invertir las indicaciones.
 
 \begin{algorithm}
  \caption{Recocido simulado}\label{alg:annealing}
