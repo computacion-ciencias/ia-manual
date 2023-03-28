@@ -7,16 +7,17 @@ Esta práctica introduce el concepto de \emph{regresión logística} para estima
 
 \section{Objetivo}
 
-Que el alumno conozca el concepto de Regresión Logística, sus aplicaciones tanto para la estimación de distribuciones de probabilidad, como para su clasificación. Que el alumno implemente el algoritmo de aprendizaje para poder estimar las probabilidades en un problema de clasificación binaria.
+Que el alumno conozca el concepto de \textit{regresión logística}, sus aplicaciones tanto para la estimación de distribuciones de probabilidad, como para clasificación. Que el alumno implemente el algoritmo de aprendizaje para poder estimar las probabilidades en un problema de clasificación binaria.
 
 \section{Introducción}
 
 El aprendizaje supervisado comprende dos tipos de problemas básicos: 1) la clasificación; y 2) la regresión. Estos problemas pueden definirse a partir del tipo de valores que se esperan a la salida. En la clasificación, la salida de los métodos es una categoría, un valor discreto; por ejemplo $Y = \{0,1,2,...,N\}$. En el caso de la regresión, el valor de salida es continuo, ya sea $\mathbb{R}$ o un intervalo.
 
-Los modelos lineales determinan una función lineal para poder solucionar alguno de estos problemas. Una función lineal multivariable será una función de la forma: $$a(x) = \sum_{i=1}^n x_iw_i + \theta$$
-Los modelos lineales utilizan una función de este tipo para tratar los datos. Por ejemplo, el Perceptrón es un modelo lineal de clasificación, donde el valor final es determinado como 0, si $a(x)$ es un valor negativo, o 1 si es positivo.
+Los modelos lineales determinan una función lineal que estima la dependencia entre las características $x$ de un ejemplar y la respuesta esperada $a(x)$. Una función lineal multivariable tendrá la forma: $$a(x) = \sum_{i=1}^n x_iw_i + \theta$$
+Los modelos lineales utilizan una función de este tipo para tratar los datos. Por ejemplo, el \textit{perceptrón} es un modelo lineal de clasificación, donde el valor final es determinado como 0, si $a(x)$ es un valor negativo, o 1 si es positivo.
 
-En el caso de la regresión logística lineal, lo que buscamos no es una clasificación, sino una regresión. En particular, la regresión logística obtendrá una probabilidad; es decir, un valor continuo en el intervalo $[0,1]$. Ya que se trata de un modelo lineal, usará una función lineal para obtener el valor de regresión. A continuación desarrollamos con más detalle el modelo de regresión logística.
+Siguiendo estrictamenta las definiciones anteriores, en el caso de la regresión logística lineal, lo que buscamos no es una clasificación, sino una regresión. Concretamente, la regresión logística obtendrá una probabilidad; es decir, un valor continuo en el intervalo $[0,1]$. No se trata de un modelo lineal, si no de la composición de una \emph{función de distribución de probabilidad acumulada} actuando sobre la función lineal, para obtener un valor de regresión en el intervalo $[0,1]$. A continuación desarrollamos con más detalle el modelo de regresión logística.
+
 
 \subsection{Regresión logística lineal}
 
@@ -24,7 +25,7 @@ Se trata de un modelo de regresión para obtener valores probabilísticos en una
 
 $$p := P(Y=1|x)$$
 
-La probabilidad de la clase 0 se puede obtener de esta como $P(Y=0|x) = 1-P(Y=1|x) = 1-p$. {\color{gray}La función logística, que es la función a partir de la cual podemos obtener $p$, se obtiene asumiendo que el logit de la distribución es lineal. El \emph{logit} es una estadística que determina el logaritmo de la verosimilitud de la distribución.
+La probabilidad de la clase 0 se puede obtener de esta como $$P(Y=0|x) = 1-P(Y=1|x) = 1-p$$ {\color{gray}La función logística, que es la función a partir de la cual podemos obtener $p$, se obtiene asumiendo que el logit de la distribución es lineal. El \emph{logit} es una estadística que determina el logaritmo de la verosimilitud de la distribución.
 
 El logit es igual a 0 cuando $ p = 1-p$, es decir, cuando el evento es aleatorio, toma valores positivos cuando $p > 1-p$ y valores negativos cuando $p < 1-p$. Así la función logit está determinada como $\ln \frac{p}{1-p}$. Finalmente, si asumimos que el logit es lineal, tenemos:}
 
