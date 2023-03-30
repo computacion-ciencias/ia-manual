@@ -41,8 +41,7 @@ Los HMMs son una solución a este tipo de problemas. Podemos pensar a un HMM com
 
 Para obtener la cadena de emisiones $\hat{y_1}, \hat{y_2}, ... , \hat{y_n}$ más óptima, que etiquete a la cadena de entrada $\hat{x_1}, \hat{x_2}, ... , \hat{x_n}$, se debe optimizar la probabilidad conjunta:
 
-\begin{align} 
-    \small
+\begin{align}
     \hat{y_1}, \hat{y_2}, ... , \hat{y_n} &= \arg\max_{y_1,...,y_n} P(Y^{(1)}=y_1, Y^{(2)}=y_2,...,Y^{(n)}=y_n, x^{(1)}, x^{(2)}, x^{(n)}) \nonumber \\
     &= \arg\max_{y_1,...,y_n} \prod_{t=1}^n P(Y^{(t)}=y_t | Y^{(t-1)}=y_{t-1}) P(x^{(t)}|Y^{(t)}=y_t) \label{eq:HMM}
 \end{align}
@@ -140,7 +139,6 @@ Entonces el algoritmo de Viterbi genera $M$ caminos finales (donde $M$ es el nú
 De forma intuitiva, en cada tiempo $t$ de la cadena de entrada, se obtiene la probabilidad que maximiza el camino hacia cada símbolo $y_i$ en ese tiempo. Para esto, se guardan las variables:
 
 \begin{equation*}
-\small
 \delta_i(t+1) = \max_{y_{i_1}...y_{i_t}} P(Y^{(1)}=y_{i_1}, ...,Y^{(t)}=y_{i_t}, x^{(1)},...,x^{(t+1)}, Y^{(t+1)}=y_i)
 \end{equation*}
 
