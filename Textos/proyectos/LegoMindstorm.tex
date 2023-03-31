@@ -1,6 +1,13 @@
+% computacion-ciencias/ia-lego-mindstorm
 
 \section{Objetivo}
 \noindent Que el estudiante trabaje con un robot programable de tal forma que comprenda las funciones de distintos tipos de sensores y motores.
+
+\begin{auxcode}
+ \caption{Seguidor de línea}
+ \centering
+ \hurl{\auxprefix ia-lego-mindstorm}
+\end{auxcode}
 
 \section{Introducci\'on}
 
@@ -15,7 +22,7 @@ Ahora, para la práctica necesitaremos algunas cosas extras, ya que se utilizar�
 
 \subsection{Instalando ev3dev}
 
-ev3dev es una distribución de Linux basada en Debian, lo cual permite tener una mayor disponibilidad de lenguajes y bibliotecas. La única desventaja es que sólo es compatible con la versión EV3 de Lego Mindstorms.
+\code{ev3dev} es una distribución de Linux basada en Debian, lo cual permite tener una mayor disponibilidad de lenguajes y bibliotecas. La única desventaja es que sólo es compatible con la versión EV3 de Lego Mindstorms.
 
 \noindent Se necesitará:
 
@@ -93,11 +100,11 @@ Su práctica consiste en crear un robot seguidor de línea y un algoritmo para �
 
 \subsection{Robot}
 
-Pueden utilizar el sensor de color (para identificar la línea) y los distintos motores que tienen a su disposición. El diseño del robot es libre, un ejemplo de cómo montar los motores y sensor lo pueden ver en la figura~\ref{fig:P10robot}.
+Pueden utilizar el sensor de color (para identificar la línea) y los distintos motores que tienen a su disposición. El diseño del robot es libre, un ejemplo de cómo montar los motores y sensor lo pueden ver en la \fref{fig:P10robot}.
 
 \subsection{Algoritmo}
 
-Aquí tienen un ejemplo que utiliza dos motores (también lo pueden encontrar en el apéndice~\ref{appe:lego}), ubicados en los costados del bloque programable, y el sensor de color para ubicarse. Cabe notar que este algoritmo es bastante sencillo, ustedes deberán mejorarlo para que su robot siga la línea lo más fluidamente posible.
+Aquí tienen un ejemplo que utiliza dos motores (también lo pueden encontrar en el código auxiliar), ubicados en los costados del bloque programable, y el sensor de color para ubicarse. Cabe notar que este algoritmo es bastante sencillo, ustedes deberán mejorarlo para que su robot siga la línea lo más fluidamente posible.
 
 \begin{minted}[mathescape,
                linenos,
@@ -162,7 +169,7 @@ Lamentablemente no hay mucha documentación sobre este plug-in, pero siempre pue
 
 \section{Requisitos y resultados}
 
-Deben entregar un script o aplicación que resuelva el problema de seguir una línea negra u obscura en un fondo contrastante junto con imágenes de la construcción del robot. Su script deberá ser lo más eficiente posible y debe guiar al robot a una velocidad mayor que el ejemplo que aparece en la sección anterior.
+Deben entregar un guión (\textit{script}) o aplicación que resuelva el problema de seguir una línea negra u obscura en un fondo contrastante junto con imágenes de la construcción del robot. Su guión deberá ser lo más eficiente posible y debe guiar al robot a una velocidad mayor que el ejemplo que aparece en la sección anterior.
 
 
 \begin{figure}[H]
@@ -177,11 +184,3 @@ Deben entregar un script o aplicación que resuelva el problema de seguir una l�
   \caption{Aquí se muestra una configuración ejemplo de robot seguidor de línea utilizando Lego Mindstroms.}
   \label{fig:P10robot}
 \end{figure}
-
-% \begin{thebibliography}{1}
-
-  % \bibitem{notes} Michael Negnevitsky {\em Artificial Intelligence: A guide to Intelligent Systems}, 2005 :
-  % Pearson Education Limited, Essex, England .
-
-% \end{thebibliography}
-

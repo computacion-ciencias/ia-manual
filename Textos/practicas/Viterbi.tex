@@ -9,6 +9,13 @@ Esta práctica introduce el concepto de Modelo Oculto de Márkov, así como sus 
 Que el alumno conozca el concepto de Modelo Oculto de Márkov, su forma de representarlos, así como sus aplicaciones. Que sea capaz de aplicar los Modelos Ocultos de Márkov a problemas de etiquetado de secuencias de forma óptima por medio del algoritmo de Viterbi.
 
 
+\begin{auxcode}
+ \caption{Viterbi}
+ \centering
+ \hurl{\auxprefix ia-viterbi}
+\end{auxcode}
+
+
 \section{Introducción}
 
 Los Modelos Ocultos de Márkov a los que nos referiremos como HMM (por sus siglas en inglés \emph{Hidden Markov Models}) son un modelo gráfico \emph{generativo}.  Esto es, son capaces de aprender un modelo de la distribución de probabilidad subyacente a los datos de entrenamiento y utilizarlo para generar nuevos datos con características semejantes.  Además, generalizan el modelo de Bayes Ingenuo e incorporan el concepto de procesos de Márkov en su estructura, es decir, que asumimos un sistema dinámico en el que el estado al tiempo $t$ depende sólo del estado al tiempo $t-1$.

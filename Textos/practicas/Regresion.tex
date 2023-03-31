@@ -1,7 +1,6 @@
 %----------------------------------------------------------------------------------------
 % Regresión Logística
 %----------------------------------------------------------------------------------------
-% ia-regresion-logistica
 
 Esta práctica introduce el concepto de \emph{regresión logística} para estimar probabilidades de datos, así como para la clasificación de estos. Se definirá el algoritmo de aprendizaje para la regresión logística y se verán sus similitudes con el Perceptrón.
 
@@ -9,6 +8,13 @@ Esta práctica introduce el concepto de \emph{regresión logística} para estima
 \section{Objetivo}
 
 Que el alumno conozca el concepto de \textit{regresión logística}, sus aplicaciones tanto para la estimación de distribuciones de probabilidad, como para clasificación. Que el alumno implemente el algoritmo de aprendizaje para poder estimar las probabilidades en un problema de clasificación binaria.
+
+\begin{auxcode}
+ \caption{Regresión logística}
+ \centering
+ \hurl{\auxprefix ia-regresion-logistica}
+\end{auxcode}
+
 
 \section{Introducción}
 
@@ -32,8 +38,7 @@ Dado un conjunto de datos $X$ y el conjunto de clases $Y = \{0,1\}$, asumiremos 
 
 La \emph{función logística} $\sigma(z)$ es una distribución de probabilidad acumulada simétrica que se puede elegir para mapear una predicción lineal al intervalo $[0,1]$, de forma que se aproxima a $0$ y $1$ en sus extremos de forma suave, se comporta semejante a la recta para probabilidades entre $0.2$ y $0.8$ y es invertible \parencite{Fox2016}.  De este modo obtenemos el modelo de regresión logística lineal, que estima $p$ como:
 \begin{align*}
- p &= \sigma \left(\sum_{i=1}^n x_i + \theta \right) \\
- p &= \frac{1}{1 + e^{-\big(\sum_{i=1}^n x_i + \theta\big)}}
+ p &= \sigma \left(\sum_{i=1}^n x_i + \theta \right) = \frac{1}{1 + e^{-\big(\sum_{i=1}^n x_i + \theta\big)}}
 \end{align*}
 
 Bajo este modelo, la \emph{función cuantil} de la función de distribución\footnote{``El \textit{cuantil} de orden $p$ es el valor de la variable $x_p$ que marca un corte de modo que una proporción $p$ de valores de la población es menor o igual que $x_{p}$''.  La función cuantil marca el punto de corte $x_p$ y es la inversa de la distribución de probabilidad acumulada. \hurl{https://es.wikipedia.org/wiki/Cuantil}} es lineal:
@@ -45,7 +50,7 @@ Al proceder a calcular explícitamente la inversa de $\sigma$ a partir de \eref{
 \begin{align*}
  \frac{p}{1-p} &= e^{\sum_{i=1}^n x_i + \theta}
 \end{align*}
-donde el término de la izquierda es llamado la \emph{cuota} a favor de $Y=1$, pues entre mayor sea su valor, mayor es la probabilidad de que ocurra $Y=1$\footnote{La cuota es una medida de la \emph{verosimilitud} de un evento, es decir, la probabilidad de haber observado un valor de una variable aleatoria, dados los parámetros de la función de densidad de probabilidad de la cual se obtuvo la muestra. \hurl{https://en.wikipedia.org/wiki/Likelihood_function}}.  Al sacar el logaritmo de ambos lados obtenemos el \emph{logit}, el logaritmo de la cuota, y es éste el que estamos modelando con una función lineal:
+donde el término de la izquierda es llamado la \emph{cuota} a favor de $Y=1$, pues entre mayor sea su valor, mayor es la probabilidad de que ocurra $Y=1$.\footnote{La cuota es una medida de la \emph{verosimilitud} de un evento, es decir, la probabilidad de haber observado un valor de una variable aleatoria, dados los parámetros de la función de densidad de probabilidad de la cual se obtuvo la muestra. \hurl{https://en.wikipedia.org/wiki/Likelihood_function}}  Al sacar el logaritmo de ambos lados obtenemos el \emph{logit}, el logaritmo de la cuota, y es éste el que estamos modelando con una función lineal:
 \begin{align*}
 logit := \ln \frac{p}{1-p} = \sum_{i=1}^n x_i + \theta
 \end{align*}

@@ -6,6 +6,12 @@
 
 Conocer el funcionamiento de la unidad elemental con la cual se construyen las redes neuronales: el perceptrón, y lograr implementar un perceptrón simple que aprenda las operaciones \classname{AND} y \classname{OR} para tres variables.
 
+\begin{auxcode}
+ \caption{Perceptrón}
+ \centering
+ \hurl{\auxprefix ia-perceptron}
+\end{auxcode}
+
 \section{Introducci\'on}
 
 \quotes{Una red neuronal se puede definir como un modelo de razonamiento basado en el cerebro humano} \parencite[166]{Nengnevitsky2005}. Basándonos en el libro de Negnevisky explicaremos cómo funciona el cerebro, cómo las Redes Neuronales modelan el cerebro, cómo aprenden y finalizaremos con el Perceptrón \parencite[cap. 6]{Nengnevitsky2005}.
@@ -28,11 +34,11 @@ Esta plasticidad permite que las conexiones hacia las neuronas que conducen a la
   \label{fig:P9screen1}
 \end{figure}
 
-\subsubsection{¿C\'omo modelan al cerebro?}
+\subsubsection{El cerebro, muchas neuronas conectadas}
 
 \noindent Las neuronas de la red neuronal artificial se conectan entre sí usando conexiones con un peso dado, pasando señales de una neurona a otra. Cada neurona recibe un número de señales de entrada a través de sus conexiones, pero sólo produce una salida, como se muestra en la figura~\ref{fig:P9screen2}. Esta señal de salida se transmite por la conexión saliente de la neurona (lo equivalente al axón en la neurona biológica). Esta conexión saliente, a su vez, se separa en varias ramas que transmiten la misma señal. Estas ramas terminan como conexiones de entrada de otras neuronas en la red.
 
-\subsubsection{¿C\'omo aprenden?}
+\subsubsection{Aprendizaje}
 
 \noindent Las neuronas se conectan mediante enlaces que tienen un peso asociado a ellos. Estos pesos son los medios para guardar información a largo plazo. Expresan la importancia de cada entrada de la neurona. Entonces, las redes neuronales \quotes{aprenden} por medio de ajustes a estos pesos.
 
@@ -46,7 +52,7 @@ Esta plasticidad permite que las conexiones hacia las neuronas que conducen a la
   \label{fig:P9screen2}
 \end{figure}
 
-\subsubsection{¿C\'omo se determina la salida?}
+\subsubsection{Cálculo de la salida}
 
 \noindent La neurona calcula la suma de las señales de entrada multiplicadas por el peso de su conexión con la neurona siguiente (combinación lineal) y compara este resultado con un umbral $\theta$. Si el total es menor que el umbral, la salida de la neurona es (\ -1)\ , si es mayor entonces la neurona se activa y su salida es (\ 1)\ . A lo descrito anteriormente se le llama función de activación.
 
@@ -60,7 +66,7 @@ El perceptrón consiste en un combinador lineal seguido de una función de activ
 \[Y = f\left(\sum_{i=1}^{n}x_iw_i-\theta\right)\]
 \parencite[169]{Nengnevitsky2005}
 
-\subsubsection{Pero ¿c\'omo aprende a clasificar?}
+\subsubsection{Aprendizaje para clasificación}
 
 Esto se logra haciendo pequeñas modificaciones a los pesos de las entradas para reducir las diferencias entre la salida obtenida y la salida deseada. El proceso de actualización de pesos es bastante simple. Como queremos obtener (o aproximarnos a) una salida deseada, tenemos que iterar sobre un conjunto de entrenamiento (de tamaño $m$) las veces necesarias, modificando los pesos de las conexiones, hasta minimizar el error en la salida. Si para el ejemplar de entrenamiento $j$, la salida es $Y(j)$ y la salida deseada es $Y_d(j)$, entonces la función de error está dada por:
 

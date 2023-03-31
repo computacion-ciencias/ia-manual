@@ -1,16 +1,23 @@
 
 
 \section{Objetivo}
-Comprender el algoritmo de búsqueda con retractación (\textit{backtrack}) y su relación con recursión. Llevar a cabo su implementación en la construcción de laberintos. Entender la forma de representar la lógica de la construcción del laberinto y su visualización. \par
+Comprender el algoritmo de búsqueda con retroceso (\textit{backtrack}) y su relación con recursión. Llevar a cabo su implementación en la construcción de laberintos. Entender la forma de representar la lógica de la construcción del laberinto y su visualización. \par
+
+
+\begin{auxcode}
+ \caption{Laberintos}
+ \centering
+ \hurl{\auxprefix ia-laberintos}
+\end{auxcode}
 
 \section{Introducci\'on}
 \textbf{Retractación} es un algoritmo para encontrar soluciones en problemas computacionales donde se encuentran varios candidatos parciales de solución que se van descartando conforme avanza el algoritmo o la búsqueda.
 
-El problema más clásico de la aplicación de retractación es el problema de las \textbf{ocho reinas}, que consiste en colocar ocho reinas en un tablero de ajedrez convencional de manera que ninguna ataque a las demás. En cada paso del algoritmo se agrega una reina a una casilla y se verifica que no ataque a las \textbf{k} reinas del tablero. Cuando no se cumple esta condición, se vuelve a una solución válida previa y se continúa probando hasta que satisfaga que no se ataquen ninguna de las reinas del tablero.\par
+El problema más clásico de la aplicación de retroceso es el problema de las \textbf{ocho reinas}, que consiste en colocar ocho reinas en un tablero de ajedrez convencional de manera que ninguna ataque a las demás. En cada paso del algoritmo se agrega una reina a una casilla y se verifica que no ataque a las \textbf{k} reinas del tablero. Cuando no se cumple esta condición, se vuelve a una solución válida previa y se continúa probando hasta que satisfaga que no se ataquen ninguna de las reinas del tablero.\par
 
-La aplicación de la técnica de retractación sólo tiene sentido en problemas que involucran soluciones parciales. Hay que notar que es una manera más eficiente que el uso de fuerza bruta, ya que se descartan muchas posibilidades que no cumplen los requisitos para ser solución del problema.
+La aplicación de la técnica de retroceso sólo tiene sentido en problemas que involucran soluciones parciales. Hay que notar que es una manera más eficiente que el uso de fuerza bruta, ya que se descartan muchas posibilidades que no cumplen los requisitos para ser solución del problema.
 
-Conceptualmente, retractación es similar a la búsqueda en profundidad en árboles. Considerando que cada nodo en el árbol de búsqueda es una posible solución parcial del problema, la forma de recorrerlo es mediante recursión; podando o descartando subárboles que no son válidos como solución.\par
+Conceptualmente, retroceso es similar a la búsqueda en profundidad en árboles. Considerando que cada nodo en el árbol de búsqueda es una posible solución parcial del problema, la forma de recorrerlo es mediante recursión; podando o descartando subárboles que no son válidos como solución.\par
 
 
 \section{Desarrollo e implementaci\'on}
@@ -94,7 +101,7 @@ Se debe implementar tanto la lógica de construcción del laberinto como su visu
 
 \section{Requisitos y resultados}
 
-Para llevar a cabo la evaluación de esta práctica es necesario implementar la construcción del laberinto usando retractación. Empleen como estructura auxiliar durante la construcción una pila (\textit{stack}).
+Para llevar a cabo la evaluación de esta práctica es necesario implementar la construcción del laberinto usando retroceso. Empleen como estructura auxiliar durante la construcción una pila (\textit{stack}).
 
 La implementación debe ser lo más generalizada y robusta posible, es decir, se deben definir parámetros o valores para determinar el ancho y largo del laberinto.
 
