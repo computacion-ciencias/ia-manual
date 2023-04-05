@@ -2,7 +2,7 @@
 % Aplicaciones de la clase Factor
 %----------------------------------------------------------------------------------------
 
-Esta práctica es un pequeño complemento a la práctica \emph{Factores}.
+Esta práctica es complemento a la práctica \emph{Factores}.
 
 \section{Objetivo}
 
@@ -15,7 +15,7 @@ El alumno utilizará la clase factor para resolver consultas a una red de Bayes.
  
  \item Combinar las operaciones reducción y normalización de factores para calcular la reducción en distribuciones de probabilidad.
  
- \item Que alumno pueda mapear de una ecuación con sumas y productos de distribuciones a las operaciones correspondientes con factores.
+ \item Que el alumno pueda mapear de una ecuación con sumas y productos de distribuciones a las operaciones correspondientes con factores.
 \end{compactitem}
 
 \begin{auxcode}
@@ -27,13 +27,52 @@ El alumno utilizará la clase factor para resolver consultas a una red de Bayes.
 
 \section{Introducción}
 
-Para realizar esta práctica se tomarán ejemplos del problema de la fiesta de Pedro, por lo que necesitarás la gráfica obtenida y las distribuciones de probabilidad completadas en teoría. [\fref{Fig:GrafPedro}]
+En esta práctica utilizarás un escenario de juguete donde un detective intenta resolver un robo.  Listaremos a continuación la evidencia recabada por el detective, tu tarea será codificarla como un modelo gráfico probabilista y responder preguntas sobre el caso haciendo uso de inferencia.
 
-\begin{figure}
- \centering
- \includegraphics[width=0.8\textwidth]{inferenciasfactor/ComplicadaPedro.png}
- \caption{Gráfica con las relaciones de dependencia condicional del problema de la Fiesta de Pedro.  El significado de los nodos y las distribuciones de probabilidad correspondientes se pueden encontrar entre los textos del curso.}\label{Fig:GrafPedro}
-\end{figure}
+\subsection{Antecedentes}
+
+Hace tres días el diamante \textit{Colossus} fue robado del museo de \textit{Ciudad Ladrillos}.  El agente \textit{Toño} está a cargo del caso y cuenta con la siguiente información:
+
+Hay cinco personas sospechosas y se desea determinar quiénes participaron en el robo:
+\begin{compactitem}
+ \item Daniel
+ \item Rita
+ \item Joaquín
+ \item Camelia
+ \item Sam
+\end{compactitem}
+de donde tendremos cinco variables aleatorias: $DP$, $RP$, $JP$, $CP$, $SP$.
+
+\subsection{Evidencia}
+
+\begin{enumerate}
+
+ \item Tanto Daniel como Joaquín suelen organizar robos de este tipo y la probabilidad de que cada uno haya participado es igual a la de que no haya participado.
+
+ \item Rita ha participando anteriormente en robos con Daniel y Joaquín, aunque se lleva mejor con Daniel.  Además, el empleo $E$ de Rita estaba en riesgo, aunque el reporte no indica si lo perdió o no; la probabilidad de que lo hubiera perdido era del 65\%.  Cuando Daniel y Joaquín participaron, ella estuvo con el equipo el 90\% de las ocasiones, si sólo estaba Daniel el 80\%, si sólo estaba Joaquín, el 45\%, y nunca actúa sola.  Si Rita está ocupada con su empleo esas probabilidades se reducen a la mitad.
+
+ \item Se sabe que Sam es amigo de Rita, y no le gusta el empleo de Rita.  Por lo que, con tal de que lo deje, si ella conservó el empleo la probabilidad de que hubiera participado es del 80\% independientemente de que ella participara o no.  Si Rita perdió el empleo y participó, la probabilidad de que Sam también estuviera involucrado es del 65\%, si ella no participó, es del 20\%.
+
+ \item  El alarma del museo fue desactivada, esto se logra mediante el uso de alguno de tres dispositivos: A, B y C.  Dependiendo de la pericia de su usuario, puede ser posible retirarlos antes de marcharse o no.   Camelia trabaja en un laboratorio de electrónica donde se puede tener acceso a estos dispositivos y sabe muy bien cómo usarlos.  Si ella participó existe una probabilidad del 20\% de que un dispositivo de tipo A haya sido abandonado en el museo $DiA$, sino, esta probabilidad es del 35\%; ella dejará del dispositivo B con el  40\%, mientras que otro lo hará con un  85\%; sólo en un 10\% ella dejará un dispositivo C, mientras que otra persona lo dejára el 45\% de la veces.
+
+ \item Joaquín ha trabajado con Camelia en proyectos legales, existe una probabilidad del 15\% de que Camelia hubiera aceptado participar en el robo si Joaquín lo hizo.
+
+ \item Independientemente de que Camelia haya estado ahí para usar el dispositivo, pudo haberse limitado a asesorar a los asaltantes. Se sabe que Daniel la conoce y, de haber participado en el robo, hay un 50\% de probabilidades de que le haya pedido asesoría $CA$. Si no participó, no hubo quien solicitara la asesoría.
+
+ \item Entonces, el dispositivo elegido $DiE$ para el robo dependió de si Camelia dió asesoría o participó el robo.  Si Camelia participó en el robo definitivamente eligió el dispositivo C, pero si dió asesoría para que lo usara otra persona habrá sugerido el dispositivo B, si no participó ni asesorando ni en persona, un no especialista había elegido el dispositivo A el 25\% de las veces, el B el 40\% pues es más comercial y el C el 35\%.
+
+ \item La probabilidad de encontrar un dispositivo en museo $DiM$ depende del dispositivo que haya sido elegido y de que éste sea abandonado por quien lo usó.  Si un dispositivo fue abandonado, hay un 90\% de probabilidades de que la policía lo encuentre $PE$.  Evidentemente, no es posible dejar un dipositivo que no se eligió, por lo que consideraremos que $$P(DiM) = P(DiE)P(DiA)P(PE)$$ sólo para casos en los que el tipo de dispositivo coincide.
+
+ \item Para encontrar la ubicación $U$ del diamante se concideran tres posibilidades:
+ \begin{itemize}
+  \item Sam tiene una caja de seguridad en el banco, si él participó el diamante podría estar ahí.
+  \item Daniel es un mandón, pero algo imprudente, cuando ha participado en un robo frecuentemente los objetos han sido encontrados en su casa.
+  \item A Joaquín no le gusta correr riesgos y considera que Daniel es muy descuidado, pero también es demasiado metódico.  En ocasiones anteriores se ha encontrado el botín enterrado en un punto equidistante a las casas de todos los participantes.
+ \end{itemize}
+ Si, de ellos tres, sólo Sam participó, el diamante estará en su caja de seguridad.  Si Daniel participó, pero no Joaquín, hay un 80\% de probabilidades de que esté en casa de Daniel, un 15\% en la caja de Sam y un 5\% de que le hayan copiado la idea a Joaquín.  Si Joaquín participó, pero no Daniel, hay un 65\% de probabilidad de que el diamante esté enterrado, un 30\% de que esté en la caja y un 5\% de que lo hayan sembrado en casa de Daniel.  Si tanto Daniel como Joaquín estuvieron en el equipo, cualquiera de los tres lugares es igualmente probable.
+
+\end{enumerate}
+
 
 
 \section{Desarrollo e implementación}
@@ -48,10 +87,10 @@ Para las instrucciones siguientes asumiremos que el código está en \code{Pytho
  \item Para esta práctica deberás entregar dos archivos:
  \begin{enumerate}
   \item \code{Factor.py}.  Es el código de la práctica anterior y será necesario para ejecutar esta.
-  \item \code{PedroFactor.py}.  En este \textit{script} colocarás las funciones para resolver los problemas indicados.  Cada función que programes deberá:
+  \item \code{DetectiveFactor.py}.  En este \textit{script} colocarás las funciones para resolver los problemas indicados.  Cada función que programes deberá:
   \begin{enumerate}
    \item Imprimir al inicio cuál es la \emph{consulta} (probabilidad) que está realizando.
-   \item Los factores con resultados intermedios relevantes.  Antes de imprimir el factor, imprime su significado.  Por ejemplo: $P(ma|AP,VP)$, $P(MA,mp)$ ó $P(MA,JA)P(LI|bp)$.
+   \item Los factores con resultados intermedios relevantes.  Antes de imprimir el factor, imprime su significado.  Por ejemplo: $P(sp|E,RP)$, $P(CP,jp)$ ó $P(AD)P(U|E)$.
    \item El resultado final, igualmente con algún formato que lo haga resaltar de las demás operaciones.
   \end{enumerate}
   Al final, en la sección \code{if \_\_name\_\_=='\_\_main\_\_':} mandar ejecutar todas las funciones mostrando tus resultados para cada ejercicio.
@@ -62,39 +101,43 @@ Para las instrucciones siguientes asumiremos que el código está en \code{Pytho
 \begin{align*}
  \sum_{A,B,C} &= \sum_A \sum_B \sum_C f(A,B,C)
 \end{align*}
-
+Recuerda usar paréntesis cuando las sumas no afecten a todos los términos a su derecha.  Por ejemplo:
+\begin{align*}
+ \left(\sum_A \sum_B  f_1(A,B)\right) \left( \sum_C \sum_D f_2(C,D) \right)
+\end{align*}
 
 Las tareas que debes realizar son las siguientes:
 \begin{enumerate}
- \item Crea todas las variables correspondientes a las variables aleatorias de la fiesta de Pedro como variables globales del \textit{script}.
+ \item Dada la descripción anterior, genera \textbf{la gráfica de Bayes} con la información del caso así como \textbf{las tablas de distribución de probabilidad} correspondientes.  Inclúyelas en un pdf, que entregarás con tu práctica.
+
+ \item Crea todas las variables correspondientes a las variables aleatorias como variables globales del \textit{script}.
  
  \item Crea todos los factores correspondientes a las distribuciones de probabilidad, también como variables globales.
  
  \item Crea una función por cada ecuación, donde resuelvas directamente la traducción de las operaciones siguientes, en el orden en el que están especificadas.  Para cada versión imprime el número de renglones que tienen tus factores después de cada multiplicación y marginalización. Observa que, al final, todas deben dar el mismo resultado
  \begin{align}
-  P(VP,BP) =& \sum_{AA,BA,FIN,IT,E} P(VP|AA,BA)P(BP|BA,E)P(AA|FIN) \\
-            & P(BA|IT)P(FIN)P(IT)P(E) \nonumber \\
-  P(VP,BP) =& \sum_{AA,BA} P(VP|AA,BA)\sum_E P(BP|BA,E)\sum_{FIN}P(AA|FIN) \\
-            & \sum_{IT}P(BA|IT)P(FIN)P(IT)P(E) \nonumber \\
-  P(VP,BP) =& \sum_{AA,BA} \left\lbrace P(VP|AA,BA) \left[\sum_{FIN}P(AA|FIN)P(FIN)\right] \right\rbrace \\
-            & \left[\sum_E P(BP|BA,E)P(E)\right] \left[ \sum_{IT}P(BA|IT)P(IT) \right] \nonumber
+  P(U) =& P(U|SP,JP,DP)P(SP|E,RP)P(RP|E,JP,DP)P(E)P(JP)P(DP) \\
+       =& \sum_{SP,JP,DP,E,RP}P(U|SP,JP,DP)P(SP|E,RP)P(RP|E,JP,DP) \nonumber \\
+        & P(E)P(JP)P(DP) \nonumber \\
+       =& \sum_{E}P(E) \sum_{RP,SP}P(SP|E,RP) \sum_{DP}P(DP) \sum_{JP}P(U|SP,JP,DP) \nonumber \\
+        & P(RP|E,JP,DP)P(JP) \nonumber
  \end{align}
  
- \item Calcula la probabilidad de que María, Alicia y Víctor estén en la fiesta $P(MP,AP,VP)$.
+ \item Calcula la probabilidad de que los cinco sospechosos hayan participado en el robo.
+
+ \item Calcula la probabilidad de que Rita haya participado y un dispositivo tipo $B$ haya sido abandonado.
  
- \item Calcula la probabilidad de que haya llovido el día que enviaron la invitación dado que María y Alicia estuvieron presentes.  Para ello seguirás el método siguiente.
+ \item Calcula la probabilidad de que Daniel haya participado, dado que se encontró el dispositivo B en el museo y el diamante estaba en la caja de seguridad de Sam.  Para ello seguirás el método siguiente.
  Recuerda que, por definición de probabilidad condicional:
  \begin{align*}
-   P(LI|mp,ap) &= \frac{P(LI,mp,ap)}{P(mp,ap)}
+   P(DP|D=A,U=Caja) &= \frac{P(DP,D=A,U=Caja)}{P(D=A,U=Caja)}
  \end{align*}
   
  \begin{enumerate}
-  \item Calcula la ecuación correspondiente para obtener $P(LI,mp,ap)$ usando la regla de la cadena para redes de Bayes.  Factorízala según sea conveniente y escribe tu resultado en los comentarios de la función de python para este ejercicio.
+  \item Calcula la ecuación correspondiente para obtener $P(DP,D=A,U=Caja)$ usando la regla de la cadena para redes de Bayes.  Factorízala según sea conveniente y escribe tu resultado en los comentarios de la función de python para este ejercicio.
   
-  \item Utiliza tus factores para obtener el resultado correspondiente, pero antes de multiplicar y marginalizar, manda llamar la operación \code{reducir} sobre todos los factores que contengan a $MP$ y $AP$, de modo que sólo te quedes con los renglones donde $MP=mp$ y $AP=ap$.
+  \item Utiliza tus factores para obtener el resultado correspondiente, pero antes de multiplicar y marginalizar, manda llamar la operación \code{reducir} sobre todos los factores que contengan a $D$ y $U$, de modo que sólo te quedes con los renglones donde $D=A$ y $U=Caja$.
   
   \item Normaliza tu resultado final, esta es la probabilidad que estabas buscando.
  \end{enumerate}
-
-
 \end{enumerate}
