@@ -41,35 +41,35 @@ Hay cinco personas sospechosas y se desea determinar quiénes participaron en el
  \item Camelia
  \item Sam
 \end{compactitem}
-de donde tendremos cinco variables aleatorias: $DP$, $RP$, $JP$, $CP$, $SP$.
+de donde tendremos cinco variables aleatorias: $DP$, $RP$, $JP$, $CP$, $SP$, correspondiendo a la inicial del nombre y la palabra ``participó''.
 
 \subsection{Evidencia}
 
 \begin{enumerate}
 
- \item Tanto Daniel como Joaquín suelen organizar robos de este tipo y la probabilidad de que cada uno haya participado es igual a la de que no haya participado.
+ \item Tanto Daniel como Joaquín suelen organizar robos de este tipo.  De cada diez casos, Joaquín ha estado en siete y Daniel en cinco.
 
- \item Rita ha participando anteriormente en robos con Daniel y Joaquín, aunque se lleva mejor con Daniel.  Además, el empleo $E$ de Rita estaba en riesgo, aunque el reporte no indica si lo perdió o no; la probabilidad de que lo hubiera perdido era del 65\%.  Cuando Daniel y Joaquín participaron, ella estuvo con el equipo el 90\% de las ocasiones, si sólo estaba Daniel el 80\%, si sólo estaba Joaquín, el 45\%, y nunca actúa sola.  Si Rita está ocupada con su empleo esas probabilidades se reducen a la mitad.
+ \item Rita ha participando anteriormente en robos con Daniel y Joaquín, aunque se lleva mejor con Daniel.  Además, el empleo $E$ de Rita estaba en riesgo, aunque el reporte no indica si lo perdió o no; la probabilidad de que lo hubiera perdido era del 65\%.  Cuando Daniel y Joaquín participaron, ella estuvo con el equipo el 90\% de las ocasiones, si sólo estaba Daniel el 80\%, si sólo estaba Joaquín, el 45\%, y nunca actúa sin alguno de ellos.  Si Rita está ocupada con su empleo esas probabilidades se reducen a la mitad.
 
  \item Se sabe que Sam es amigo de Rita, y no le gusta el empleo de Rita.  Por lo que, con tal de que lo deje, si ella conservó el empleo la probabilidad de que hubiera participado es del 80\% independientemente de que ella participara o no.  Si Rita perdió el empleo y participó, la probabilidad de que Sam también estuviera involucrado es del 65\%, si ella no participó, es del 20\%.
 
- \item  El alarma del museo fue desactivada, esto se logra mediante el uso de alguno de tres dispositivos: A, B y C.  Dependiendo de la pericia de su usuario, puede ser posible retirarlos antes de marcharse o no.   Camelia trabaja en un laboratorio de electrónica donde se puede tener acceso a estos dispositivos y sabe muy bien cómo usarlos.  Si ella participó existe una probabilidad del 20\% de que un dispositivo de tipo A haya sido abandonado en el museo $DiA$, sino, esta probabilidad es del 35\%; ella dejará del dispositivo B con el  40\%, mientras que otro lo hará con un  85\%; sólo en un 10\% ella dejará un dispositivo C, mientras que otra persona lo dejára el 45\% de la veces.
+ \item  El alarma del museo fue desactivada, esto se logra mediante el uso de alguno de tres dispositivos: A, B y C, de los cuales debieron haber elegido alguno ($DiE = $ dispositivo elegido).  Dependiendo de la pericia de su usuario, puede ser posible retirarlos antes de marcharse o no ($DiA = $ dispositivo abandonado).   Camelia trabaja en un laboratorio de electrónica donde se puede tener acceso a estos dispositivos y sabe muy bien cómo usarlos.  Si ella participó existe una probabilidad del 20\% de que un dispositivo de tipo A haya sido abandonado en el museo, sino, esta probabilidad es del 35\%; ella dejará del dispositivo B con el  40\%, mientras que otro lo hará con un  85\%; sólo en un 10\% ella dejará un dispositivo C, mientras que otra persona lo dejára el 45\% de la veces.
 
- \item Joaquín ha trabajado con Camelia en proyectos legales, existe una probabilidad del 15\% de que Camelia hubiera aceptado participar en el robo si Joaquín lo hizo.
+ \item Joaquín ha trabajado con Camelia en proyectos legales, existe una probabilidad del 15\% de que Camelia hubiera aceptado participar en el robo si Joaquín lo hizo y un 1\% de que ella no hubiera participado y de hecho, ella hubiera ideado el robo.
 
- \item Independientemente de que Camelia haya estado ahí para usar el dispositivo, pudo haberse limitado a asesorar a los asaltantes. Se sabe que Daniel la conoce y, de haber participado en el robo, hay un 50\% de probabilidades de que le haya pedido asesoría $CA$. Si no participó, no hubo quien solicitara la asesoría.
+ \item Independientemente de que Camelia haya estado ahí para usar el dispositivo, pudo haberse limitado a asesorar a los asaltantes ($CA$). Se sabe que Daniel la conoce y, de haber participado en el robo, hay un 50\% de probabilidades de que le haya pedido asesoría. Si no participó, no hubo quien solicitara la asesoría.
 
  \item Entonces, el dispositivo elegido $DiE$ para el robo dependió de si Camelia dió asesoría o participó el robo.  Si Camelia participó en el robo definitivamente eligió el dispositivo C, pero si dió asesoría para que lo usara otra persona habrá sugerido el dispositivo B, si no participó ni asesorando ni en persona, un no especialista había elegido el dispositivo A el 25\% de las veces, el B el 40\% pues es más comercial y el C el 35\%.
 
- \item La probabilidad de encontrar un dispositivo en museo $DiM$ depende del dispositivo que haya sido elegido y de que éste sea abandonado por quien lo usó.  Si un dispositivo fue abandonado, hay un 90\% de probabilidades de que la policía lo encuentre $PE$.  Evidentemente, no es posible dejar un dipositivo que no se eligió, por lo que consideraremos que $$P(DiM) = P(DiE)P(DiA)P(PE)$$ sólo para casos en los que el tipo de dispositivo coincide.
+ \item La probabilidad de encontrar un dispositivo en el museo $DiM$ depende del dispositivo que haya sido elegido y de que éste sea abandonado por quien lo usó.  Si un dispositivo tipo A fue abandonado hay un 97\% de probabilidades de que la policía lo encuentre; 99\% para un dispositivo B y 90\% para un dispositivo C.
 
  \item Para encontrar la ubicación $U$ del diamante se concideran tres posibilidades:
  \begin{itemize}
   \item Sam tiene una caja de seguridad en el banco, si él participó el diamante podría estar ahí.
   \item Daniel es un mandón, pero algo imprudente, cuando ha participado en un robo frecuentemente los objetos han sido encontrados en su casa.
-  \item A Joaquín no le gusta correr riesgos y considera que Daniel es muy descuidado, pero también es demasiado metódico.  En ocasiones anteriores se ha encontrado el botín enterrado en un punto equidistante a las casas de todos los participantes.
+  \item A Joaquín no le gusta correr riesgos y considera que Daniel es muy descuidado, pero también es muy metódico.  En ocasiones anteriores se ha encontrado el botín enterrado en un punto equidistante a las casas de todos los participantes.
  \end{itemize}
- Si, de ellos tres, sólo Sam participó, el diamante estará en su caja de seguridad.  Si Daniel participó, pero no Joaquín, hay un 80\% de probabilidades de que esté en casa de Daniel, un 15\% en la caja de Sam y un 5\% de que le hayan copiado la idea a Joaquín.  Si Joaquín participó, pero no Daniel, hay un 65\% de probabilidad de que el diamante esté enterrado, un 30\% de que esté en la caja y un 5\% de que lo hayan sembrado en casa de Daniel.  Si tanto Daniel como Joaquín estuvieron en el equipo, cualquiera de los tres lugares es igualmente probable.
+ Si, de ellos tres, sólo Sam participó, el diamante estará en su caja de seguridad.  Si Daniel participó, pero no Joaquín, hay un 80\% de probabilidades de que esté en casa de Daniel, un 15\% en la caja de Sam y un 5\% de que le hayan copiado la idea a Joaquín.  Si Joaquín participó, pero no Daniel, hay un 65\% de probabilidad de que el diamante esté enterrado, un 30\% de que esté en la caja y un 5\% de que lo hayan sembrado en casa de Daniel.  Si tanto Daniel como Joaquín estuvieron en el equipo, cualquiera de los tres lugares es igualmente probable... incluso si Sam no participó.  Si ninguno de los tres participó la casa de Daniel sigue siendo un buen escondite con el 60\%, el punto central con 30\% y la caja de Sam 10\%.
 
 \end{enumerate}
 
@@ -123,7 +123,11 @@ Las tareas que debes realizar son las siguientes:
         & P(RP|E,JP,DP)P(JP) \nonumber
  \end{align}
  
- \item Calcula la probabilidad de que los cinco sospechosos hayan participado en el robo.
+ \item Calcula la probabilidad de que:
+ \begin{itemize}
+  \item Los cinco sospechosos hayan participado en el robo.
+  \item Ninguno de ellos haya sido.
+ \end{itemize}
 
  \item Calcula la probabilidad de que Rita haya participado y un dispositivo tipo $B$ haya sido abandonado.
  
