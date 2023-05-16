@@ -66,6 +66,14 @@ El perceptrón consiste en un combinador lineal seguido de una función de activ
 \[Y = f\left(\sum_{i=1}^{n}x_iw_i-\theta\right)\]
 \parencite[169]{Nengnevitsky2005}
 
+La función escalón (\textit{sign function}) es una opción básica que puede fungir como función de activación:
+\begin{align*}
+ f &= \begin{cases}
+       1 & \text{si } X \geq 0 \\
+       0 & \text{si } X < 0
+      \end{cases}
+\end{align*}
+
 \subsubsection{Aprendizaje para clasificación}
 
 Esto se logra haciendo pequeñas modificaciones a los pesos de las entradas para reducir las diferencias entre la salida obtenida y la salida deseada. El proceso de actualización de pesos es bastante simple. Como queremos obtener (o aproximarnos a) una salida deseada, tenemos que iterar sobre un conjunto de entrenamiento (de tamaño $m$) las veces necesarias, modificando los pesos de las conexiones, hasta minimizar el error en la salida. Si para el ejemplar de entrenamiento $j$, la salida es $Y(j)$ y la salida deseada es $Y_d(j)$, entonces la función de error está dada por:
@@ -157,7 +165,8 @@ Para probar su perceptrón, deberán utilizar el siguiente conjunto de entradas:
 
 \[\texttt{[}\texttt{[}0,0,0\texttt{]}, \texttt{[}1,0,1\texttt{]}, \texttt{[}0,0,1\texttt{]}, \texttt{[}1,1,1\texttt{]} \texttt{]}\]
 
-\noindent PD: Se les recomienda que no se compliquen y usen la función escalón (\textit{step function}) como función de activación.\par
+
+
 
 
 \section{Requisitos y resultados}
