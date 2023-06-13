@@ -116,9 +116,10 @@ Las tareas que debes realizar son las siguientes:
  
  \item Crea una función por cada ecuación, donde resuelvas directamente la traducción de las operaciones siguientes, en el orden en el que están especificadas.  Para cada versión imprime el número de renglones que tienen tus factores después de cada multiplicación y marginalización. Observa que, al final, todas deben dar el mismo resultado
  \begin{align}
-  P(U) =& P(U|SP,JP,DP)P(SP|E,RP)P(RP|E,JP,DP)P(E)P(JP)P(DP) \\
-       =& \sum_{SP,JP,DP,E,RP}P(U|SP,JP,DP)P(SP|E,RP)P(RP|E,JP,DP) \nonumber \\
+  P(U) %=& P(U|SP,JP,DP)P(SP|E,RP)P(RP|E,JP,DP)P(E)P(JP)P(DP) \\
+       =& \sum_{SP,JP,DP,E,RP}P(U|SP,JP,DP)P(SP|E,RP)P(RP|E,JP,DP) \\
         & P(E)P(JP)P(DP) \nonumber \\
+       =& \sum_{JP}P(JP)\sum_{DP}P(DP)\sum_{SP}P(U|SP,JP,DP)\sum_{RP,E}P(SP|E,RP)P(RP|E,JP,DP)P(E) \nonumber \\
        =& \sum_{E}P(E) \sum_{RP,SP}P(SP|E,RP) \sum_{DP}P(DP) \sum_{JP}P(U|SP,JP,DP) \nonumber \\
         & P(RP|E,JP,DP)P(JP) \nonumber
  \end{align}
@@ -131,8 +132,8 @@ Las tareas que debes realizar son las siguientes:
 
  \item Calcula la probabilidad de que Rita haya participado y un dispositivo tipo $B$ haya sido abandonado.
  
- \item Calcula la probabilidad de que Daniel haya participado, dado que se encontró el dispositivo B en el museo y el diamante estaba en la caja de seguridad de Sam.  Para ello seguirás el método siguiente.
- Recuerda que, por definición de probabilidad condicional:
+ \item Calcula la probabilidad de que Daniel haya participado, dado que se encontró el dispositivo A en el museo y el diamante estaba en la caja de seguridad de Sam.  Para ello seguirás el método siguiente.
+ Recuerda que, por definición de probabilidad condicional es:
  \begin{align*}
    P(DP|D=A,U=Caja) &= \frac{P(DP,D=A,U=Caja)}{P(D=A,U=Caja)}
  \end{align*}
