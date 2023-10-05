@@ -48,6 +48,13 @@ Las tareas que debes realizar son las siguientes:
 
  Añade métodos o lo que encuentres necesario.  Recuerda que es tu proyecto.  Observa que este paso corresponde a determinar si una acción es aplicable en un estado dado.
 
+ \item Completa el constructor por defecto de \code{Tablero} colocando todas las piezas en el estado inicial.  Para ello deberás también agregar imágenes para las piezas del tablero, el programa las escala así que no tienes que preocuparte demasiado por la escala, puedes descargar las imágenes de internet o usar grafos de fuentes.  Agrega las imágenes completando el método
+ \begin{center}
+  \code{private void creaVistasDePiezas()}
+ \end{center}
+ de la clase \code{vistas.VistaTablero}.
+
+
  \item Completa ahora el método \code{ejecutaJugada} en la misma clase para que los cambios sugeridos por la jugada se vean reflejados en el tablero.  Recuerda almacenar qué jugada fue la que produjo el cambio en el tablero.  En la segunda parte del proyecto este historial corresponderá a las \emph{acciones aplicadas}.  Así que observa bien cómo haces tu diseño, pensando en resolver la segunda parte.
 
  \item Regresa ahora la clase \code{Tablero} y completa \code{hayJaqueMate}.
