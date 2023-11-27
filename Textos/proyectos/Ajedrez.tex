@@ -10,12 +10,12 @@ El alumno implementará un agente inteligente capaz de jugar ajedrez contra un s
 
 \section{Objetivos}
 
-\begin{compactitem}
 Que el alumno(a):
+\begin{compactitem}
  \item implemente un agente inteligente para un juego,
  \item implemente un algoritmo de búsqueda con adversarios aplicándolo en un escenario real, transfiriendo sus conocimientos sobre \emph{acciones}, \emph{acciones aplicables}, \emph{estados} y \emph{nodos búsqueda}.
  \item diseñe su propia estructura para implementar el algoritmo,
- \itme utilice un función heurística para truncar la profundidad a la que trabajará el algoritmo.
+ \item utilice un función heurística para truncar la profundidad a la que trabajará el algoritmo.
 \end{compactitem}
 
 
@@ -35,7 +35,8 @@ En este paquete se te entrega:
 
 \subsection{Tareas a realizar}
 
-Las tareas que debes realizar son las siguientes:
+Las tareas que debes realizar son las siguientes.  Incluye pruebas unitarias que muestren que cada parte de tu código funciona correctamente.
+
 \begin{enumerate}
 \subsubsection{Parte I: Reglas del ajedrez}
  \item Completa el proyecto que se te entrega.  El paquete:
@@ -57,7 +58,7 @@ Las tareas que debes realizar son las siguientes:
 
  \item Completa ahora el método \code{ejecutaJugada} en la misma clase para que los cambios sugeridos por la jugada se vean reflejados en el tablero.  Recuerda almacenar qué jugada fue la que produjo el cambio en el tablero.  En la segunda parte del proyecto este historial corresponderá a las \emph{acciones aplicadas}.  Así que observa bien cómo haces tu diseño, pensando en resolver la segunda parte.
 
- \item Regresa ahora la clase \code{Tablero} y completa \code{hayJaqueMate}.
+ \item Regresa ahora a la clase \code{Tablero} y completa \code{hayJaqueMate}.
 
  \item Finalmente prepara tu heurística: completa el método \code{calificación} de la clase \code{Tablero}.  Como no será posible explorar todo el espacio de estados del ajedrez, habrá que truncar el algoritmo de búsqueda con adversarios que implementarás.  Para ello, lo que harás es otorgar una calificación a cualquier tablero, para determinar \textit{quién va ganado la partida}.
 
@@ -81,6 +82,8 @@ Las tareas que debes realizar son las siguientes:
  Deberás definir una profundidad límite la cual tratarás como si fuera el fin del juego, aquí utilizarás la función \code{calificación} para asignar el puntaje al tablero.
 
  Mide cuál es la profundidad máxima que puede alcanzar tu algoritmo sin dejar esperando demasiado al jugador blanco.
+
+ \textbf{Nota:} No olvides incluir pruebas unitarias que muestren que cada parte de tu modelo funciona.
 
  \item Se otorgará un punto extra a quien sustituya Min-max por poda alfa-beta.
 \end{enumerate}
