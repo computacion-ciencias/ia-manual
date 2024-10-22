@@ -74,8 +74,8 @@ Tras cientos de miles de pasos en la ejecución de la simulación, como se muest
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\textwidth]{termitas/screen4.png}
-  \caption{Termitas colocando aleatoriamente astillas con las reglas definidas anteriormente, tomada de \cite{Resnick1994}.}
+  \includegraphics[width=0.9\textwidth]{termitas/Termitas.png}
+  \caption{Termitas colocando aleatoriamente astillas con las reglas definidas anteriormente.  Reproducción del experimento en \cite{Resnick1994}.}
   \label{fig:termitasaleatorias}
 \end{figure}
 
@@ -129,7 +129,7 @@ Existen 3 maneras diferentes de simular e implementar el modelo de termitas:
 
   \item \textbf{Modificar la caminata para que sea aleatoria y restringida} \\
     Una manera de avanzar totalmente aleatoria como en el primer caso implica que pueden existir muchos movimientos innecesarios (considerese la situación en la que una termita se cicla moviéndose en la casilla delante de ella y detrás de ella).
-    Empleando la dirección en la que está observando la termita se puede restringuir su movimiento a solo 3 opciones: a la izquierda, al frente o a la derecha.
+    Empleando la dirección en la que está observando la termita se puede restringir su movimiento a solo 3 opciones: a la izquierda, al frente o a la derecha.
     Adicionalmente al soltar una astilla, la termita da media vuelta y se coloca en la dirección opuesta de donde soltó la astilla (esto evita una situación similar en la que se cicle una termita moviendo la misma astilla al mismo lugar).
 
   \item \textbf{Brindar un salto a las termitas} \\
