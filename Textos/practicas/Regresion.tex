@@ -168,6 +168,35 @@ En conclusión, podemos ver que la regresión logística está ampliamente relac
 \end{figure}
 
 
+\section{Ejemplo de aplicación de la regresión logística}
+
+Un conjunto datos de popular para realizar clasificación es el conjunto de datos de flores Iris elaborado por el biólogo y estadista Ronald Fisher en 1936. Se trata de datos que describen tres variedades de flores iris, variedades estas son: iris setosa, iris versicolor e iris virginica. Los datos cuentan con cuatro mediciones: la longitud y anchura de los pétalos, y la longitud y anchura de los sépalos. En la Figura~\ref{Fig:iris} se puede ver la imagen de los tres tipos de flores iris. El objetivo es poder clasificar un ejemplar en alguno de los tres distintos tipos de iris basándose únicamente en estas cuatro medidas. Para esto, podemos utilizar la regresión logística, la cual determina la probabilidad de que un dato pertenezca a algún tipo de iris dadas las medidas de sus pétalos y sépalos.
+
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.6]{regresion/Iris.png}
+ \caption{Los tres tipos de flores iris}\label{Fig:iris}
+\end{figure} 
+
+En este caso, nuestro modelo debe determinar la probabilidad de tres clases. Podemos pensar que cada clase puede modelarse como un caso de regresión logística como el de la Figura~\ref{Fig:LinearReg}, de tal forma que el modelo tendrá que aprender tres vectores de parámetros $w$, uno por cada clase (los cuáles, de hecho, pueden considerarse una matriz). Cada uno de estos vectores de parámetros se aprenderá por medio del método de descenso por gradiente expuesto más arriba. En nuestro ejemplo de flores iris, los parámetros aprendidos para $w$ fueron los siguientes:
+
+\begin{center}
+        \begin{tabular}{ c | l l l l }
+          ~ & \textbf{Long. sépalo} & \textbf{Anch. sépalo} & \textbf{Long. pétalo} & \textbf{Anch. pétalo}\\ \hline
+          \textbf{Setosa} & -0.42 & \textbf{0.87} & -2.31 & -0.98 \\
+	\textbf{Versicolor} & \textbf{0.41} & -0.37 & -0.22 & -0.69 \\
+	\textbf{Virginica}  & 0.01 & -0.50 & \textbf{2.54} & 1.67 \\ \hline
+        \end{tabular}
+    \end{center}
+
+De estos resultados, se puede concluir que para la iris setosa la anchura del sépalo tiene una influencia mayor que las otras medidas en su determinación. Mientras que la longitud del sépalo influye más en la iris versicolor. Finalmente, la iris virginica está mayormente determinada por la longitud del pétalo. El resultado de aplicar la regresión logística a este problema tiene un buen desempeño, mayor al 90\% de exactitud. Esto es debido a que es un problema que puede ser linealmente separable como se ve en la Figura~\ref{Fig:irisLogisticReg}. Aquí hemos visualizado el problema en dos de sus cuatro dimensiones, pero como puede verse, se puede separar el espacio linealmente en las tres correspondientes a las tres clases de iris.
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.6]{regresion/irisLogisticReg.png}
+ \caption{A la izquierda visualización de los datos en dos dimensiones; a la derecha las clasificaciones hechas por la regresión logística}\label{Fig:irisLogisticReg}
+\end{figure} 
 
 
 
