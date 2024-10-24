@@ -88,7 +88,7 @@ donde:
   \item \(h(n)\) es el costo estimado del movimiento para ir desde ese cuadro \(n\) hasta el destino final, el punto B. Si conociéramos ese costo exactamente no necesitaríamos buscar la mejor ruta, bastaría con movernos hacia el vecino con el valor más bajo, en lugar de ello sólo contaremos con una aproximación, a esta se le llama \textbf{heurística}.
 \end{itemize}
 
-Para generar el camino completo de A a B, tendremos que ir sacando a los nodos de la lista abierta con menor \(f(n)\) hasta llegar a la meta.  Sin embargo, calcular esta función tiene su chiste, pues su valor puede cambiar conforme exploramos.  Veamos entonces cómo se hace ese cálculo.
+Para generar el camino completo de A a B, tendremos que ir sacando a los nodos de la lista abierta con menor \(f(n)\) hasta llegar a la meta.  Sin embargo, calcular esta función requiere su truco, pues su valor puede cambiar conforme exploramos.  Veamos entonces cómo se hace ese cálculo.
 
 
 \subsubsection{Heurística}
@@ -97,7 +97,7 @@ La primer función que podemos calcular es \(h(n)\), pues su valor no cambia una
 
 Cuando se trata de problemas de desplazamiento, como es el caso aquí, una aproximación utilizada frecuentemente es la distancia Euclidiana (la ruta más corta, si no hubiera obstáculos, sería la línea recta), aunque tiene la desventaja de involucrar el cálculo de una raíz cuadrada. Por ello existen otras aproximaciones, que pueden ser más o menos adecuadas, dependiendo del ambiente.
 
-Además de la distancia Euclidiana, otra técnica para aproximar distancias es el método Manhattan, donde se calcula el número total de cuadros movidos horizontalmente y verticalmente para alcanzar el cuadrado destino desde el cuadro actual, sin hacer uso de movimientos diagonales e ignorando cualquier obstáculo. Se llama método Manhattan porque está inspirado en la ciudad que lleva ese nombre, donde las manzanas están diseñadas en forma de rejilla y para ir desde un lugar a otro no es posible tomar atajos atravesando una manzana en diagonal.  Observa que esta estimación es mejor si el agente no puede moverse en diagonal, pues de este modo nunca sobreestimará qué tan lejos está la meta.
+Además de la distancia Euclidiana, otra técnica para aproximar distancias es el método Manhattan, donde se calcula el número total de cuadros movidos horizontalmente y verticalmente para alcanzar el cuadrado destino desde el cuadro actual, sin hacer uso de movimientos diagonales e ignorando cualquier obstáculo. Se llama método Manhattan porque está inspirado en el distrito que lleva ese nombre, donde las calles están diseñadas en forma de rejilla y para ir desde un lugar a otro no es posible tomar atajos atravesando una manzana en diagonal.  Observa que esta estimación es mejor si el agente no puede moverse en diagonal, pues de este modo nunca sobreestimará qué tan lejos está la meta.
 
 En esta práctica asignaremos un costo de 10 por cada movimiento vertical u horizontal a través de un cuadrado y un costo de 14 para un movimiento diagonal (una aproximación razonable de \(\sqrt{2}\times10\)), pues usar números enteros es mucho más rápido para la computadora y la diferencia en tiempo puede ser significativa si el algoritmo se ejecutará muchas veces sobre muchos nodos.
 

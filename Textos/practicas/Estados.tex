@@ -10,7 +10,14 @@ Que el alumno comprenda la noción de \emph{Estado} y \emph{Espacio de Búsqueda
 \end{auxcode}
 
 \section{Introducci\'on}
-Dado un problema o modelo es posible determinar las características del mundo descrito en él. Uno de los puntos a tratar es la representación de dicho mundo y el concepto de estado. Un estado es una configuración posible del mundo con el que se trabaja. Por ejemplo, un juego de ajedrez se compone de un tablero de 64 cuadros donde inicialmente están 32 piezas (16 para cada jugador). El estado inicial del ajedrez se muestra en la \fref{fig:ajedrez}.\par
+Dado un problema o modelo es posible determinar las características del mundo descrito en él.  Uno de los puntos a tratar es la representación de dicho mundo y el concepto de estado.  Para representar estar características se utilizan \emph{variables}, cada una de las cuales toma valores de un dominio dado.  Un estado es una configuración posible del mundo con el que se trabaja.
+
+\begin{definition}[Estado]
+ Un \emph{estado} es el conjunto de valores de las variables del sistema en un momento determinado.
+\end{definition}
+
+
+Por ejemplo, un juego de ajedrez se compone de un tablero de 64 cuadros donde inicialmente están 32 piezas (16 para cada jugador). El estado inicial del ajedrez se muestra en la \fref{fig:ajedrez}.\par
 
 \begin{figure}
   \centering
@@ -22,21 +29,58 @@ Dado un problema o modelo es posible determinar las características del mundo d
 Cuando una pieza se mueve, el estado del ajedrez cambia; pues la posición y cantidad de las piezas en juego determinan el estado del ajedrez.  De esta manera el \emph{espacio de estados} se representa como una gráfica donde cada nodo representa un estado del problema y las aristas que los unen son la aplicación de una \emph{acción} (u \textit{operador aterrizado}).\par
 
 
+Es decir, el \emph{espacio de estados} son todas las posibles configuraciones del problema. En el caso del ajedrez, las acciones que unen cada estado en la gráfica representan el movimiento de una pieza por parte del jugador y son el otro elemento requerido para el definir el \emph{sistema de transiciones de estados}.
+
+Podemos entonces introducir una definición formal para caracterizar al sistema, sus estados posibles y las transiciones que se pueden realizar entre ellos:
+
+
+\begin{definition}[Sistema de transiciones de estados]
+ Un \emph{sistema de transiciones de estados} es una tupla $\Sigma=(S,A,E, \gamma)$, donde:
+ \begin{itemize}
+  \item $S= \{s_1,s_2,...\}$ es un conjunto finito o \textit{recursivamente enumerable}\footnote{Infinito} de \emph{estados}.
+  \item $A= \{a_1,a_2,...\}$ es un conjunto finito o \textit{recursivamente enumerable} de \emph{acciones} realizables por el agente.
+  \item $E= \{e_1,e_2,...\}$ es un conjunto finito o \textit{recursivamente enumerable} de \emph{eventos} que no están en control del agente.
+  \item $\gamma: S \times (A \cup E) \rightarrow 2^S$ es una función de transición de estados\footnote{$2^S$ es un conjunto de estados, el conjunto potencia de todos los estados.  Es decir, un elemento del conjunto $2^S$ es un conjunto de estados.}.
+ \end{itemize}
+ \parencite{Ghallab2004}
+\end{definition}
+
+Dado el conjunto de acciones, no todas producirán una transición si se intenta aplicarlas sobre cualquier estado.  La función $\gamma$ es una función parcial, es decir, está definida para algunos pares $(S, A \cup E)$, pero no para todos.  Entonces:
+
+\begin{definition}
+  Se dice que la acción $a$ es \emph{aplicable} en $s$ si $a \in A$ y $\gamma(s,a) \neq \emptyset$.  Aplicar $a$ en $s$ cambia el estado del sistema a $s'$. \parencite{Ghallab2004}
+\end{definition}
+
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\textwidth]{estados/screen4.png}
-  \caption{Ejemplo de un espacio de estados con las transiciones entre ellos. \protect\footnotemark }
+  %\includegraphics[width=0.9\textwidth]{estados/screen4.png}
+  \includegraphics[width=0.9\textwidth]{estados/Espacio.png}
+  \caption{Ejemplo de un espacio de estados con las transiciones entre ellos. Cuando no se muestra la transición correspondiente a una acción $a_i$ es porque no es aplicable.}
   \label{fig:espacioestados}
 \end{figure}
 
-\footnotetext{Milton A. Ramírez Klapp, Notas de Inteligencia Artificial, Universidad San Sebastián, Facultad de Ingeniería y Tecnología.}
 
-Es decir, el espacio de estados son todas las posibles configuraciones del problema. En el caso del ajedrez, las acciones que unen cada estado en la gráfica representan el movimiento de una pieza por parte del jugador y son el otro elemento requerido para el definir el \emph{sistema de transiciones de estados}.\fref{fig:espacioestados}
+Finalmente, para resolver un problema concreto, se utiliza el sistema de transiciones de estados, agregando uno o varios puntos posibles de partida y estados finales donde se alcanza una meta o se declara un fallo  \fref{fig:espacioestados}.  Introducimos entonces la definición para un problema de planeación clásico:
+
+
+ \begin{definition}
+  Sea un problema de planeación la tupla $\mathcal{P} = (\Sigma, s_i,g)$ con:
+
+  \begin{itemize}
+   \item $\Sigma$ un sistema de transición de estados (con sus operadores),
+   \item $s_i$ un estado incial en $S_0$, donde $S_0$ es el conjunto de estados iniciales.
+   \item $g$ una función de prueba para la meta: un \emph{estado objetivo} ha sido alcanzado.
+  \end{itemize}
+  \parencite{Ghallab2004}
+ \end{definition}
+
+ Opcionalmente se puede agregar una \emph{función de costo del camino}, cuando algunas acciones son más complejas de realizar que otras.
+
 
 
 \section{Desarrollo e implementaci\'on}
 
-La práctica consiste en generar el sistema de transiciones de estados para el juego del Gato (también llamado \textit{Tres en línea}).  Para ello se requiere calcular a los sucesores de cada estado válido del juego y ensamblar el grafo de transiciones.  Para generar y almacenar este grafo se utiliza una estructura conocida como \emph{nodo de búsqueda}.  Para esta práctica el tipo nodo corresponderá a la clase \code{Gato}, la cual se caracteriza por contener la información del estado que contiene y la lista de nodos con los estados sucesores alcanzables mediante alguna jugada desde el nodo actual.
+La práctica consiste en generar el sistema de transiciones de estados para el problema de jugar al Gato (también llamado \textit{Tres en línea}).  Para ello se requiere calcular a los sucesores de cada estado válido del juego y ensamblar el grafo de transiciones.  Para generar y almacenar este grafo se utiliza una estructura conocida como \emph{nodo de búsqueda}.  Para esta práctica el tipo nodo corresponderá a la clase \code{Gato}, la cual se caracteriza por contener la información del estado que contiene y la lista de nodos con los estados sucesores alcanzables mediante alguna jugada desde el nodo actual.
 
 Recordemos que el juego del Gato es entre dos jugadores, representados por los símbolos \enquote{\classname{O}} y \enquote{\classname{X}}, que toman turnos para marcar los espacios vacíos de un tablero de 3x3.
 Un jugador gana cuando logra tener una línea, ya sea horizontal, vertical o diagonal, de 3 símbolos correspondientes. \fref{fig:tictactoe}
