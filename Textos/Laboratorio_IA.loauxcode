@@ -15,20 +15,22 @@
 \addvspace {10\p@ }
 \contentsline {auxcode}{\numberline {8.1}{\ignorespaces Regresión logística}}{56}{auxcode.caption.190}%
 \addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {9.1}{\ignorespaces Factores}}{64}{auxcode.caption.206}%
+\contentsline {auxcode}{\numberline {9.1}{\ignorespaces Regresión polinomial}}{66}{auxcode.caption.209}%
 \addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {10.1}{\ignorespaces Policías y ladrones}}{73}{auxcode.caption.237}%
+\contentsline {auxcode}{\numberline {10.1}{\ignorespaces Factores}}{74}{auxcode.caption.234}%
 \addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {11.1}{\ignorespaces Bayes ingenuo}}{79}{auxcode.caption.271}%
+\contentsline {auxcode}{\numberline {11.1}{\ignorespaces Policías y ladrones}}{83}{auxcode.caption.265}%
 \addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {12.1}{\ignorespaces Cadenas de Márkov}}{88}{auxcode.caption.295}%
+\contentsline {auxcode}{\numberline {12.1}{\ignorespaces Bayes ingenuo}}{89}{auxcode.caption.299}%
 \addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {13.1}{\ignorespaces Viterbi}}{95}{auxcode.caption.321}%
+\contentsline {auxcode}{\numberline {13.1}{\ignorespaces Cadenas de Márkov}}{98}{auxcode.caption.323}%
 \addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {14.1}{\ignorespaces Máquina de inferencias}}{108}{auxcode.caption.352}%
+\contentsline {auxcode}{\numberline {14.1}{\ignorespaces Viterbi}}{105}{auxcode.caption.349}%
 \addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {15.1}{\ignorespaces Ajedrez}}{113}{auxcode.caption.452}%
+\contentsline {auxcode}{\numberline {15.1}{\ignorespaces Máquina de inferencias}}{118}{auxcode.caption.380}%
 \addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {16.1}{\ignorespaces Seguidor de línea}}{116}{auxcode.caption.471}%
+\contentsline {auxcode}{\numberline {16.1}{\ignorespaces Ajedrez}}{123}{auxcode.caption.480}%
 \addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {17.1}{\ignorespaces Navegación}}{122}{auxcode.caption.501}%
+\contentsline {auxcode}{\numberline {17.1}{\ignorespaces Seguidor de línea}}{126}{auxcode.caption.499}%
+\addvspace {10\p@ }
+\contentsline {auxcode}{\numberline {18.1}{\ignorespaces Navegación}}{132}{auxcode.caption.529}%
