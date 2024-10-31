@@ -102,7 +102,21 @@ Las clases, métodos y variables más relevantes son las siguientes:
 \end{description}
 
 \subsection{Implementaci\'on}
-El constructor de la clase \classname{ModeloTermitas} ya está implementado (principalmente para inicializar el espacio y termitas). También se encuentra implementado el método \classname{moverTermita}, que mueve la termita dada como parámetro en la dirección indicada. Cada termita tiene una vecindad de Moore, es decir, tienen 8 celdas adyacentes (considerando un espacio periódico) que se enumeran según la \fref{fig:dirsposibles1}.
+
+Para reproducir el experimento de \cite{Resnick1994} haremos uso del lenguaje de programación \Java, pero nos auxiliaremos de la biblioteca \code{core.jar} del lenguaje \code{Processing}\footnote{\hurl{https://processing.org/}}.  Esto nos permitirá crear el ambiente gráfico al heredar de la clase
+\begin{center}
+ \code{processing.core.PApplet}.
+\end{center}
+De esta clase sobreescribimos tres métodos:
+\begin{itemize}
+ \item \code{setup} Permite configurar el fondo de la ventana y crear los objetos que se utilizarán durante la ejecución de la animación.
+
+ \item \code{settings} Aquí se hacen configuraciones iniciales como el tamaño de la ventana a mostrar.
+
+ \item \code{draw} Método que es llamado periódicamente en el hilo de procesamiento y desde el cual se actualiza el contenido a mostrar.
+\end{itemize}
+
+El código auxiliar para esta práctica ya muestra cómo generar una animación inicial.  El constructor de la clase \classname{ModeloTermitas} ya está implementado (principalmente para inicializar el espacio y termitas). También se encuentra implementado el método \classname{moverTermita}, que mueve la termita dada como parámetro en la dirección indicada. Cada termita tiene una vecindad de Moore, es decir, tienen 8 celdas adyacentes (considerando un espacio periódico) que se enumeran según la \fref{fig:dirsposibles1}.
 
 \begin{figure}
   \begin{center}

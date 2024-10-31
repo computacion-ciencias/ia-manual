@@ -10,12 +10,17 @@ Que el alumno comprenda la noción de \emph{Estado} y \emph{Espacio de Búsqueda
 \end{auxcode}
 
 \section{Introducci\'on}
+
+\subsection{Estado}
+
 Dado un problema o modelo es posible determinar las características del mundo descrito en él.  Uno de los puntos a tratar es la representación de dicho mundo y el concepto de estado.  Para representar estar características se utilizan \emph{variables}, cada una de las cuales toma valores de un dominio dado.  Un estado es una configuración posible del mundo con el que se trabaja.
 
 \begin{definition}[Estado]
  Un \emph{estado} es el conjunto de valores de las variables del sistema en un momento determinado.
 \end{definition}
 
+
+\subsection{Sistema de transiciones de estados}
 
 Por ejemplo, un juego de ajedrez se compone de un tablero de 64 cuadros donde inicialmente están 32 piezas (16 para cada jugador). El estado inicial del ajedrez se muestra en la \fref{fig:ajedrez}.\par
 
@@ -58,6 +63,9 @@ Dado el conjunto de acciones, no todas producirán una transición si se intenta
   \caption{Ejemplo de un espacio de estados con las transiciones entre ellos. Cuando no se muestra la transición correspondiente a una acción $a_i$ es porque no es aplicable.}
   \label{fig:espacioestados}
 \end{figure}
+
+
+\subsection{Problema de planeación}
 
 
 Finalmente, para resolver un problema concreto, se utiliza el sistema de transiciones de estados, agregando uno o varios puntos posibles de partida y estados finales donde se alcanza una meta o se declara un fallo  \fref{fig:espacioestados}.  Introducimos entonces la definición para un problema de planeación clásico:
