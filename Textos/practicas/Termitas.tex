@@ -84,8 +84,12 @@ Tras cientos de miles de pasos en la ejecución de la simulación, como se muest
 \section{Desarrollo e implementaci\'on}
 
 
-Los resultados anteriores son reportados por el propio Resnick, sin embargo, para mostrar que es posible llegar al mismo resultado, se lleva a cabo una implementación con el lenguaje de programación \classname{Processing}.
-Al alumno se le proporciona parte de la implementación, de manera que se enfoque únicamente en programar el comportamiento descrito y evitando perder tiempo en la interfaz gráfica.
+Los resultados anteriores son reportados por el propio Resnick, sin embargo, para mostrar que es posible llegar al mismo resultado.  Para reproducir su experimento haremos uso del lenguaje de programación \Java, pero nos auxiliaremos de la biblioteca \code{core.jar} del lenguaje \code{Processing}\footnote{\hurl{https://processing.org/}}.  Esto nos permitirá crear el ambiente gráfico al heredar de la clase
+\begin{center}
+ \code{processing.core.PApplet}.
+\end{center}
+
+Se te proporciona parte de la implementación, de manera que te enfoques únicamente en programar el comportamiento descrito y evitando invertir tiempo en la interfaz gráfica.
 
 Las clases, métodos y variables más relevantes son las siguientes:
 
@@ -103,11 +107,8 @@ Las clases, métodos y variables más relevantes son las siguientes:
 
 \subsection{Implementaci\'on}
 
-Para reproducir el experimento de \cite{Resnick1994} haremos uso del lenguaje de programación \Java, pero nos auxiliaremos de la biblioteca \code{core.jar} del lenguaje \code{Processing}\footnote{\hurl{https://processing.org/}}.  Esto nos permitirá crear el ambiente gráfico al heredar de la clase
-\begin{center}
- \code{processing.core.PApplet}.
-\end{center}
-De esta clase sobreescribimos tres métodos:
+
+La clase \code{Termitas}, que extiende \code{PApplet}, sobreescribe tres métodos:
 \begin{itemize}
  \item \code{setup} Permite configurar el fondo de la ventana y crear los objetos que se utilizarán durante la ejecución de la animación.
 
