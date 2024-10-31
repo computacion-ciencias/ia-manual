@@ -18,12 +18,13 @@ Que el alumno conozca el concepto de \textit{regresión logística}, sus aplicac
 
 \section{Introducción}
 
-El aprendizaje supervisado comprende dos tipos de problemas básicos: 1) la clasificación; y 2) la regresión. Estos problemas pueden definirse a partir del tipo de valores que se esperan a la salida. En la clasificación, la salida de los métodos es una categoría, un valor discreto; por ejemplo $Y = \{0,1,2,...,N\}$. En el caso de la regresión, el valor de salida es continuo, ya sea $\mathbb{R}$ o un intervalo.
+El aprendizaje supervisado comprende dos tipos de problemas básicos: 1) la clasificación; y 2) la regresión. Estos problemas pueden definirse a partir del tipo de valores que se esperan a la salida. En la clasificación, la salida de los métodos es una categoría, un valor discreto; por ejemplo $Y = \{0,1,2,...,N\}$. En el caso de la regresión, el valor de salida es continuo, ya sea $\mathbb{R}$ o un intervalo de $\mathbb{R}$.
 
 Los modelos de regresión lineal eligen una función lineal para estimar la dependencia entre las características $x$ de un ejemplar y la respuesta esperada $a(x)$. Una función lineal multivariable tendrá la forma: $$a(x) = \sum_{i=1}^n x_iw_i + \theta.$$
 Los modelos lineales utilizan como base una función de este tipo para tratar los datos. Por ejemplo, el \textit{perceptrón} es un modelo lineal de clasificación, donde el valor final es determinado como 0, si $a(x)$ es un valor negativo, o 1 si es positivo.
 
 %Siguiendo estrictamenta las definiciones anteriores, en el caso de la regresión logística lineal, lo que buscamos no es una clasificación, sino una regresión. Concretamente, la regresión logística obtendrá una probabilidad; es decir, un valor continuo en el intervalo $[0,1]$.  Se trata de la composición de una \emph{función de distribución de probabilidad acumulada}\footnote{Formalmente la función de distribución acumulada para $X$ continua es $$F(x) = P[X \leq x] =\int_{-\infty}^{x} f(u) du$$ y la forma de la función $F(x)$ depende de la función de densidad de probabilidad $f(u)$.} actuando sobre la función lineal, para obtener un valor de regresión en el intervalo $[0,1]$. A continuación desarrollamos con más detalle el modelo de regresión logística.
+
 
 
 \subsection{Regresión logística lineal}
@@ -36,7 +37,7 @@ Dado un conjunto de datos $X$ y el conjunto de clases $Y = \{0,1\}$, asumiremos 
 %La función logística, que es la función a partir de la cual podemos obtener $p$, se obtiene asumiendo que el logit de la distribución es lineal. El \emph{logit} es una estadística que determina el logaritmo de la cuota de la distribución.
 
 
-La \emph{función logística} $\sigma(z)$ es una distribución de probabilidad acumulada simétrica que se puede elegir para mapear una predicción lineal al intervalo $[0,1]$, de forma que se aproxima a $0$ y $1$ en sus extremos de forma suave, se comporta semejante a la recta para probabilidades entre $0.2$ y $0.8$ y es invertible \parencite{Fox2016}.  De este modo obtenemos el modelo de regresión logística lineal, que estima $p$ como:
+La \emph{función logística} $\sigma(z)$ es una distribución de probabilidad acumulada simétrica que se puede elegir para mapear una predicción lineal al intervalo $[0,1]$, de forma que se aproxima a $0$ y $1$ en sus extremos de forma suave, se comporta semejante a la recta para probabilidades entre $0.2$ y $0.8$ y es invertible \parencite{Fox2016}.  De este modo obtenemos el modelo de regresión logística lineal, que estima el parámetro $p$ como:
 \begin{align*}
  p &= \sigma \left(\sum_{i=1}^n x_i + \theta \right) = \frac{1}{1 + e^{-\big(\sum_{i=1}^n x_i + \theta\big)}}
 \end{align*}
@@ -102,7 +103,7 @@ En el caso de la regresión logística, la función objetivo (ya que trabajamos 
     J(w, \theta) = - y \ln\big( \sigma(x; w, \theta)\big) - (1- y) \ln\big( 1-\sigma(x; w, \theta) \big)
 \end{equation*}
 
-Dado que tenemos una distribución binaria, se toman dos términos: el término $y \ln\big( \sigma(x; w, \theta)\big)$ que corresponde a la probabilidad de la clase 1, y el término $(1-y) \ln\big( 1-\sigma(x; w, \theta)\big)$ que corresponde a la probabilidad de la clase 0. Claramente si el dato $x$ de entrada pertenece a la clase 1, minimizar el primer término corresponde a maximizar la probabilidad $\sigma(x; w, \theta)$. Análogamente, se maximiza la probabilidad de la clase 0 cuando los datos de entrada son de esta clase.
+Dado que tenemos una distribución binaria, se toman dos términos: el primer término $y \ln\big( \sigma(x; w, \theta)\big)$ que corresponde a la probabilidad de la clase 1, y el término $(1-y) \ln\big( 1-\sigma(x; w, \theta)\big)$ que corresponde a la probabilidad de la clase 0. Claramente si el dato $x$ de entrada pertenece a la clase 1, minimizar el primer término corresponde a maximizar la probabilidad $\sigma(x; w, \theta)$. Análogamente, se maximiza la probabilidad de la clase 0 cuando los datos de entrada son de esta clase.
 
 Para aplicar el descenso por el gradiente debemos obtener el vector gradiente, lo que implica obtener las derivadas parciales de la función objetivo con respecto a los parámetros entrenables. Podemos observar que:
 
@@ -170,19 +171,19 @@ En conclusión, podemos ver que la regresión logística está ampliamente relac
 
 \subsection{Ejemplo de aplicación de la regresión logística}
 
-Un conjunto datos de popular para realizar clasificación es el conjunto de datos de flores Iris elaborado por el biólogo y estadista Ronald Fisher en 1936. Se trata de datos que describen tres variedades de flores iris, variedades estas son: iris setosa, iris versicolor e iris virginica. Los datos cuentan con cuatro mediciones: la longitud y anchura de los pétalos, y la longitud y anchura de los sépalos. En la Figura~\ref{Fig:iris} se puede ver la imagen de los tres tipos de flores iris. El objetivo es poder clasificar un ejemplar en alguno de los tres distintos tipos de iris basándose únicamente en estas cuatro medidas. Para esto, podemos utilizar la regresión logística, la cual determina la probabilidad de que un dato pertenezca a algún tipo de iris dadas las medidas de sus pétalos y sépalos.
+Un conjunto datos de popular para realizar clasificación es el conjunto de datos de flores Iris elaborado por el biólogo y estadista Ronald Fisher en 1936. Se trata de datos que describen tres variedades de flores iris, éstas son: iris setosa, iris versicolor e iris virginica. Los datos cuentan con cuatro mediciones: la longitud y anchura de los pétalos, y la longitud y anchura de los sépalos. En la Figura~\ref{Fig:iris} se puede ver la imagen de los tres tipos de flores iris. El objetivo es poder clasificar un ejemplar en alguno de los tres distintos tipos de iris basándose únicamente en estas cuatro medidas. Para esto, podemos utilizar la regresión logística, la cual determina la probabilidad de que un dato pertenezca a algún tipo de iris dadas las medidas de sus pétalos y sépalos.
 
 
 \begin{figure}
  \centering
- \includegraphics[scale=0.6]{regresion/Iris.png}
+ \includegraphics[width=0.8\textwidth]{regresion/Iris.png}
  \caption{Los tres tipos de flores iris}\label{Fig:iris}
 \end{figure} 
 
 En este caso, nuestro modelo debe determinar la probabilidad de tres clases. Podemos pensar que cada clase puede modelarse como un caso de regresión logística como el de la Figura~\ref{Fig:LinearReg}, de tal forma que el modelo tendrá que aprender tres vectores de parámetros $w$, uno por cada clase (los cuáles, de hecho, pueden considerarse una matriz). Cada uno de estos vectores de parámetros se aprenderá por medio del método de descenso por gradiente expuesto más arriba. En nuestro ejemplo de flores iris, los parámetros aprendidos para $w$ fueron los siguientes:
 
 \begin{center}
-        \begin{tabular}{ c | l l l l }
+        \begin{tabular}{ c | l l l l } \hline
           ~ & \textbf{Long. sépalo} & \textbf{Anch. sépalo} & \textbf{Long. pétalo} & \textbf{Anch. pétalo}\\ \hline
           \textbf{Setosa} & -0.42 & \textbf{0.87} & -2.31 & -0.98 \\
 	\textbf{Versicolor} & \textbf{0.41} & -0.37 & -0.22 & -0.69 \\
@@ -194,7 +195,7 @@ De estos resultados, se puede concluir que para la iris setosa la anchura del s�
 
 \begin{figure}
  \centering
- \includegraphics[scale=0.6]{regresion/irisLogisticReg.png}
+ \includegraphics[width=0.8\textwidth]{regresion/irisLogisticReg.png}
  \caption{A la izquierda visualización de los datos en dos dimensiones; a la derecha las clasificaciones hechas por la regresión logística}\label{Fig:irisLogisticReg}
 \end{figure} 
 
