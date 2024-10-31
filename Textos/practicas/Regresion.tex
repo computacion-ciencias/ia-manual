@@ -23,7 +23,7 @@ El aprendizaje supervisado comprende dos tipos de problemas básicos: 1) la clas
 Los modelos de regresión lineal eligen una función lineal para estimar la dependencia entre las características $x$ de un ejemplar y la respuesta esperada $a(x)$. Una función lineal multivariable tendrá la forma: $$a(x) = \sum_{i=1}^n x_iw_i + \theta.$$
 Los modelos lineales utilizan como base una función de este tipo para tratar los datos. Por ejemplo, el \textit{perceptrón} es un modelo lineal de clasificación, donde el valor final es determinado como 0, si $a(x)$ es un valor negativo, o 1 si es positivo.
 
-Siguiendo estrictamenta las definiciones anteriores, en el caso de la regresión logística lineal, lo que buscamos no es una clasificación, sino una regresión. Concretamente, la regresión logística obtendrá una probabilidad; es decir, un valor continuo en el intervalo $[0,1]$.  Se trata de la composición de una \emph{función de distribución de probabilidad acumulada}\footnote{Formalmente la función de distribución acumulada para $X$ continua es $$F(x) = P[X \leq x] =\int_{-\infty}^{x} f(u) du$$ y la forma de la función $F(x)$ depende de la función de densidad de probabilidad $f(u)$.} actuando sobre la función lineal, para obtener un valor de regresión en el intervalo $[0,1]$. A continuación desarrollamos con más detalle el modelo de regresión logística.
+%Siguiendo estrictamenta las definiciones anteriores, en el caso de la regresión logística lineal, lo que buscamos no es una clasificación, sino una regresión. Concretamente, la regresión logística obtendrá una probabilidad; es decir, un valor continuo en el intervalo $[0,1]$.  Se trata de la composición de una \emph{función de distribución de probabilidad acumulada}\footnote{Formalmente la función de distribución acumulada para $X$ continua es $$F(x) = P[X \leq x] =\int_{-\infty}^{x} f(u) du$$ y la forma de la función $F(x)$ depende de la función de densidad de probabilidad $f(u)$.} actuando sobre la función lineal, para obtener un valor de regresión en el intervalo $[0,1]$. A continuación desarrollamos con más detalle el modelo de regresión logística.
 
 
 \subsection{Regresión logística lineal}
@@ -168,7 +168,7 @@ En conclusión, podemos ver que la regresión logística está ampliamente relac
 \end{figure}
 
 
-\section{Ejemplo de aplicación de la regresión logística}
+\subsection{Ejemplo de aplicación de la regresión logística}
 
 Un conjunto datos de popular para realizar clasificación es el conjunto de datos de flores Iris elaborado por el biólogo y estadista Ronald Fisher en 1936. Se trata de datos que describen tres variedades de flores iris, variedades estas son: iris setosa, iris versicolor e iris virginica. Los datos cuentan con cuatro mediciones: la longitud y anchura de los pétalos, y la longitud y anchura de los sépalos. En la Figura~\ref{Fig:iris} se puede ver la imagen de los tres tipos de flores iris. El objetivo es poder clasificar un ejemplar en alguno de los tres distintos tipos de iris basándose únicamente en estas cuatro medidas. Para esto, podemos utilizar la regresión logística, la cual determina la probabilidad de que un dato pertenezca a algún tipo de iris dadas las medidas de sus pétalos y sépalos.
 
@@ -201,7 +201,7 @@ De estos resultados, se puede concluir que para la iris setosa la anchura del s�
 
 
 
-\section{Desarrollo}
+\section{Desarrollo e implementación}
 
 En esta práctica se implementará el modelo de regresión logística lineal y el algoritmo de aprendizaje para esta en un conjunto de datos lógico. Se propone generar un conjunto de datos en base al problema lógico \textsc{And}, pero introduciendo ruido para dispersar los datos en el espacio $\mathbb{R}^2$. Se entrenará un modelo de regresión logística y se obtendrán las probabilidades de que los datos pertenezcan a una clase o a otra.
 
@@ -241,6 +241,6 @@ Para la implementación del código se manejarán arreglos en \code{numpy} y se 
 \end{itemize}
 
 
-\subsection{Requisitos y resultados}
+\section{Requisitos y resultados}
 
 Se tendrá que entregar la clase \code{LogisticRegression} adecuadamente programada y documentada. Como se ha mencionado, la clase deberá contener las funciones \code{fit}, \code{predict\_proba} y \code{predict}, todas estas adecuadamente realizadas y funcionando de la manera indicada. Además, se usará esta clase para entrenar y obtener las clases de los datos que ya se han indicado.  Se otorgará un punto extra a quien incluya un reporte de su comparación con los resultados obtenidos con el perceptrón.
