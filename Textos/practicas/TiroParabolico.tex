@@ -188,7 +188,7 @@ Para minimizar $\mathcal{L}$ la hipótesis deberá incrementar la magnitud de lo
 
 
 
-\section{Desarrollo}
+\section{Desarrollo e implementación}
 
 Para esta práctica deberás reproducir el experimento simulado del tiro parabólico.  Se recomienda crear un cuaderno de \Python y usar \code{matplotlib} para generar las gráficas.
 
@@ -197,6 +197,12 @@ Para esta práctica deberás reproducir el experimento simulado del tiro parabó
  \item Utiliza la distribución Gaussiana para muestrear datos que simulen mediciones con ruido.
  \item Divide tus datos aleatoriamente en conjuntos de entrenamiento (70\%), validación (20\%) y prueba (\%10).
  \item Realiza el entrenamiento para polinomios de grados desde uno hasta ocho.
- \item Genera la gráfica error vs grado tanto en el conjunto de entrenamiento como en el de validación. Reporta el resultado obtenido.
+ \item Genera la gráfica error vs grado tanto en el conjunto de entrenamiento como en el de validación. Reporta el resultado obtenido, especialmente cuál fue el modelo seleccionado y cuál es su error en el conjunto de prueba.
  \item Repite el procediento usando regularización. Reporta el resultado obtenido.
 \end{enumerate}
+
+
+
+\section{Requisitos y resultados}
+
+La implementación de las técnicas anteriores deberá realizarse de forma genérica, es decir, deberán generarse datos para cualquier tiro parabólico dados los parámetros correspondientes y no sólo un ejemplar.  En función de estos parámetros deberá generarse una visualización de los datos en una gráfica 2D.  Igualmente es obligatorio generar las gráficas de error vs grado para los conjuntos de entrenamiento y validación.
