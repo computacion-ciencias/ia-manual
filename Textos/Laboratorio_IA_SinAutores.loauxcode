@@ -1,32 +1,17 @@
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {1.1}{\ignorespaces Termitas\relax }}{3}{auxcode.caption.9}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {2.1}{\ignorespaces Gatos\relax }}{11}{auxcode.caption.30}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {3.1}{\ignorespaces Algoritmos genéticos\relax }}{16}{auxcode.caption.46}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {4.1}{\ignorespaces Laberintos\relax }}{24}{auxcode.caption.84}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {5.1}{\ignorespaces Recocido\relax }}{28}{auxcode.caption.103}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {6.1}{\ignorespaces Pakuman\relax }}{33}{auxcode.caption.114}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {7.1}{\ignorespaces Perceptrón\relax }}{45}{auxcode.caption.156}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {8.1}{\ignorespaces Regresión logística\relax }}{51}{auxcode.caption.180}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {9.1}{\ignorespaces Factores\relax }}{59}{auxcode.caption.196}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {10.1}{\ignorespaces Policías y ladrones\relax }}{68}{auxcode.caption.227}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {11.1}{\ignorespaces Bayes ingenuo\relax }}{74}{auxcode.caption.261}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {12.1}{\ignorespaces Cadenas de Márkov\relax }}{83}{auxcode.caption.285}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {13.1}{\ignorespaces Viterbi\relax }}{90}{auxcode.caption.311}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {14.1}{\ignorespaces Máquina de inferencias\relax }}{103}{auxcode.caption.342}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {15.1}{\ignorespaces Seguidor de línea\relax }}{107}{auxcode.caption.440}%
-\addvspace {10\p@ }
-\contentsline {auxcode}{\numberline {16.1}{\ignorespaces Navegación\relax }}{113}{auxcode.caption.470}%
+\contentsline {auxcode}{\numberline {1.1}{\ignorespaces Termitas}}{3}{auxcode.caption.9}%
+\contentsline {auxcode}{\numberline {2.1}{\ignorespaces Gatos}}{11}{auxcode.caption.30}%
+\contentsline {auxcode}{\numberline {3.1}{\ignorespaces Laberintos}}{18}{auxcode.caption.53}%
+\contentsline {auxcode}{\numberline {4.1}{\ignorespaces Algoritmos genéticos}}{22}{auxcode.caption.72}%
+\contentsline {auxcode}{\numberline {5.1}{\ignorespaces Recocido}}{30}{auxcode.caption.110}%
+\contentsline {auxcode}{\numberline {6.1}{\ignorespaces Pakuman}}{35}{auxcode.caption.121}%
+\contentsline {auxcode}{\numberline {7.1}{\ignorespaces Perceptrón}}{47}{auxcode.caption.163}%
+\contentsline {auxcode}{\numberline {8.1}{\ignorespaces Regresión logística}}{53}{auxcode.caption.187}%
+\contentsline {auxcode}{\numberline {9.1}{\ignorespaces Regresión polinomial}}{62}{auxcode.caption.206}%
+\contentsline {auxcode}{\numberline {10.1}{\ignorespaces Factores}}{71}{auxcode.caption.232}%
+\contentsline {auxcode}{\numberline {11.1}{\ignorespaces Policías y ladrones}}{80}{auxcode.caption.263}%
+\contentsline {auxcode}{\numberline {12.1}{\ignorespaces Bayes ingenuo}}{86}{auxcode.caption.297}%
+\contentsline {auxcode}{\numberline {13.1}{\ignorespaces Cadenas de Márkov}}{95}{auxcode.caption.321}%
+\contentsline {auxcode}{\numberline {14.1}{\ignorespaces Viterbi}}{102}{auxcode.caption.347}%
+\contentsline {auxcode}{\numberline {15.1}{\ignorespaces Máquina de inferencias}}{115}{auxcode.caption.378}%
+\contentsline {auxcode}{\numberline {16.1}{\ignorespaces Seguidor de línea}}{120}{auxcode.caption.478}%
+\contentsline {auxcode}{\numberline {17.1}{\ignorespaces Navegación}}{126}{auxcode.caption.508}%
