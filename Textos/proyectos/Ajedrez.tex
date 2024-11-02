@@ -12,10 +12,10 @@ El alumno implementará un agente inteligente capaz de jugar ajedrez contra un s
 
 Que el alumno(a):
 \begin{compactitem}
- \item implemente un agente inteligente para un juego,
- \item implemente un algoritmo de búsqueda con adversarios aplicándolo en un escenario real, transfiriendo sus conocimientos sobre \emph{acciones}, \emph{acciones aplicables}, \emph{estados} y \emph{nodos búsqueda}.
- \item diseñe su propia estructura para implementar el algoritmo,
- \item utilice un función heurística para truncar la profundidad a la que trabajará el algoritmo.
+ \item Implemente un agente inteligente para un juego.
+ \item Implemente un algoritmo de búsqueda con adversarios aplicándolo en un escenario real, transfiriendo sus conocimientos sobre \emph{acciones}, \emph{acciones aplicables}, \emph{estados} y \emph{nodos búsqueda}.
+ \item Diseñe su propia estructura para implementar el algoritmo.
+ \item Utilice un función heurística para truncar la profundidad a la que trabajará el algoritmo.
 \end{compactitem}
 
 
@@ -25,13 +25,45 @@ Que el alumno(a):
  \hurl{\auxprefix ia-ajedrez}
 \end{auxcode}
 
-\section{Desarrollo}
 
-En este paquete se te entrega:
+\section{Introducción}
+
+El juego del Ajedrez es un ejemplo excelente de problema de planeación sobre un espacio de estados discreto que se puede resolver mediante búsqueda.  El espacio de estados corresponde a todos los posibles tableros del juego: todas las posibles combinaciones de posiciones de figuras en él más aquellas que pudieran haber sido capturadas [\fref{fig:tableroAjedrez}].  El espacio es enorme, sin embargo, el problema se puede enfrentar tan sólo con técnicas clásicas.  La fecha 11 de mayo de 1997 quedó marcada como el día en que la IA DeepBlue derrotó al campeón humano de ajedrez Garry Kasparov\footnote{\hurl{https://ethic.es/2024/03/el-dia-que-kasparov-perdio-contra-deep-blue/}}.  DeepBlue utilizó búsqueda sobre el espacio de estados, haciendo evaluaciones de los estados mediante una función heurística.  En otras palabras: en este curso ya estudiaste todo lo necesario para comprender e incluso implementar un sistema igual.  Para este proyecto harás una implementación un poco más sencilla pero sólo por cuestiones de tiempo.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.5\textwidth]{ajedrez/tableroAjedrez}
+ \caption{Estado inicial para el problema de jugar al ajedrez.}
+ \label{fig:tableroAjedrez}
+\end{figure}
+
+Las reglas del juego son mundialmente conocidas, un sitio donde puedes encontrar todos los detalles es \hurl{https://help.gnome.org/users/gnome-chess/stable/index.html.es}.  Las reglas más importantes son:
 \begin{itemize}
- \item Un proyecto con \code{JavaFX} con la interfaz gráfica para mostrar un ajedrez.
+ \item La \fref{fig:tableroAjedrez} describe el estado inicial.
+ \item Las piezas sólo pueden moverse a casillas desocupadas, a menos que puedan realizar la captura del pieza contraria.
+ \item Los peones sólo pueden moverse una casilla hacia adelante, pero capturan movéndose en diagonal hacia el frente un cuadro.
+ \item Las torres se desplazan horizontal y verticalmente.
+ \item Los alfiles se desplazan diagonalmente.
+ \item La reina puede moverse horizontal, vertical y diagonalmente.
+ \item El puede moverse a cualquiera de las ocho casillas a su alrededor.
+ \item Torres, alfiles y reina pueden desplazarse tantas casillas como quieran en sus direcciones válidas, siempre que no se topen con otra pieza.  Si la otra pieza es enemiga la pueden capturar y quedarás colocados en el lugar que ocupaba la otra pieza.
+ \item Los caballos son los únicos que pueden saltar y su desplazamiento es en forma de L: dos cuadros verticalmente y uno horizontal ó dos horizonales y uno vertical, en la dirección que prefiera.  Sólo captura a la pieza que se encuentre en su casilla final.
+ \item Se dice que el rey está en \code{jaque} si una pieza enemiga se coloca donde lo puede capturar y el jugador tiene la obligación de rescatar a su rey.
+ \item El juego termina cuando uno de los jugadores logra capturar al rey del otro.  Cuando un rey se encuentra en posición de jaque, sin que éste tenga escapatoria posible el juego termina (\emph{jaque mate}).
 \end{itemize}
 
+
+
+\section{Desarrollo e implementación}
+
+Para este proyecto programarás a un agente inteligente para jugar ajedrez contra él.  Para ello en este paquete se te entrega un proyecto \code{JavaFX} con la interfaz gráfica para mostrar un ajedrez [\fref{fig:ajedrezfx}].
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.5\textwidth]{ajedrez/ajedrezfx}
+ \caption{Interfaz gráfica en \code{JavaFX} para programar el juego de ajedrez.}
+ \label{fig:ajedrezfx}
+\end{figure}
 
 \subsection{Tareas a realizar}
 
@@ -86,4 +118,19 @@ Las tareas que debes realizar son las siguientes.  Incluye pruebas unitarias que
  \textbf{Nota:} No olvides incluir pruebas unitarias que muestren que cada parte de tu modelo funciona.
 
  \item Se otorgará un punto extra a quien sustituya Min-max por poda alfa-beta.
+
+ \item Los empates son más complejos de detectar, por lo que su implementación se dejará para obtener otro punto extra si implementas este caso completo o décimas si sólo implementas algunos casos.  Se dice que el juego queda \emph{tablas} por varios motivos \footnote{\hurl{https://help.gnome.org/users/gnome-chess/stable/chess-rules.html.es}}:
+ \begin{description}
+  \item [Por acuerdo]  Ambos jugadores se rinden... pero tu PC no se rinde, así que no aplicaremos esta regla.
+  \item [Rey ahogado]  El jugador que tiene que mover no tiene movimientos legales y su rey no está en jaque.
+  \item [*Repetición triple] La misma posición sucede tres veces con el mismo jugador y si cada jugador tiene el mismo conjunto de movimientos legales las tres veces, incluyendo comer y enroque.
+  \item [Regla de los cincuenta movimientos] Después de 50 movimientos de cada jugador no se ha movido o capturado un peón.
+  \item [Jaque mate imposible] Todos los peones se han capturado y un jugador sólo tiene su rey, mientras que el otro jugador también tiene solamente su rey o su rey y un caballo o un alfil.
+ \end{description}
+
 \end{enumerate}
+
+
+\section{Requisitos y resultados}
+
+Básicamente, deberás entregar un ajedrez que se pueda jugar.  El agente manejado por la PC usará Min-max para elegir su tirada.  Juega algunas partidas y asegúrate de que puedes iniciar bien la partida, jugar contra la computadora y que se declara al ganador correctamente cuando ocurre y jaque mate.  Edita tu \code{README.md} con las instrucciones adecuadas para que cualquier usuario pueda ejecutar tu aplicación.
