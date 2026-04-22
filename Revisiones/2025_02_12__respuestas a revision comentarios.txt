@@ -1,0 +1,31 @@
+Agradecemos a los árbitros el tiempo y esfuerzo dedicado a los comentarios, que nos ayudan mejorar varios puntos del manual.  A continuación se indica cómo fueron atendidos cada uno de ellos:
+
+1. Una gran disculpa a los revisores.  El problema con la introducción fue que, al compilar la versión sin autores, no se reflejaron los cambios que afectaban el índice y la inclusión de la Introducción, este el motivo por el cual la Introducción no quedó incluida en la versión que se envió, así como algunos cambios de orden en las prácticas.
+
+2. Mismo caso.
+
+3. Se agregó un referencia a los tutoriales en línea, a la cual se cita desde la Introducción.
+
+4. Se movió A* para quedar antes de Algoritmos Genéticos y seguir la secuencia natural del temario.  Sin embargo es importante mencionar que, en la práctica, no nos ha sido posible llegar al tema A* en la parte de teoría a tiempo para realizar aquí esta práctica, por lo que suelen quedar dos semanas sin práctica y después no queda tiempo para las otras.  Lo que hemos hecho para resolverlo es poner las otras dos primero, explicando el tema en el laboratorio.
+
+5. Dado que "En urbanismo, una manzana (también conocida como bloque, cuadra o í­nsula) es un espacio urbano edificado o destinado a la edificación, delimitado por calles, avenidas o vías públicas en todos sus lados. Constituye la célula básica del trazado urbano, agrupando un conjunto de lotes o parcelas." El uso de la palabra "manzana" permite relacionar rápidamente el cruce en diagonal con la imposibilidad física de penetrar esa área delimitada.  Surge la duda ¿por qué resulta imperioso evitar el uso de ese término?
+
+6. La cita sí se encuentra en el proyecto STRIPS, justo al inicio de su introducción.
+
+7. Esta omisión también se debió al problema durante la compilación del documento, pues la cita a la nueva edición se encontraba en la introducción.  En la versión que tenemos actualmente, se citan ambas ediciones.  En la Bibliografía aparecen:
+
+Russell, Stuart, Peter Norvig et al. (2022). Artificial Intelligence: A Modern Approach,
+Global Edition. Ed. por Stuart Russell y Peter Norvig. 4th. Pearson Series in Artificial
+Intelligence. isbn: 1-292-40113-3.
+Russell, Stuart y Peter Norving (2010). Artificial Intelligence, A Modern Approach. Ed.
+por Michael Hirsch. 2a. Pearson Prentice Hall.
+
+8. Se agregó la liga al conjunto de datos, como nota al pie cuando se hace la primera mención a él en la práctica.
+
+9. Se sustituyó estadista por estadístico.
+
+10. Se hizo una búsqueda con grep y se realizaron las sustituciones para que todos digan Python.
+
+11. Se definieron los acrónimos BNF y PDDL.  Hasta donde sabemos son los que habían quedado sin definir.
+
+12. El acento se colocó en congruencia con la pronunciación original del nombre, que es ruso, y cuya sílaba tónica es Mar, por lo que en español se escribe Márkov.  https://es.wikipedia.org/wiki/Andr%C3%A9i_M%C3%A1rkov y https://theconversation.com/andrei-markov-cadenas-matematicas-para-luchar-contra-las-epidemias-138986

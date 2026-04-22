@@ -42,7 +42,7 @@ La selección es una etapa del algoritmo genético en la cual se selecciona un i
 Existen diferentes maneras de realizar el proceso de selección, el más común es la \textbf{selección proporcional de aptitud} (selección de ruleta). En este tipo de selección, la aptitud (o \textit{fitness}) del individuo se asocia con su probabilidad de selección.\par
 
 Entonces si \(f_i\)  es la aptitud del individuo \(i\) en la población, la probabilidad de ser seleccionado es:\par
-\[p_i = {f_i \over \sum_{j=1}^{N} f_j}\]
+\[p_i = {\frac{f_i}{\sum_{j=1}^{N} f_j}}\]
 donde \(N\) es el número de individuos en la población.\par
 
 Esto es similar a imaginar una ruleta de casino. Usualmente una proporción de la rueda de la ruleta es asignada a cada posible individuo basado en su aptitud. Esto se logra al dividir la aptitud de cada individuo entre el total de aptitud de todos los individuos, que es equivalente a normalizarlos a 1. Entonces un individuo es aleatoriamente seleccionado de la manera en que lo haría una ruleta que está girando.
