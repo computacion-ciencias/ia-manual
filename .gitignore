@@ -1,4 +1,6 @@
 ## Core latex/pdflatex auxiliary files:
+**/*.data.minted
+**/*.tex.kate-swp
 *.loauxcode
 *.aux
 *.lof
